@@ -1,0 +1,15 @@
+Install instructions:
+
+From the install directory of terra tech, replace
+/TerraTechWin64_Data/Managed/Assembly-CSharp.dll
+
+With the dll provided in the zip package.
+Start the game
+
+The mod will have created a configuration file:
+/mod.maritaria.settings
+
+You can now edit this settings file.
+To apply the settings a reset of the game is required.
+
+If the settings file is missing when the game starts the mod will re-create it.
