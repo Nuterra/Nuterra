@@ -21,20 +21,20 @@ The main tool used to develop the mod is [dnSpy], a tool to decompile and edit m
 
 # Roadmap
 ## v0.2
-- Add first custom block
-- Add rename current tech UI
+- [ ] Add first custom block
+- [ ] Add rename current tech UI
 
 ## v0.3
-- Generic custom block loading system
-- Remove the need to edit accessors
+- [ ] Generic custom block loading system
+- [ ] Remove the need to edit accessors
 
 ## v1.0
-- Create modding API without references to original Assembly-CSharp.dll
-- Hotswappable mod loading
-- API for registering new blocktypes
-- API for registering configuration UI
-- Modular UI creation
-- Robust save system to allow loading worlds with missing mods
+- [ ] Create modding API without references to original Assembly-CSharp.dll
+- [ ] Hotswappable mod loading
+- [ ] API for registering new blocktypes
+- [ ] API for registering configuration UI
+- [ ] Modular UI creation
+- [ ] Robust save system to allow loading worlds with missing mods
 
 ## v2.0
 Support for multiplayer will be planned as soon as Terra Tech has build-in multiplayer.
