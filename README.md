@@ -16,14 +16,17 @@ Check the [Releases] page for the latest version of the mod. Every distrubution 
 2. Replace /TerraTechWin64_Data/Managed/Assembly-CSharp.dll with the same-named .dll in the package.
 3. Run the game
 
-# Tools
-The main tool used to develop the mod is [dnSpy], a tool to decompile and edit managed assemblies. All modifications to the game are collected in the Maritaria namespace, merged into the original assembly and finally the original code is redirected to pass through the mod code. The documentation includes instructions about usage of [dnSpy]
+# Development
+The main tool used to develop the mod is [dnSpy], a tool to decompile and edit managed assemblies. All modifications to the game are collected in the Maritaria namespace, merged into the original assembly and finally the original code is redirected to pass through the mod code. The documentation includes instructions about usage of [dnSpy].
 
 # Roadmap
 ## V1.0
 - Create modding API without references to original Assembly-CSharp.dll
-- Load mods in such a way that they are hot-swappable
-- Mechanism for registering new blocks
+- Hotswappable mod loading
+- API for registering new blocktypes
+- API for registering configuration UI
+- Modular UI creation
+- Robust save system to allow loading worlds with missing mods
 
 ## V2.0
-- Robust save system to allow loading worlds with missing mods
+Support for multiplayer will be planned as soon as Terra Tech has build-in multiplayer.
