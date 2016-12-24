@@ -43,8 +43,8 @@ void ManUI.Start()
 }
 ```
 ## dnSpy
-In dnSpy, right-click the method and choose "Edit IL instructions..."
-Insert a `call` IL instruction at the beginning of the list and make it call `void Maritaria.Mod.Init()`
+1. In dnSpy, right-click the method and choose "Edit IL instructions..."
+2. Insert a `call` IL instruction at the beginning of the list and make it call `void Maritaria.Mod.Init()`
 
 # Hook module code
 For each of the module overrides in the `Maritaria.Modules` class, the original methods of the game have to be redirected to the modded ones. This is done by finding the original method, clearing it's method body and calling the modded method, returning it's result if required. For the `InputControl` overrides, fire has to be changed to a boolean using the following expression: `(fire != 0)`.
