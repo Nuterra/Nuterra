@@ -27,6 +27,7 @@ The main tool used to develop the mod is [dnSpy], a tool to decompile and edit m
 ## v0.3
 - [ ] Generic custom block loading system
 - [ ] Remove the need to edit accessors
+- [ ] Base building blocks (GeoCorp)
 
 ## v1.0
 - [ ] Create modding API without references to original Assembly-CSharp.dll
