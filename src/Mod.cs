@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
+using System.Collections;
 using UnityEngine;
 
 namespace Maritaria
@@ -10,7 +14,8 @@ namespace Maritaria
 		
 		public static void Init()
 		{
-			Console.WriteLine("Maritaria.Mod.Init();");
+			Console.WriteLine("Maritaria.Mod.Init()");
+			CleanLogger.Install();
 			
 			Config = new ModConfig();
 			Config.Load();
@@ -21,6 +26,8 @@ namespace Maritaria
 			UnityEngine.Object.DontDestroyOnLoad(Mod.BehaviorHolder);
 			
 			SplashScreenHandler.Init();
+			
+			Singleton.Manager<CameraManager>.inst.ScreenBlur.enabled = false;
 		}
 
 		public static void LogGameObject(GameObject inst)
@@ -29,13 +36,7 @@ namespace Maritaria
 			{
 				return;
 			}
-			Visible component = inst.GetComponent<Visible>();
-			if (component != null && component.m_ItemType.ObjectType == ObjectTypes.Block && component.m_ItemType.ItemType == 3)
-			{
-				Mod.LogGameObject(inst, "");
-				Transform expr_4D = inst.transform.GetChild(0);
-				expr_4D.localPosition=(expr_4D.localPosition + new Vector3(1f, 0f, 0f));
-			}
+			LogGameObject(inst, string.Empty);
 		}
 
 		public static void LogGameObject(GameObject inst, string prefix)
@@ -44,20 +45,18 @@ namespace Maritaria
 			{
 				return;
 			}
-			Console.WriteLine(string.Concat(new string[]
-			{
-				prefix,
-				"GameObject: ",
-				inst.name,
-				" ",
-				inst.transform.localPosition.ToString()
-			}));
+			Console.WriteLine($"{prefix}GameObject name: ({inst.name}) pos: {inst.transform.localPosition}");
 			prefix += "\t";
+			Console.WriteLine($"{prefix}activeSelf: {inst.activeSelf} activeInHierarchy: {inst.activeInHierarchy}");
+			Console.WriteLine($"{prefix}layer: ({inst.layer}) tag: ({inst.tag})");
+			Console.WriteLine($"{prefix}Components:");
 			Component[] components = inst.GetComponents<Component>();
 			for (int i = 0; i < components.Length; i++)
 			{
-				Mod.LogComponent(components[i], prefix);
+				Component component = components[i];
+				Mod.LogComponent(component, prefix);
 			}
+			Console.WriteLine($"{prefix}GameObjects:");
 			for (int j = 0; j < inst.transform.childCount; j++)
 			{
 				Mod.LogGameObject(inst.transform.GetChild(j).gameObject, prefix);
@@ -70,10 +69,10 @@ namespace Maritaria
 			{
 				return;
 			}
-			Console.Write(prefix + "Component: " + inst.GetType().FullName + " ");
+			Console.Write($"{prefix}{inst.GetType().FullName} ");
 			if (inst is TankBlock)
 			{
-				Mod.LogComponent_TankBlock((TankBlock)inst);
+				Mod.LogComponent_TankBlock((TankBlock)inst, prefix);
 				return;
 			}
 			if (inst is Visible)
@@ -86,12 +85,41 @@ namespace Maritaria
 				Mod.LogComponent_MeshFilter((MeshFilter)inst);
 				return;
 			}
+			if (inst is BoxCollider)
+			{
+				Mod.LogComponent_BoxCollider((BoxCollider)inst);
+				return;
+			}
 			Console.WriteLine();
 		}
 
-		public static void LogComponent_TankBlock(TankBlock tankBlock)
+		public static void LogComponent_TankBlock(TankBlock tankBlock, string prefix)
 		{
-			Console.WriteLine(tankBlock.BlockCellBounds);
+			Console.WriteLine();
+			Console.WriteLine($"{prefix}\tattachPoints:");
+			foreach(Vector3 vec in tankBlock.attachPoints)
+			{
+				Console.WriteLine($"{prefix}\t\t- {vec}");
+			}
+			Console.WriteLine($"{prefix}\tfilledCells:");
+			foreach(Vector3 vec in tankBlock.filledCells)
+			{
+				Console.WriteLine($"{prefix}\t\t- {vec}");
+			}
+			Console.WriteLine($"{prefix}\tpartialCells:");
+			foreach(Vector3 vec in tankBlock.partialCells)
+			{
+				Console.WriteLine($"{prefix}\t\t- {vec}");
+			}
+			Console.WriteLine($"{prefix}\tapGroups:");
+			foreach(TankBlock.APGroup group in tankBlock.apGroups)
+			{
+				Console.WriteLine($"{prefix}\t\t- Count: {group.Count}");
+				foreach(int i in group.Enumerate())
+				{
+					Console.WriteLine($"{prefix}\t\t\t{i}");
+				}
+			}
 		}
 
 		public static void LogComponent_Visible(Visible visible)
@@ -102,6 +130,41 @@ namespace Maritaria
 		public static void LogComponent_MeshFilter(MeshFilter mesh)
 		{
 			Console.WriteLine(mesh.mesh.name);
+		}
+
+		public static void LogComponent_BoxCollider(BoxCollider box)
+		{
+			Console.WriteLine($"{box.center} {box.size}");
+		}
+		
+		public static void LogPrivates(object obj, string prefix)
+		{
+			return;
+			foreach(FieldInfo prop in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+			{
+				object value = prop.GetValue(obj);
+				if (value!=null)
+				{
+					if (value.GetType().IsArray || typeof(ICollection).IsAssignableFrom(value.GetType()))
+					{
+						value = $"{((IEnumerable)value).Cast<object>().Count()} ({value.GetType()})";
+					}
+				}
+				Console.WriteLine($"{prefix}{prop.Name} = {value}");
+			}
+			foreach(PropertyInfo prop in obj.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+			{
+				object value;
+				try
+				{
+					value = prop.GetValue(obj, null);
+				}
+				catch(Exception ex)
+				{
+					value = ex;
+				}
+				Console.WriteLine($"{prefix}{prop.Name} = {value}");
+			}
 		}
 	}
 }
