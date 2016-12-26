@@ -21,7 +21,7 @@ The main tool used to develop the mod is [dnSpy], a tool to decompile and edit m
 
 # Roadmap
 ## v0.2
-- [ ] Add first custom block
+- [x] Add first custom block
 - [ ] Add rename current tech UI
 
 ## v0.3
