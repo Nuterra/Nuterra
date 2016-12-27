@@ -27,7 +27,7 @@ namespace Maritaria
 		
 		public ModConfig()
 		{
-			RestoreDefaults();
+			RestoreDefaultSettings();
 		}
 		
 		public void Load()
@@ -139,12 +139,12 @@ namespace Maritaria
 			}
 			if (a == "turnnightkey")
 			{
-				this.TurnNightKey = ParseKey(settingValue);
+				this.TurnNightKey = ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a=="turndaykey")
 			{
-				this.TurnDayKey = ParseKey(settingValue);
+				this.TurnDayKey = ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 		}
