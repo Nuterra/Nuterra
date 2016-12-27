@@ -5,6 +5,7 @@ namespace Maritaria
 {
 	public static class BlockLoader
 	{
+		public static readonly string StarBlockFile = "\\my_first_block.obj";
 		public static readonly int StarBlockID = 9000;// (int)BlockTypes.GSOStarBlock;//Add this to the enum
 		public static readonly FactionSubTypes StarBlockFaction = FactionSubTypes.GSO;
 		public static readonly BlockCategories StarBlockCategory = BlockCategories.Accessories;
@@ -81,7 +82,7 @@ namespace Maritaria
 			renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 			
 			MeshFilter filter = renderObject.EnsureComponent<MeshFilter>();
-			filter.mesh = new ObjImporter().ImportFile(@"D:\Personal\Documents\Visual Studio 2015\Projects\terratech-mod\data\my_first_block.obj");
+			filter.mesh = new ObjImporter().ImportFile(Mod.DataDirectory + StarBlockFile);
 			
 			Vector3 bounds = filter.mesh.bounds.size;
 			float largestSide = Mathf.Max(bounds.x, bounds.y, bounds.z, 1f);

@@ -3,12 +3,14 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 
 namespace Maritaria
 {
 	public static class Mod
 	{
+		public static readonly string DataDirectory = "maritaria";
 		public static ModConfig Config;
 		public static GameObject BehaviorHolder;
 		
@@ -17,6 +19,8 @@ namespace Maritaria
 		{
 			Console.WriteLine("Maritaria.Mod.Init()");
 			CleanLogger.Install();
+			
+			EnsureDirectoryStructure();
 			
 			Config = new ModConfig();
 			Config.Load();
@@ -28,6 +32,14 @@ namespace Maritaria
 			
 			SplashScreenHandler.Init();
 			
+		}
+		
+		private static void EnsureDirectoryStructure()
+		{
+			if (!Directory.Exists(DataDirectory))
+			{
+				Directory.CreateDirectory(DataDirectory);
+			}
 		}
 
 		public static void LogGameObject(GameObject inst)

@@ -8,7 +8,7 @@ namespace Maritaria
 	public class ModConfig
 	{
 		public static readonly string DefaultConfigContents = "# Lines starting with a # are ignored\n# Some settings are disabled by default, remove the # in front of the line to enable it\n# Settings format: [name] [value]\n# Setting names and values must be split by a single space\n# List of UnityEngine.KeyCode: https://docs.unity3d.com/ScriptReference/KeyCode.html\n\n# The key to trigger all drills on your current tech (UnityEngine.KeyCode)\nDrillKey Alpha1\n\n# The key to trigger all buzzsaws on your current tech (UnityEngine.KeyCode)\nSawKey Alpha2\n\n# The key to trigger all hammer blocks on your current tech (UnityEngine.KeyCode)\nHammerKey Alpha3\n\n# The key to trigger all scoop blocks on your current tech (UnityEngine.KeyCode)\nScoopKey Alpha4\n\n# The key to trigger all \"Plasma Cutter\" blocks on your current tech (UnityEngine.KeyCode)\nPlasmaKey Alpha5\n\n# The key to toggle your magnet blocks on/off; when disabled your magnets will not attract any blocks (UnityEngine.KeyCode)\nMagnetToggleKey M\n\n# Every hit after a block starts to explode lowers the explosion timer by a given amount of seconds (seconds)\n# Vanilla: 0.1\n#ExplodeTimerReductionPerHit 1.0\n\n# Enable solar panels to be used on techs\nMobileSolarPanels 1\n\n# Enable to allow changing time of day\n#TurnDayKey Alpha9\n#TurnNightKey Alpha0";
-		public string ConfigFileName = "mod.maritaria.settings";
+		public string ConfigFileName = Mod.DataDirectory + "\\mod.settings";
 		
 		public KeyCode DrillKey;
 		public KeyCode HammerKey;
@@ -41,6 +41,7 @@ namespace Maritaria
 		{
 			if (!File.Exists(this.ConfigFileName))
 			{
+				Console.WriteLine("Creating default config file: " + ConfigFileName);
 				using (StreamWriter streamWriter = File.CreateText(this.ConfigFileName))
 				{
 					streamWriter.WriteLine(DefaultConfigContents);
