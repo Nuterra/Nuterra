@@ -12,6 +12,7 @@ namespace Maritaria
 		public static ModConfig Config;
 		public static GameObject BehaviorHolder;
 		
+		//Hook to be called at the beginning of ManUI.Start
 		public static void Init()
 		{
 			Console.WriteLine("Maritaria.Mod.Init()");
@@ -22,12 +23,11 @@ namespace Maritaria
 			
 			BehaviorHolder = new GameObject();
 			BehaviorHolder.AddComponent<MagnetToggleKeyBehaviour>();
-			BehaviorHolder.AddComponent<RenameTechKeyBehaviour>();
+			BehaviorHolder.AddComponent<TimeOfDayKeysBehaviour>();
 			UnityEngine.Object.DontDestroyOnLoad(Mod.BehaviorHolder);
 			
 			SplashScreenHandler.Init();
 			
-			Singleton.Manager<CameraManager>.inst.ScreenBlur.enabled = false;
 		}
 
 		public static void LogGameObject(GameObject inst)

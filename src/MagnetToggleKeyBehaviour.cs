@@ -19,7 +19,7 @@ namespace Maritaria
 		{
 			if (Input.GetKeyDown(Mod.Config.MagnetToggleKey))
 			{
-				ModuleMods.Magnet.DisabledForPlayerControlledTank = !ModuleMods.Magnet.DisabledForPlayerControlledTank;
+				Modules.Magnet.DisabledForPlayerControlledTank = !Modules.Magnet.DisabledForPlayerControlledTank;
 			}
 		}
 
@@ -37,7 +37,7 @@ namespace Maritaria
 			{
 				return;
 			}
-			if (ModuleMods.Magnet.DisabledForPlayerControlledTank)
+			if (Modules.Magnet.DisabledForPlayerControlledTank)
 			{
 				this._content.text=(string.Format(MagnetToggleKeyBehaviour.DisplayFormat, MagnetToggleKeyBehaviour.OfflineStatus));
 			}

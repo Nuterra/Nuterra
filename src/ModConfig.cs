@@ -7,45 +7,32 @@ namespace Maritaria
 {
 	public class ModConfig
 	{
+		public string ConfigFileName = "mod.maritaria.settings";
+		
 		public KeyCode DrillKey;
-
 		public KeyCode HammerKey;
-
 		public KeyCode MagnetToggleKey;
-
 		public KeyCode ScoopKey;
-
-		public string ConfigFileName;
-
+		public KeyCode PlasmaKey;
 		public KeyCode SawKey;
 
 		public bool MobileSolarPanels;
-
-		public bool BuyIntoInventory;
-
-		public KeyCode PlasmaKey;
-
-		public float MobileSolarMultiplier;
-
 		public float MobileSolarVelocityThreshold;
-
+		public float MobileSolarMultiplier;
+		
+		public KeyCode TurnNightKey;
+		public KeyCode TurnDayKey;
+		
+		public bool BuyIntoInventory;
+		
 		public ModConfig()
 		{
-			this.ConfigFileName = "mod.maritaria.settings";
-			this.BuyIntoInventory = false;
-			this.DrillKey = 0;
-			this.HammerKey = 0;
-			this.MagnetToggleKey = 0;
-			this.MobileSolarMultiplier = 0.2f;
-			this.MobileSolarPanels = false;
-			this.MobileSolarVelocityThreshold = 0.1f;
-			this.PlasmaKey = 0;
-			this.ScoopKey = 0;
+			RestoreDefaults();
 		}
-
+		
 		public void Load()
 		{
-			this.Clear();
+			this.RestoreDefaultSettings();
 			this.ReadFile();
 		}
 
@@ -69,13 +56,24 @@ namespace Maritaria
 				}
 			}
 		}
-
-		private void Clear()
+		
+		private void RestoreDefaultSettings()
 		{
-			this.DrillKey = (KeyCode)49;
-			this.HammerKey =(KeyCode) 50;
-			this.MagnetToggleKey = (KeyCode)109;
-			this.ScoopKey = (KeyCode)51;
+			DrillKey = KeyCode.None;
+			HammerKey = KeyCode.None;
+			MagnetToggleKey = KeyCode.None;
+			ScoopKey = KeyCode.None;
+			PlasmaKey = KeyCode.None;
+			SawKey = KeyCode.None;
+
+			MobileSolarPanels = false;
+			MobileSolarVelocityThreshold = 0.1f;
+			MobileSolarMultiplier = 0.2f;
+
+			TurnNightKey = KeyCode.None;
+			TurnDayKey = KeyCode.None;
+
+			BuyIntoInventory = false;
 		}
 
 		private void Apply(string line)
@@ -85,12 +83,9 @@ namespace Maritaria
 			{
 				return;
 			}
-			string[] expr_31 = line.Split(new char[]
-			{
-				' '
-			}, 2, StringSplitOptions.RemoveEmptyEntries);
-			string settingName = expr_31[0];
-			string settingValue = expr_31[1];
+			string[] parts = line.Split(new char[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
+			string settingName = parts[0];
+			string settingValue = parts[1];
 			this.Apply(settingName, settingValue);
 		}
 
@@ -140,6 +135,16 @@ namespace Maritaria
 			if (a == "mobilesolarpanels")
 			{
 				this.MobileSolarPanels = ModConfig.ParseBoolean(settingValue);
+				return;
+			}
+			if (a == "turnnightkey")
+			{
+				this.TurnNightKey = ParseKey(settingValue);
+				return;
+			}
+			if (a=="turndaykey")
+			{
+				this.TurnDayKey = ParseKey(settingValue);
 				return;
 			}
 		}

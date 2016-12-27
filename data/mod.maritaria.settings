@@ -28,3 +28,7 @@ MagnetToggleKey M
 
 # Enable solar panels to be used on techs
 MobileSolarPanels 1
+
+# Enable to allow changing time of day
+#TurnDayKey Alpha9
+#TurnNightKey Alpha0
