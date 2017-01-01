@@ -10,6 +10,7 @@ namespace Maritaria
 {
 	public static class Mod
 	{
+		public static readonly Version CurrentVersion = new Version(0, 2, 1);
 		public static readonly string DataDirectory = "maritaria";
 		public static ModConfig Config;
 		public static GameObject BehaviorHolder;
@@ -17,7 +18,7 @@ namespace Maritaria
 		//Hook to be called at the beginning of ManUI.Start
 		public static void Init()
 		{
-			Console.WriteLine("Maritaria.Mod.Init()");
+			Console.WriteLine($"Maritaria.Mod.Init({CurrentVersion})");
 			CleanLogger.Install();
 			
 			EnsureDirectoryStructure();
