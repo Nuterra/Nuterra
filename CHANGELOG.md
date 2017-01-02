@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 - This CHANGELOG file
+- Version identification in output_log.txt
+- First person view
 
 ### Changed
 - Year of LICENSE file
