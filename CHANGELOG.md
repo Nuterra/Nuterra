@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - This CHANGELOG file
 
+### Changed
+- Year of LICENSE file
+
 ## [0.2.0] - 2017-01-02
 ### Added
 - Added custom 'smiley' block
