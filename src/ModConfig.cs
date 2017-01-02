@@ -23,6 +23,7 @@ namespace Maritaria
 		
 		public KeyCode TurnNightKey;
 		public KeyCode TurnDayKey;
+		public KeyCode FirstPersonKey;
 		
 		public bool BuyIntoInventory;
 		
@@ -72,6 +73,7 @@ namespace Maritaria
 
 			TurnNightKey = KeyCode.None;
 			TurnDayKey = KeyCode.None;
+			FirstPersonKey = KeyCode.None;
 
 			BuyIntoInventory = false;
 		}
@@ -144,6 +146,11 @@ namespace Maritaria
 			if (a == "turndaykey")
 			{
 				this.TurnDayKey = ParseKey(settingValue, KeyCode.None);
+				return;
+			}
+			if (a == "firstpersonkey")
+			{
+				this.FirstPersonKey = ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 		}
