@@ -43,7 +43,7 @@ namespace Maritaria
 				while (enumerator.MoveNext())
 				{
 					TankBlock block = enumerator.Current;
-					if (block.BlockType == (BlockTypes)BlockLoader.StarBlockID)
+					if (block.BlockType == (BlockTypes)SmileyBlock.BlockID)
 					{
 						this.ActiveCameraBlock = block;
 						found = true;
