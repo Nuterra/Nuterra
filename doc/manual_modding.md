@@ -1,70 +1,14 @@
 Editting the assembly is done using a tool such as dnSpy
 
-# Change private to internal
-Change the following fields, properties and methods from `private` to `internal` (in dnSpy this level is called `assembly`)
+# Inserting code
+First compile all the existing code into the assembly. Then write the assembly to disk so the new types can be used from existing TerraTech code.
 
-## BlockLoader
-- ManSpawn.AddBlockToDictionary(GameObject)
-- BlockUnlockTable.m_CorpBlockList
-- class BlockUnlockTable.CorpBlockData
-- class BlockUnlockTable.GradeData
-- TankBlock.m_BlockCategory
+# Changing accessors
+Some things need to have their accessors modified in order to give access to the newly compiled code.
+Unfortunatly the list of things to change frequently changes and the best way to handle this step is to go through the code and check the accessor on all properties accessed.
 
-## Modules.Drill
-- ModuleDrill.m_Spinning
-
-## Modules.Energy
-- ModuleEnergy.set_IsGenerating
-- ModuleEnergy.m_OutputPerSecond
-- ModuleEnergy.CheckOutputConditions()
-- ModuleEnergy.m_OutputEnergyType
-- ModuleEnergy.m_AnimatorController
-- ModuleEnergy.m_GeneratingEnergyBool
-- ModuleEnergy.m_OutputConditions
-- ModuleEnergy.m_ThermalSourceInRange
-
-## Modules.Hammer
-- ModuleHammer.state
-
-## Modules.Magnet
-- ModuleItemHolderMagnet.m_Holder
-- ModuleItemHolderMagnet.UnglueAllObjects()
-- ModuleItemHolderMagnet.m_PickupDelayTimeout
-- ModuleItemHolderMagnet.m_Picker
-- ModuleItemHolderMagnet.UpdateItemMovement()
-- ModuleItemHolderMagnet.m_SettleThresholdSqr
-- ModuleItemHolderMagnet.m_SettlingSpeedThreshold
-
-## Modules.Scoop
-- ModuleScoop.lifted
-- ModuleScoop.lift
-- ModuleScoop.drop
-
-## Modules.Weapon
-- ModuleWeapon.m_TargetPosition
-
-## SplashScreenHandler
-- ManSplashScreen.m_MyCanvas
-- ManSplashScreen.m_SplashScreenIndex
-
-# Bake code into assembly
-## dnSpy
-1. Merge all the code into one big file. (important: using statements must be at the top of the file)
-2. Right-click the "Assembly-CSharp.dll" module and choose "Add Class (C#)..."
-3. Paste all the code into the dialog and compile it.
-
-## One-at-a-time bake order:
-1. CleanLogger
-2. GameObjectExtensions
-3. ObjImporter
-4. ModConfig
-5. SplashScreenHandler
-6. <write assembly to disk>
-7. BlockLoader
-9. Mod + MagnetToggleKeyBehaviour + Modules
-
-# Hook existing code
-Change the methods of existing TerraTech code to redirect to the mod.
+# Redirect TerraTech to mod code
+TerraTech code is changed by creating methods in the 
 
 ## dnSpy
 Due to a technical limitation in dnSpy, you cannot pass 'this' if the target method expects an instance of the class being editted.
@@ -79,15 +23,15 @@ ManUI.Start() | Maritaria.Mod.Init() | Before method body
 ManSpawn.Start() | Maritaria.BlockLoader.Init() | After method body
 BlockUnlockTable.Init() | Maritaria.BlockLoader.BlockUnlockTable_Init() | Before method body
 ManLicenses.SetupLicenses() | Maritaria.BlockLoader.ManLicenses_SetupLicenses() | Before method body
-ModuleDrill.ControlInput() | Maritaria.Modules.Drill.Input() | Replace method body [note]
+ModuleDrill.ControlInput() | Maritaria.Modules.Drill.Input() | Replace method body [#1]
 ModuleEnergy.CheckOutputConditions() | Maritaria.Modules.Energy.CheckOutputConditions() | Replace method body
 ModuleEnergy.OnUpdateSupplyEnergy() | Maritaria.Modules.Energy.OnUpdateSupplyEnergy() | Replace method body
-ModuleHammer.ControlInput() | Maritaria.Modules.Hammer.Input() | Replace method body [note]
+ModuleHammer.ControlInput() | Maritaria.Modules.Hammer.Input() | Replace method body [#1]
 ModuleItemHolderMagnet.FixedUpdate() | Maritaria.Modules.Magnet.FixedUpdate() | Replace method body
-ModuleScoop.ControlInput() | Maritaria.Modules.Scoop.Input() | Replace method body [note]
-ModuleWeapon.ControlInputManual() | Maritaria.Modules.Weapon.Input() | Replace method body [note]
+ModuleScoop.ControlInput() | Maritaria.Modules.Scoop.Input() | Replace method body [#1]
+ModuleWeapon.ControlInputManual() | Maritaria.Modules.Weapon.Input() | Replace method body [#1]
 
-Note: to transform fire to bool use: ```(fire != 0)```
+Note #1: to transform fire to bool use: ```(fire != 0)```
 
 ## Example: ManUI.Start() -> Maritaria.Mod.Init()
 If you cannot manage to get the method to compile, try the following:
