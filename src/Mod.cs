@@ -29,6 +29,7 @@ namespace Maritaria
 			BehaviorHolder = new GameObject();
 			BehaviorHolder.AddComponent<MagnetToggleKeyBehaviour>();
 			BehaviorHolder.AddComponent<TimeOfDayKeysBehaviour>();
+			BehaviorHolder.AddComponent<FirstPersonKeyBehaviour>();
 			UnityEngine.Object.DontDestroyOnLoad(Mod.BehaviorHolder);
 			
 			SplashScreenHandler.Init();

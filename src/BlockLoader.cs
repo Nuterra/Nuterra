@@ -44,8 +44,6 @@ namespace Maritaria
 			gso.m_GradeList[0].m_BlockList = unlocked;
 		}
 		
-		//TestCode in ManTechBuilder.UpdateAttachParticles()
-		
 		public static void ManLicenses_SetupLicenses(ManLicenses licenses)
 		{
 			//ManLicenses.BlockState state = licenses.GetBlockState((BlockTypes)StarBlockID);
@@ -71,7 +69,14 @@ namespace Maritaria
 			TankBlock tankBlock = obj.GetComponent<TankBlock>();
 			
 			tankBlock.m_BlockCategory = StarBlockCategory;
-			tankBlock.attachPoints = new Vector3[]{ new Vector3(0, -0.5f, 0) };
+			tankBlock.attachPoints = new Vector3[]{
+				new Vector3(0, 0, 0.5f), //Top
+				new Vector3(0, 0, -0.5f), //Bottom
+				//new Vector3(0, 0.5f, 0), //Front
+				new Vector3(0, -0.5f, 0), //Back
+				new Vector3(0.5f, 0, 0), //Left
+				new Vector3(-0.5f, 0, 0), //Right
+			};
 			tankBlock.filledCells = new Vector3[]{ new Vector3(0, 0, 0) };
 			tankBlock.partialCells = new Vector3[]{ };
 				
