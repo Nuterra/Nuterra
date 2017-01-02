@@ -7,6 +7,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Mechanism for defining new blocktypes in an OO manner.
 
 ## [0.2.3]
 ### Fixed
