@@ -32,3 +32,6 @@ MobileSolarPanels 1
 # Enable to allow changing time of day
 #TurnDayKey Alpha9
 #TurnNightKey Alpha0
+
+# This key allows you to switch to first-person mode when controlling a tech. The view is from a smiley cube which has to be present on the tech (blockID 9000).
+#FirstPersonKey F
