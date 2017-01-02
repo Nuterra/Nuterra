@@ -10,7 +10,7 @@ namespace Maritaria
 {
 	public static class Mod
 	{
-		public static readonly Version CurrentVersion = new Version(0, 2, 2);
+		public static readonly Version CurrentVersion = new Version(0, 2, 3);
 		public static readonly string DataDirectory = "maritaria";
 		public static ModConfig Config;
 		public static GameObject BehaviorHolder;
