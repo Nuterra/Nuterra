@@ -27,7 +27,6 @@ namespace Maritaria
 			{
 				return true;
 			}
-			if (tank.beam)
 			{
 				this.FirstPersonEnabled = false;
 			}
