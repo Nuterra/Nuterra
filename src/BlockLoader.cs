@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -43,12 +44,23 @@ namespace Maritaria
 			
 			gso.m_GradeList[0].m_BlockList = unlocked;
 		}
-		
+		//Hook to be called
 		public static void ManLicenses_SetupLicenses(ManLicenses licenses)
 		{
 			//ManLicenses.BlockState state = licenses.GetBlockState((BlockTypes)StarBlockID);
 			//Console.WriteLine($"StarBlock: {state}");
 			licenses.DiscoverBlock((BlockTypes)StarBlockID);
+		}
+		
+		//Hook by replacement ManStats.IntStatList.OnSerializing()
+		public static void IntStatList_OnSerializing(ManStats.IntStatList list)
+		{
+			list.m_StatPerTypeSerialized = new Dictionary<string, int>(list.m_StatPerType.Count);
+			foreach (KeyValuePair<int, int> current in list.m_StatPerType)
+			{
+				string value = Enum.GetName(list.m_EnumType, current.Key) ?? current.Key.ToString();
+				list.m_StatPerTypeSerialized.Add(value, current.Value);
+			}
 		}
 		
 		public static GameObject InitStarPrefab()
