@@ -55,7 +55,7 @@ namespace Maritaria
 					return true;
 				}
 			}
-			Singleton.cameraTrans.position = this.ActiveCameraBlock.tank.transform.TransformPoint(this.ActiveCameraBlock.cachedLocalPosition + new Vector3(0f, 0f, -0.4f));
+			Singleton.cameraTrans.position = this.ActiveCameraBlock.tank.transform.TransformPoint(this.ActiveCameraBlock.cachedLocalPosition + new Vector3(0f, 0f, 0f));
 			Singleton.cameraTrans.rotation = this.ActiveCameraBlock.tank.transform.rotation;
 			this.SetActiveBlockVisibility(false);
 			return false;
