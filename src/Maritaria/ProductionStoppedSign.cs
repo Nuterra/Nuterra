@@ -9,6 +9,7 @@ namespace Maritaria
 		private static readonly string StopSignFile = Path.Combine(Mod.DataDirectory, "stop_sign.png");
 		private static Texture2D _stopSign;
 		private TankBlock _block;
+		private static readonly Rect _signDrawSize = new Rect(0, 0, 32, 32);
 		
 		private void Start()
 		{
@@ -34,9 +35,9 @@ namespace Maritaria
 			{
 				//Draw only nearby stopsigns
 				Vector3 screenPos = Singleton.camera.WorldToScreenPoint(blockPos);
-				screenPos.y = Screen.height - screenPos.y - (_stopSign.height / 2);
-				screenPos.x -= _stopSign.width / 2;
-				GUI.DrawTexture(new Rect(screenPos, new Vector2(32, 32)), _stopSign); 
+				screenPos.x -= _signDrawSize.width / 2;
+				screenPos.y = Screen.height - screenPos.y - (_signDrawSize.height / 2);
+				GUI.DrawTexture(new Rect(screenPos, _signDrawSize.size), _stopSign); 
 				
 			}
 		}
