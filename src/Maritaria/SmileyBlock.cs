@@ -6,8 +6,8 @@ namespace Maritaria
 {
 	public sealed class SmileyBlock : CustomBlock
 	{
-		public static readonly string SpriteFile = Path.Combine(Mod.DataDirectory, "face_block", "face_block.png");
-		public static readonly string ModelFile = Path.Combine(Mod.DataDirectory, "face_block", "face_block.obj");
+		public static readonly string SpriteFile = Path.Combine(Mod.DataDirectory, "face_block\\face_block.png");
+		public static readonly string ModelFile = Path.Combine(Mod.DataDirectory, "face_block\\face_block.obj");
 		
 		public static readonly int BlockID = 9000;
 		
