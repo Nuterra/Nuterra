@@ -27,7 +27,7 @@ namespace Maritaria
 		
 		private Texture2D LoadTexture(string imageName)
 		{
-			byte[] imageData = File.ReadAllBytes(Path.Combine(Mod.DataDirectory, imageName));
+			byte[] imageData = File.ReadAllBytes(imageName);
 			Texture2D texture = new Texture2D(1, 1);
 			texture.LoadImage(imageData);
 			return texture;

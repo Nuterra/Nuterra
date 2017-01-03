@@ -11,6 +11,6 @@ namespace Maritaria
 		FactionSubTypes Faction { get; }
 		BlockCategories Category { get; }
 		GameObject Prefab { get; }
-		Sprite DisplaySprite { get; set; }
+		Sprite DisplaySprite { get; }
 	}
 }
