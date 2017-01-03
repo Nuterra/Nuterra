@@ -17,6 +17,7 @@ namespace Maritaria
 		public FactionSubTypes Faction => FactionSubTypes.GSO;
 		public BlockCategories Category => BlockCategories.Accessories;
 		public GameObject Prefab { get; }
+		public Sprite DisplaySprite {get; set;} = new SpriteFactory().CreateSprite("smiley.png");
 		
 		public SmileyBlock()
 		{

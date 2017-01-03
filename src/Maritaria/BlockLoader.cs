@@ -100,5 +100,26 @@ namespace Maritaria
 			}
 			return null;
 		}
+		
+		//Hook at start of method, override result if not null (http://prntscr.com/dqvhrh)
+		public static Sprite SpriteFetcher_GetSprite(ObjectTypes objectType, int itemType)
+		{
+			switch(objectType)
+			{
+				case ObjectTypes.Block: 
+					return SpriteFetcher_GetSprite_Block(itemType);
+			}
+			return null;
+		}
+		
+		private static Sprite SpriteFetcher_GetSprite_Block(int itemType)
+		{
+			CustomBlock block;
+			if (CustomBlocks.TryGetValue(itemType, out block))
+			{
+				return block.DisplaySprite;
+			}
+			return null;
+		}
 	}
 }
