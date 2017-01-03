@@ -11,9 +11,11 @@ All notable changes to this project will be documented in this file.
 - Mechanism for defining new blocktypes in an OO manner.
 - Special message to bug reports to flag them as comming from a modded game
 - Sylver's mod code
+- Resource string and image to smiley block
 
 ### Changed
 - Moved code to namespaced based folder
+- Magnet status now hidden when there are no magnets on your tech
 
 ## [0.2.3]
 ### Fixed
