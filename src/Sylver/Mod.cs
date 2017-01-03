@@ -10,6 +10,7 @@ namespace Sylver
 			Console.WriteLine("Sylver.Mod.Init()");
 			Mod.BehaviorHolder = new GameObject();
 			Mod.BehaviorHolder.AddComponent<SylverMod>();
+			Mod.BehaviorHolder.AddComponent<GUIRenderer>();
 			UnityEngine.Object.DontDestroyOnLoad(Mod.BehaviorHolder);
 		}
 
