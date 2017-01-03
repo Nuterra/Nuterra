@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 - Mechanism for defining new blocktypes in an OO manner.
+- Special message to bug reports to flag them as comming from a modded game
 
 ## [0.2.3]
 ### Fixed
