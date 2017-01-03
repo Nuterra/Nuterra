@@ -71,23 +71,9 @@ namespace Sylver
 
 		static SylverMod()
 		{
-		}
-
-		public static string EnemyAIName
-		{
-			get
-			{
-				return SylverMod.m_EnemyAIName;
-			}
-			set
-			{
-				SylverMod.m_EnemyAIName = value;
-			}
-		}
-
+		}			
+		
 		private static string m_FriendlyAIName = "FTUE";
-
-		private static string m_EnemyAIName = "FTUE";
 
 		private int num;
 
