@@ -10,9 +10,10 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Mechanism for defining new blocktypes in an OO manner.
 - Special message to bug reports to flag them as comming from a modded game
+- Sylver's mod code
 
 ### Changed
-- Moved code to namespaced based folder (prep for sylver code import)
+- Moved code to namespaced based folder
 
 ## [0.2.3]
 ### Fixed
