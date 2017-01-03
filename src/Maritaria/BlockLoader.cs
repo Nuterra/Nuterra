@@ -66,5 +66,39 @@ namespace Maritaria
 				list.m_StatPerTypeSerialized.Add(value, current.Value);
 			}
 		}
+		//Hook at start of method, override result if not null (http://prntscr.com/dqv0zy)
+		public static string StringLookup_GetString(int itemType, LocalisationEnums.StringBanks itemEnum)
+		{
+			switch(itemEnum)
+			{
+				case LocalisationEnums.StringBanks.BlockNames:
+					return StringLookup_GetString_BlockName(itemType);
+				break;
+				case LocalisationEnums.StringBanks.BlockDescription:
+					return StringLookup_GetString_BlockDescription(itemType);
+				default:
+					return null;
+			}
+		}
+		
+		private static string StringLookup_GetString_BlockName(int blockID)
+		{
+			CustomBlock block;
+			if (CustomBlocks.TryGetValue(blockID, out block))
+			{
+				return block.Name;
+			}
+			return null;
+		}
+		
+		private static string StringLookup_GetString_BlockDescription(int blockID)
+		{
+			CustomBlock block;
+			if (CustomBlocks.TryGetValue(blockID, out block))
+			{
+				return block.Description;
+			}
+			return null;
+		}
 	}
 }
