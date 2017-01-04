@@ -16,6 +16,7 @@ namespace Maritaria
 		public KeyCode ScoopKey;
 		public KeyCode PlasmaKey;
 		public KeyCode SawKey;
+		public KeyCode ProductionToggleKey;
 
 		public bool MobileSolarPanels;
 		public float MobileSolarVelocityThreshold;
@@ -95,32 +96,37 @@ namespace Maritaria
 			string a = settingName.ToLower();
 			if (a == "drillkey")
 			{
-				this.DrillKey = ModConfig.ParseKey(settingValue, 0);
+				this.DrillKey = ModConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "sawkey")
 			{
-				this.SawKey = ModConfig.ParseKey(settingValue, 0);
+				this.SawKey = ModConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "hammerkey")
 			{
-				this.HammerKey = ModConfig.ParseKey(settingValue, 0);
+				this.HammerKey = ModConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "scoopkey")
 			{
-				this.ScoopKey = ModConfig.ParseKey(settingValue, 0);
+				this.ScoopKey = ModConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "magnettogglekey")
 			{
-				this.MagnetToggleKey = ModConfig.ParseKey(settingValue, 0);
+				this.MagnetToggleKey = ModConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "plasmakey")
 			{
-				this.PlasmaKey = ModConfig.ParseKey(settingValue, 0);
+				this.PlasmaKey = ModConfig.ParseKey(settingValue, KeyCode.None);
+				return;
+			}
+			if (a == "productiontogglekey")
+			{
+				this.ProductionToggleKey = ModConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "explodetimerreductionperhit")

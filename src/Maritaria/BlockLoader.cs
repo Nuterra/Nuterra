@@ -66,5 +66,60 @@ namespace Maritaria
 				list.m_StatPerTypeSerialized.Add(value, current.Value);
 			}
 		}
+		//Hook at start of method, override result if not null (http://prntscr.com/dqv0zy)
+		public static string StringLookup_GetString(int itemType, LocalisationEnums.StringBanks itemEnum)
+		{
+			switch(itemEnum)
+			{
+				case LocalisationEnums.StringBanks.BlockNames:
+					return StringLookup_GetString_BlockName(itemType);
+				break;
+				case LocalisationEnums.StringBanks.BlockDescription:
+					return StringLookup_GetString_BlockDescription(itemType);
+				default:
+					return null;
+			}
+		}
+		
+		private static string StringLookup_GetString_BlockName(int blockID)
+		{
+			CustomBlock block;
+			if (CustomBlocks.TryGetValue(blockID, out block))
+			{
+				return block.Name;
+			}
+			return null;
+		}
+		
+		private static string StringLookup_GetString_BlockDescription(int blockID)
+		{
+			CustomBlock block;
+			if (CustomBlocks.TryGetValue(blockID, out block))
+			{
+				return block.Description;
+			}
+			return null;
+		}
+		
+		//Hook at start of method, override result if not null (http://prntscr.com/dqvhrh)
+		public static Sprite SpriteFetcher_GetSprite(ObjectTypes objectType, int itemType)
+		{
+			switch(objectType)
+			{
+				case ObjectTypes.Block: 
+					return SpriteFetcher_GetSprite_Block(itemType);
+			}
+			return null;
+		}
+		
+		private static Sprite SpriteFetcher_GetSprite_Block(int itemType)
+		{
+			CustomBlock block;
+			if (CustomBlocks.TryGetValue(itemType, out block))
+			{
+				return block.DisplaySprite;
+			}
+			return null;
+		}
 	}
 }

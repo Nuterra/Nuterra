@@ -33,8 +33,9 @@ namespace Maritaria
 
 		public void OnGUI()
 		{
-			if (!Singleton.playerTank)
+			if (!Singleton.playerTank || Singleton.playerTank.blockman.IterateBlockComponents<ModuleItemHolderMagnet>().FirstOrDefault() == null)
 			{
+				//No tank or no magnet blocks
 				return;
 			}
 			if (Modules.Magnet.DisabledForPlayerControlledTank)
@@ -51,10 +52,6 @@ namespace Maritaria
 			vector.y -= vector2.y * 0.5f;
 			vector.x -= vector2.x * 0.5f;
 			GUI.Label(new Rect(vector, vector2), this._content, this._style);
-		}
-
-		static MagnetToggleKeyBehaviour()
-		{
 		}
 	}
 }
