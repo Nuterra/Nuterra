@@ -63,7 +63,7 @@ namespace Maritaria
 				pickup.IsEnabled = ProductionActive;
 				if (!ProductionActive)
 				{
-					pickup.m_Holder.DropAll();
+					pickup.m_Holder.DropAll();//Make internal
 				}
 				pickup.gameObject.EnsureComponent<ProductionStoppedSign>();
 			}
