@@ -94,17 +94,24 @@ namespace Sylver
 			}
 		}
 
-		private static string m_FriendlyAIName = "FTUE";
+		public static void Mode_EnterMode(Mode newGamemode) //Need to be Hooked at the start of Mode.EnterMode() by SylverMod.Mode_EnterMode(this);
+		{
+			SylverMod.IsRandD = (newGamemode is ModeMisc);
+		}
+
+		private static string m_FriendlyAIName = "";
 
 		private DebugUtil.KeySequence m_DebugAISpawn;
 
-		private static string m_EnemyAIName = "FTUEAI";
+		private static string m_EnemyAIName = "";
 
 		private int num;
+
+		public static bool IsRandD;
 
 		
 
 		}
 	}
-}
+
 
