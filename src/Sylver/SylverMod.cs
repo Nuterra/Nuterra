@@ -102,81 +102,8 @@ namespace Sylver
 
 		private int num;
 
-		public class KeySequence
-		{
-			public KeySequence(string keySequence, float interval)
-			{
-				IEnumerable<char> arg_2C_0 = keySequence.ToUpper();
-				Func<char, KeyCode> arg_2C_1;
-				if ((arg_2C_1 = SylverMod.KeySequence.<>c.<>9__0_0) == null)
-				{
-					arg_2C_1 = (SylverMod.KeySequence.<>c.<>9__0_0 = new Func<char, KeyCode>(SylverMod.KeySequence.<>c.<>9.<.ctor>b__0_0));
-				}
-				this.keyCodes = arg_2C_0.Select(arg_2C_1).ToArray<KeyCode>();
-				this.currentIndex = 0;
-				this.maxInterval = interval;
-			}
+		
 
-			public bool Completed()
-			{
-				if (Time.time > this.lastAcceptTime + this.maxInterval)
-				{
-					this.currentIndex = 0;
-				}
-				bool flag = false;
-				if (Input.GetKeyDown(this.keyCodes[this.currentIndex]))
-				{
-					this.currentIndex++;
-					this.lastAcceptTime = Time.time;
-					flag = true;
-					if (this.currentIndex == this.keyCodes.Length)
-					{
-						this.currentIndex = 0;
-						AudioSource component = Singleton.Manager<DebugUtil>.inst.GetComponent<AudioSource>();
-						if (component)
-						{
-							component.Play();
-						}
-						return true;
-					}
-				}
-				if (Input.anyKeyDown && !flag)
-				{
-					this.currentIndex = 0;
-				}
-				return false;
-			}
-
-			private KeyCode[] keyCodes;
-
-			private int currentIndex;
-
-			private float maxInterval;
-
-			private float lastAcceptTime;
-
-			[CompilerGenerated]
-			[Serializable]
-			private sealed class <>c
-			{
-				static <>c()
-				{
-					// Note: this type is marked as 'beforefieldinit'.
-				}
-
-				public <>c()
-				{
-				}
-
-				internal KeyCode <.ctor>b__0_0(char c)
-				{
-					return (KeyCode)((int)Enum.Parse(typeof(KeyCode), c.ToString()));
-				}
-
-				public static readonly SylverMod.KeySequence.<>c <>9 = new SylverMod.KeySequence.<>c();
-
-				public static Func<char, KeyCode> <>9__0_0;
-			}
 		}
 	}
 }
