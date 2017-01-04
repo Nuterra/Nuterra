@@ -34,8 +34,6 @@ namespace Maritaria
 			UnityEngine.Object.DontDestroyOnLoad(Mod.BehaviorHolder);
 			
 			SplashScreenHandler.Init();
-			
-			Sylver.Mod.Init();
 		}
 		
 		private static void EnsureDirectoryStructure()
