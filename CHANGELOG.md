@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - Mechanism for defining new blocktypes in an OO manner.
 - Special message to bug reports to flag them as comming from a modded game
 - Sylver's mod code
+  - Spawning Preset Techs as normal Techs
+  - Spawning Preset Techs as Enemies
 - Resource string and image to smiley block
 
 ### Changed
