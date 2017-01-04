@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace Sylver
 
 		private void Update()
 		{
+		if (object.Equals(SylverMod.IsRandD, true))
+			{
 			if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
 			{
 				this.num++;
@@ -66,6 +69,7 @@ namespace Sylver
 			if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetKeyDown(KeyCode.E))
 			{
 				Singleton.Manager<ManPop>.inst.DebugForceSpawn();
+			}
 			}
 		}
 
