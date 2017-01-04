@@ -12,7 +12,7 @@ namespace Maritaria
 
 		public GUIStyle _style = new GUIStyle();
 
-		public string _contentFormat = "<color=#eeeeee><size=20>Mod by <color=#{0}>Maritaria</color> and <color={1}>Sylver</color></size></color>";
+		public string _contentFormat = "<color=#eeeeee><size=20>Mod by <color=#{0}>Maritaria</color> and <color=#{1}>Sylver</color></size></color>";
 
 		public SplashScreenHandler()
 		{
