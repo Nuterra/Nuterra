@@ -33,26 +33,35 @@ namespace Sylver
 			if (this.num == 0)
 			{
 				SylverMod.m_FriendlyAIName = "Gauntlet_01";
+				SylverMod.m_EnemyAIName = "Gauntlet_01";
 			}
 			if (this.num == 1)
 			{
 				SylverMod.m_FriendlyAIName = "Cannon";
+				SylverMod.m_EnemyAIName = "Cannon";
 			}
 			if (this.num == 2)
 			{
 				SylverMod.m_FriendlyAIName = "FTUE";
+				SylverMod.m_EnemyAIName = "FTUE";
 			}
 			if (this.num == 3)
 			{
 				SylverMod.m_FriendlyAIName = "LiftOffCab";
+				SylverMod.m_EnemyAIName = "LiftOffCab";
 			}
 			if (this.num == 4)
 			{
 				SylverMod.m_FriendlyAIName = "VENLiftOffCab";
+				SylverMod.m_EnemyAIName = "VENLiftOffCab";
 			}
 			if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Q))
 			{
 				Singleton.Manager<ManSpawn>.inst.TestSpawnFriendlyTech(SylverMod.m_FriendlyAIName);
+			}
+			if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.Q))
+			{
+				Singleton.Manager<SylverSpawn>.inst.SpawnSylverEnemy(SylverMod.m_EnemyAIName);
 			}
 			if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetKeyDown(KeyCode.E))
 			{
@@ -87,7 +96,9 @@ namespace Sylver
 
 		private static string m_FriendlyAIName = "FTUE";
 
-		private static string m_EnemyAIName = "FTUE";
+		private DebugUtil.KeySequence m_DebugAISpawn;
+
+		private static string m_EnemyAIName = "FTUEAI";
 
 		private int num;
 
