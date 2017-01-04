@@ -11,10 +11,10 @@ namespace Maritaria
 		
 		public Sprite CreateSprite(string imageName)
 		{
-			Texture2D texture = FindTexture(imageName);
+			Texture2D texture = CreateTexture(imageName);
 			return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
 		}
-		private Texture2D FindTexture(string imageName)
+		public Texture2D CreateTexture(string imageName)
 		{
 			Texture2D texture;
 			if (!_loadedImages.TryGetValue(imageName, out texture))
