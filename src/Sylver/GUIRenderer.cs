@@ -19,6 +19,8 @@ namespace Sylver
 			{
 				return;
 			}
+			if (!Singleton.Manager<DebugUtil>.inst.hideGUI)
+			{
 			this._content.text = string.Format(GUIRenderer.DisplayFormat, SylverMod.FriendlyAIName);
 			this._style.fontSize = Screen.height / 60;
 			Vector2 position = new Vector2((float)Screen.width * 0.5f, (float)Screen.height * 0.925f);
@@ -26,6 +28,7 @@ namespace Sylver
 			position.y -= vector.y * 0.5f;
 			position.x -= vector.x * 0.5f;
 			GUI.Label(new Rect(position, vector), this._content, this._style);
+			}
 		}
 
 		static GUIRenderer()
