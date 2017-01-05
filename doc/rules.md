@@ -5,7 +5,7 @@ Payload studios has reached out to the TerraTech modding community as a result o
 ## Rules for modders
 1. Do not leak the game freely to the public
 2. Do not reveal secrets or hidden information, such as cheat codes, blocks, corperations, gamemodes and the likes.
-3. Add a flag to your mod to indicate it is modded. This can be achieved by Console.WriteLine("This game is modded");and if possible flagging reports send from modded games by adding a mods field to the WWWForm in UIScreenBugReport
+3. Make your mod flag output and saves that the game has been modded.
 4. Do not break the age-rating set by Payload Studios (they currently aim for children ~8 years old)
 5. Do not upset the development of TerraTech in any significant way
 6. Do not encourage breaking of these rules to others
