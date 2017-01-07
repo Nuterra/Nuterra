@@ -25,6 +25,7 @@ namespace Maritaria
 		public KeyCode TurnNightKey;
 		public KeyCode TurnDayKey;
 		public KeyCode FirstPersonKey;
+		public KeyCode SuicideKey;
 		
 		public bool BuyIntoInventory;
 		
@@ -157,6 +158,11 @@ namespace Maritaria
 			if (a == "firstpersonkey")
 			{
 				this.FirstPersonKey = ParseKey(settingValue, KeyCode.None);
+				return;
+			}
+			if (a == "suicidekey")
+			{
+				this.SuicideKey = ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 		}
