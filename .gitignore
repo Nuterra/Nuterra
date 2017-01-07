@@ -28,3 +28,6 @@ ExportedObj/
 ## Builds
 /data/*.apk
 /data/*.unitypackage
+
+## AssetBundle output folder
+/GeneratedAssetBundles
