@@ -5,7 +5,7 @@
 [Terra Tech]: https://terratechgame.com/
 [dnSpy]: https://github.com/0xd4d/dnSpy/
 
-# Maritaria's Mod for [Terra Tech]
+# Nuterra Mod for [Terra Tech]
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)][License]
 [![Downloads for All Releases](https://img.shields.io/github/downloads/maritaria/terratech-mod/total.svg)][Releases]
 
