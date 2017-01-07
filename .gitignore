@@ -1,4 +1,4 @@
-# Unity project /data
+# Unity data project (/data)
 /data/[Ll]ibrary/
 /data/[Tt]emp/
 /data/[Oo]bj/
@@ -31,3 +31,6 @@ ExportedObj/
 
 ## AssetBundle output folder
 /GeneratedAssetBundles
+
+## Blender
+/data/*.blend1
