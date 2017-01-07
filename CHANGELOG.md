@@ -1,13 +1,21 @@
-[Unreleased]: https://github.com/maritaria/terratech-mod/compare/v0.2.4...HEAD
-[0.2.4]: https://github.com/maritaria/terratech-mod/compare/v0.2.3...v0.2.4
-[0.2.3]: https://github.com/maritaria/terratech-mod/compare/v0.2.2...v0.2.3
-[0.2.2]: https://github.com/maritaria/terratech-mod/compare/v0.2.0...v0.2.2
-[0.2.0]: https://github.com/maritaria/terratech-mod/compare/v0.1.0...v0.2.0
+[Unreleased]: https://github.com/maritaria/nuterra/compare/v0.2.4...HEAD
+[0.2.4]: https://github.com/maritaria/nuterra/compare/v0.2.3...v0.2.4
+[0.2.3]: https://github.com/maritaria/nuterra/compare/v0.2.2...v0.2.3
+[0.2.2]: https://github.com/maritaria/nuterra/compare/v0.2.0...v0.2.2
+[0.2.0]: https://github.com/maritaria/nuterra/compare/v0.1.0...v0.2.0
 
 # Change Log
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Modloader
+- Self destruction key (Gamelynx mod)
+- Bacon block
+- Unity resource project (/data)
+
+### Changed
+- Project name to nuterra
 
 ## [0.2.4]
 ### Added
