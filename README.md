@@ -1,13 +1,13 @@
 [License]: https://tldrlegal.com/l/mit/
-[Documentation]: https://github.com/maritaria/terratech-mod/doc/
-[Issues]: https://github.com/maritaria/terratech-mod/issues/
-[Releases]: https://github.com/maritaria/terratech-mod/releases/latest/
+[Documentation]: https://github.com/maritaria/nuterra/doc/
+[Issues]: https://github.com/maritaria/nuterra/issues/
+[Releases]: https://github.com/maritaria/nuterra/releases/latest/
 [Terra Tech]: https://terratechgame.com/
 [dnSpy]: https://github.com/0xd4d/dnSpy/
 
 # Nuterra Mod for [Terra Tech]
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)][License]
-[![Downloads for All Releases](https://img.shields.io/github/downloads/maritaria/terratech-mod/total.svg)][Releases]
+[![Downloads for All Releases](https://img.shields.io/github/downloads/maritaria/nuterra/total.svg)][Releases]
 
 # Installation
 Check the [Releases] page for the latest version of the mod. Every distrubution will include a copy of seperate install instructions for that particular release. In general, the installation process should be something like:
