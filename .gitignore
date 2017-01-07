@@ -30,7 +30,7 @@ ExportedObj/
 /data/*.unitypackage
 
 ## AssetBundle output folder
-/GeneratedAssetBundles
+/data/GeneratedAssetBundles
 
 ## Blender
 /data/*.blend1
