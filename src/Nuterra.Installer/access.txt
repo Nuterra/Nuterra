@@ -1,0 +1,4 @@
+﻿field BlockUnlockTable m_CorpBlockList
+type BlockUnlockTable/CorpBlockData
+type BlockUnlockTable/GradeData
+method ManSpawn AddBlockToDictionary
