@@ -1,0 +1,2 @@
+# Ban all versions of Assembly-CSharp.dll
+Assembly-CSharp*.dll
