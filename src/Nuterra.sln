@@ -5,18 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra", "Nuterra\Nuterra.csproj", "{129AE68B-6968-44C4-A386-68C0E1E9A63E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Installer", "Nuterra.Installer\Nuterra.Installer.csproj", "{A86EF9AA-CE1A-4261-9CCB-47ACA387A5C0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.OneTimePad", "Nuterra.OneTimePad\Nuterra.OneTimePad.csproj", "{A866255B-DB3C-42DB-869C-F44FDF4B391C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.OneTimePad.Tests", "Nuterra.OneTimePad.Tests\Nuterra.OneTimePad.Tests.csproj", "{21AC2964-49FE-469F-B647-1D6F8C031E0D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Installer.AccessMod", "Nuterra.Installer.AccessMod\Nuterra.Installer.AccessMod.csproj", "{562C840C-B77A-4FFA-BF61-F5F49AB2249A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Installer.Hooker", "Nuterra.Installer.Hooker\Nuterra.Installer.Hooker.csproj", "{1C8BD21C-6D12-42F2-A381-61C7C5DB77E6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Installer.PadCreator", "Nuterra.Installer.PadCreator\Nuterra.Installer.PadCreator.csproj", "{DE435E4F-5EFF-4A17-830C-C0C977292A29}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,30 +15,6 @@ Global
 		{129AE68B-6968-44C4-A386-68C0E1E9A63E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{129AE68B-6968-44C4-A386-68C0E1E9A63E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{129AE68B-6968-44C4-A386-68C0E1E9A63E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A86EF9AA-CE1A-4261-9CCB-47ACA387A5C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A86EF9AA-CE1A-4261-9CCB-47ACA387A5C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A86EF9AA-CE1A-4261-9CCB-47ACA387A5C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A86EF9AA-CE1A-4261-9CCB-47ACA387A5C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A866255B-DB3C-42DB-869C-F44FDF4B391C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A866255B-DB3C-42DB-869C-F44FDF4B391C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A866255B-DB3C-42DB-869C-F44FDF4B391C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A866255B-DB3C-42DB-869C-F44FDF4B391C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21AC2964-49FE-469F-B647-1D6F8C031E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21AC2964-49FE-469F-B647-1D6F8C031E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21AC2964-49FE-469F-B647-1D6F8C031E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21AC2964-49FE-469F-B647-1D6F8C031E0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{562C840C-B77A-4FFA-BF61-F5F49AB2249A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{562C840C-B77A-4FFA-BF61-F5F49AB2249A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{562C840C-B77A-4FFA-BF61-F5F49AB2249A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{562C840C-B77A-4FFA-BF61-F5F49AB2249A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C8BD21C-6D12-42F2-A381-61C7C5DB77E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C8BD21C-6D12-42F2-A381-61C7C5DB77E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C8BD21C-6D12-42F2-A381-61C7C5DB77E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C8BD21C-6D12-42F2-A381-61C7C5DB77E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE435E4F-5EFF-4A17-830C-C0C977292A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE435E4F-5EFF-4A17-830C-C0C977292A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE435E4F-5EFF-4A17-830C-C0C977292A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE435E4F-5EFF-4A17-830C-C0C977292A29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
