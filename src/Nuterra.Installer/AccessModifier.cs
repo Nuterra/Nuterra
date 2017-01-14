@@ -6,26 +6,30 @@ using dnlib.DotNet.Writer;
 
 namespace Nuterra.Installer
 {
-	public static class Program
+	public static class AccessModifier
 	{
-		public static readonly string ManagedDir = @"D:\Program Files (x86)\Steam\steamapps\common\TerraTech Beta\TerraTechWin64_Data\Managed";
-		public static readonly string AssemblyFile = Path.Combine(ManagedDir, "Assembly-CSharp.dll");
-		public static readonly string AccessFile = "access.txt";
-		public static readonly string OutputFile = Path.Combine(ManagedDir, "Assembly-CSharp-access.dll");
+		internal static void Main()
+		{
+			string managedDir = @"D:\Program Files (x86)\Steam\steamapps\common\TerraTech Beta\TerraTechWin64_Data\Managed";
+			string assemblyPath = Path.Combine(managedDir, "Assembly-CSharp.dll");
+			string accessFile = "access.txt";
+			string outputFile = Path.Combine(managedDir, "Assembly-CSharp-access.dll");
+			Apply(managedDir, assemblyPath, accessFile, outputFile);
+		}
 
-		internal static void Main(string[] args)
+		public static void Apply(string managedDir, string inputAssemblyFile, string accessFile, string outputAssemblyFile)
 		{
 			AssemblyResolver resolver = new AssemblyResolver();
-			resolver.PreSearchPaths.Add(ManagedDir);
+			resolver.PreSearchPaths.Add(managedDir);
 			ModuleContext context = new ModuleContext();
 
 			ModuleDefMD assembly;
-			using (FileStream fs = File.OpenRead(AssemblyFile))
+			using (FileStream fs = File.OpenRead(inputAssemblyFile))
 			{
 				assembly = ModuleDefMD.Load(fs, context);
 			}
 
-			using (FileStream fs = File.OpenRead(AccessFile))
+			using (FileStream fs = File.OpenRead(accessFile))
 			using (StreamReader reader = new StreamReader(fs))
 			{
 				while (!reader.EndOfStream)
@@ -36,15 +40,15 @@ namespace Nuterra.Installer
 
 			ModuleWriterOptions writerOptions = new ModuleWriterOptions(assembly);
 			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveRids;
-			using (FileStream fs = File.OpenWrite(OutputFile))
+			using (FileStream fs = File.OpenWrite(outputAssemblyFile))
 			{
 				assembly.Write(fs, writerOptions);
 			}
 		}
 
-		private static void ParseLine(ModuleDefMD assembly, string v)
+		private static void ParseLine(ModuleDefMD assembly, string line)
 		{
-			string[] parts = v.Split(new char[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
+			string[] parts = line.Split(new char[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
 
 			string subject = parts[0];
 			var targetType = assembly.Find(parts[1], isReflectionName: false);
