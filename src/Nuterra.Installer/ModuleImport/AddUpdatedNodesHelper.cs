@@ -5,16 +5,8 @@ using dnlib.DotNet;
 
 namespace Nuterra.Installer.ModuleImport
 {
-	sealed class AddUpdatedNodesHelper
+	internal sealed class AddUpdatedNodesHelper
 	{
-		private TypeNodeCreator[] newTypeNodeCreators;
-		private DeclSecurity[] newAssemblyDeclSecurities;
-		private DeclSecurity[] origAssemblyDeclSecurities;
-		private CustomAttribute[] newAssemblyCustomAttributes;
-		private CustomAttribute[] newModuleCustomAttributes;
-		private CustomAttribute[] origAssemblyCustomAttributes;
-		private CustomAttribute[] origModuleCustomAttributes;
-
 		public void Finish(ModuleDef module, ModuleImporter importer)
 		{
 			var dict = new Dictionary<string, List<TypeDef>>(StringComparer.Ordinal);
@@ -23,9 +15,14 @@ namespace Nuterra.Installer.ModuleImport
 				module.Types.Add(type.TargetType);
 			}
 
-			newAssemblyDeclSecurities = importer.NewAssemblyDeclSecurities;
-			newAssemblyCustomAttributes = importer.NewAssemblyCustomAttributes;
-			newModuleCustomAttributes = importer.NewModuleCustomAttributes;
+			var newAssemblyDeclSecurities = importer.NewAssemblyDeclSecurities;
+			var newAssemblyCustomAttributes = importer.NewAssemblyCustomAttributes;
+			var newModuleCustomAttributes = importer.NewModuleCustomAttributes;
+
+			DeclSecurity[] origAssemblyDeclSecurities = null;
+			CustomAttribute[] origAssemblyCustomAttributes = null;
+			CustomAttribute[] origModuleCustomAttributes = null;
+
 			if (newAssemblyDeclSecurities != null)
 				origAssemblyDeclSecurities = module.Assembly.DeclSecurities.ToArray();
 			if (newAssemblyCustomAttributes != null)
