@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Nuterra.Installer.Merger</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="dnlib">
       <HintPath>..\..\lib\dnlib.dll</HintPath>
@@ -47,6 +50,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessModifier.cs" />
+    <Compile Include="Merger.cs" />
+    <Compile Include="ModuleImport\AddUpdatedNodesHelper.cs" />
+    <Compile Include="ModuleImport\CompilerDiagnostic.cs" />
+    <Compile Include="ModuleImport\CompilerDiagnosticSeverity.cs" />
+    <Compile Include="ModuleImport\DebugFileFormat.cs" />
+    <Compile Include="ModuleImport\DebugFileResult.cs" />
+    <Compile Include="ModuleImport\dnSpy_AsmEditor_Resources.cs" />
+    <Compile Include="ModuleImport\EventDefOptions.cs" />
+    <Compile Include="ModuleImport\ExtensionMethods.cs" />
+    <Compile Include="ModuleImport\FieldDefOptions.cs" />
+    <Compile Include="ModuleImport\ImportedType.cs" />
+    <Compile Include="ModuleImport\ImportSigComparer.cs" />
+    <Compile Include="ModuleImport\LineLocation.cs" />
+    <Compile Include="ModuleImport\LineLocationSpan.cs" />
+    <Compile Include="ModuleImport\MethodDefOptions.cs" />
+    <Compile Include="ModuleImport\ModuleImporter.cs" />
+    <Compile Include="ModuleImport\ModuleImporter.ExtraImportedTypeData.cs" />
+    <Compile Include="ModuleImport\ModuleImporter.MemberInfo.cs" />
+    <Compile Include="ModuleImport\PropertyDefOptions.cs" />
+    <Compile Include="ModuleImport\StateMachineHelpers.cs" />
+    <Compile Include="ModuleImport\TypeDefOptions.cs" />
+    <Compile Include="ModuleImport\TypeNodeCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +79,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="access.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nuterra\Nuterra.csproj">
+      <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
+      <Name>Nuterra</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="MergeTest\NuterraTest.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="MergeTest\TerraTest.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

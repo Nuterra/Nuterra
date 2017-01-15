@@ -22,12 +22,7 @@ namespace Nuterra.Installer
 			AssemblyResolver resolver = new AssemblyResolver();
 			resolver.PreSearchPaths.Add(managedDir);
 			ModuleContext context = new ModuleContext();
-
-			ModuleDefMD assembly;
-			using (FileStream fs = File.OpenRead(inputAssemblyFile))
-			{
-				assembly = ModuleDefMD.Load(fs, context);
-			}
+			ModuleDefMD assembly = ModuleDefMD.Load(inputAssemblyFile, context);
 
 			using (FileStream fs = File.OpenRead(accessFile))
 			using (StreamReader reader = new StreamReader(fs))
@@ -38,12 +33,9 @@ namespace Nuterra.Installer
 				}
 			}
 
-			ModuleWriterOptions writerOptions = new ModuleWriterOptions(assembly);
+			ModuleWriterOptions writerOptions = new ModuleWriterOptions();
 			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveRids;
-			using (FileStream fs = File.OpenWrite(outputAssemblyFile))
-			{
-				assembly.Write(fs, writerOptions);
-			}
+			assembly.Write(outputAssemblyFile, writerOptions);
 		}
 
 		private static void ParseLine(ModuleDefMD assembly, string line)
