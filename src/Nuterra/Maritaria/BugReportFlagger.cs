@@ -14,7 +14,6 @@ namespace Maritaria
 
 		public static string MarkUserMessage(string userMessage)
 		{
-#warning TODO: Fix me
 			return $"Maritaria.BugReportFlagger({Nuterra.Nuterra.CurrentVersion})\n\n{userMessage}";
 		}
 	}

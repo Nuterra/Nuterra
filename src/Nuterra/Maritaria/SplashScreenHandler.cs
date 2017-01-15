@@ -5,9 +5,9 @@ namespace Maritaria
 {
 	public class SplashScreenHandler : MonoBehaviour
 	{
-		
+
 		public ManSplashScreen _splashScreen = Singleton.Manager<ManSplashScreen>.inst;
-		
+
 		public GUIContent _content = new GUIContent();
 
 		public GUIStyle _style = new GUIStyle();
@@ -19,12 +19,12 @@ namespace Maritaria
 			_style.richText = true;
 			_style.alignment = TextAnchor.MiddleCenter;
 		}
-		
+
 		public static void Init()
 		{
 			Singleton.Manager<ManSplashScreen>.inst.gameObject.AddComponent<SplashScreenHandler>();
 		}
-		
+
 		public void OnGUI()
 		{
 			if (CanDraw())
@@ -38,16 +38,16 @@ namespace Maritaria
 				GUI.Label(new Rect(vector, vector2), _content, _style);
 			}
 		}
-		
+
 		public bool CanDraw()
 		{
 			if (_splashScreen == null) return false;
 			if (_splashScreen.m_MyCanvas == null) return false;
-			if (!_splashScreen.m_MyCanvas.gameObject.active) return false;
+			if (!_splashScreen.m_MyCanvas.gameObject.activeInHierarchy) return false;
 			if (_splashScreen.m_SplashScreenIndex != 0) return false;
 			return true;
 		}
-		
+
 		public Canvas FindCanvas()
 		{
 			return _splashScreen.CanvasTrans.GetComponent<Canvas>();
