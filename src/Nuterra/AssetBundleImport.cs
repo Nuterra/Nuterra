@@ -6,7 +6,7 @@ namespace Nuterra
 {
 	public static class AssetBundleImport
 	{
-		public static readonly string AssetFilename = "nuterra-mod";
+		public static readonly string AssetFilename = "mod-nuterra";
 		public static readonly AssetBundle NuterraAssetBundle;
 
 		static AssetBundleImport()

@@ -12,7 +12,7 @@ namespace Nuterra
 		{
 			string configData = File.ReadAllText(Path.Combine(Nuterra.DataFolder, "nuterra.json"));
 			Console.WriteLine($"configData: {configData}");
-			Data = new JObject(configData);
+			Data = JObject.Parse(configData);
 		}
 	}
 }

@@ -59,11 +59,6 @@
   <ItemGroup>
     <Compile Include="AssetBundleImport.cs" />
     <Compile Include="CleanLogger.cs" />
-    <None Include="InstallProcess\AfterMerge.cs" />
-    <None Include="InstallProcess\AfterHooking.cs" />
-    <None Include="InstallProcess\Hooker.cs" />
-    <None Include="InstallProcess\RedirectSettings.cs" />
-    <None Include="InstallProcess\ReflectionExtensions.cs" />
     <Compile Include="Maritaria\BaconBlock.cs" />
     <Compile Include="Maritaria\BlockLoader.cs" />
     <Compile Include="Maritaria\BugReportFlagger.cs" />

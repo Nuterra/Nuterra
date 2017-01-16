@@ -1395,7 +1395,7 @@ namespace Nuterra.Installer.ModuleImport
 
 			foreach (var eh in sourceBody.ExceptionHandlers)
 			{
-				var newEh = new ExceptionHandler(eh.HandlerType);
+				var newEh = new dnlib.DotNet.Emit.ExceptionHandler(eh.HandlerType);
 				newEh.TryStart = GetInstruction(bodyDict, eh.TryStart);
 				newEh.TryEnd = GetInstruction(bodyDict, eh.TryEnd);
 				newEh.FilterStart = GetInstruction(bodyDict, eh.FilterStart);

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}</ProjectGuid>
+    <ProjectGuid>{737C6FE2-2BD5-40B7-B65C-3E644154A7E4}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nuterra.Installer</RootNamespace>
-    <AssemblyName>Nuterra.Installer</AssemblyName>
+    <RootNamespace>Nuterra.Test</RootNamespace>
+    <AssemblyName>Nuterra.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,14 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>Nuterra.Installer.Merger</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Assembly-CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="dnlib">
       <HintPath>..\..\lib\dnlib.dll</HintPath>
     </Reference>
@@ -53,54 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessModifier.cs" />
-    <None Include="InstallProcess\AfterHooking.cs" />
-    <None Include="InstallProcess\AfterMerge.cs" />
-    <None Include="InstallProcess\Hooker.cs" />
-    <None Include="InstallProcess\RedirectSettings.cs" />
-    <Compile Include="FullInstallProgram.cs" />
-    <Compile Include="Hooking\ReflectionExtensions.cs" />
-    <Compile Include="Hooking\RedirectSettings.cs" />
-    <Compile Include="Hooking\Hooker.cs" />
-    <Compile Include="Merger.cs" />
-    <Compile Include="ModuleImport\AddUpdatedNodesHelper.cs" />
-    <Compile Include="ModuleImport\CompilerDiagnostic.cs" />
-    <Compile Include="ModuleImport\CompilerDiagnosticSeverity.cs" />
-    <Compile Include="ModuleImport\DebugFileFormat.cs" />
-    <Compile Include="ModuleImport\DebugFileResult.cs" />
-    <Compile Include="ModuleImport\dnSpy_AsmEditor_Resources.cs" />
-    <Compile Include="ModuleImport\EventDefOptions.cs" />
-    <Compile Include="ModuleImport\ExtensionMethods.cs" />
-    <Compile Include="ModuleImport\FieldDefOptions.cs" />
-    <Compile Include="ModuleImport\ImportedType.cs" />
-    <Compile Include="ModuleImport\ImportSigComparer.cs" />
-    <Compile Include="ModuleImport\LineLocation.cs" />
-    <Compile Include="ModuleImport\LineLocationSpan.cs" />
-    <Compile Include="ModuleImport\MethodDefOptions.cs" />
-    <Compile Include="ModuleImport\ModuleImporter.cs" />
-    <Compile Include="ModuleImport\ModuleImporter.ExtraImportedTypeData.cs" />
-    <Compile Include="ModuleImport\ModuleImporter.MemberInfo.cs" />
-    <Compile Include="ModuleImport\PropertyDefOptions.cs" />
-    <Compile Include="ModuleImport\StateMachineHelpers.cs" />
-    <Compile Include="ModuleImport\TypeDefOptions.cs" />
-    <Compile Include="ModuleImport\TypeNodeCreator.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="access.txt">
+    <None Include="Test.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Nuterra\Nuterra.csproj">
-      <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
-      <Name>Nuterra</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

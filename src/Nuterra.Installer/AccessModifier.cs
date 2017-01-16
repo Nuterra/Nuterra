@@ -24,6 +24,15 @@ namespace Nuterra.Installer
 			ModuleContext context = new ModuleContext();
 			ModuleDefMD assembly = ModuleDefMD.Load(inputAssemblyFile, context);
 
+			Apply(assembly, accessFile);
+
+			ModuleWriterOptions writerOptions = new ModuleWriterOptions();
+			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveRids;
+			assembly.Write(outputAssemblyFile, writerOptions);
+		}
+
+		public static void Apply(ModuleDefMD assembly, string accessFile)
+		{
 			using (FileStream fs = File.OpenRead(accessFile))
 			using (StreamReader reader = new StreamReader(fs))
 			{
@@ -32,10 +41,6 @@ namespace Nuterra.Installer
 					ParseLine(assembly, reader.ReadLine());
 				}
 			}
-
-			ModuleWriterOptions writerOptions = new ModuleWriterOptions();
-			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveRids;
-			assembly.Write(outputAssemblyFile, writerOptions);
 		}
 
 		private static void ParseLine(ModuleDefMD assembly, string line)
@@ -47,7 +52,7 @@ namespace Nuterra.Installer
 			switch (subject)
 			{
 				case "field":
-					MakeFieldPublic(targetType, parts[2]);
+					MakeFieldInternal(targetType, parts[2]);
 					break;
 
 				case "type":
@@ -55,16 +60,24 @@ namespace Nuterra.Installer
 					break;
 
 				case "method":
-					MakeMethodPublic(targetType, parts[2]);
+					MakeMethodInternal(targetType, parts[2]);
 					break;
 			}
 		}
 
-		private static void MakeFieldPublic(TypeDef type, string fieldName)
+		private static void MakeFieldInternal(TypeDef type, string fieldName)
 		{
 			FieldDef field = type.Fields.First(f => f.Name == fieldName);
+			bool isFamily = field.IsFamily;
 			field.Attributes &= ~FieldAttributes.FieldAccessMask;
-			field.Attributes |= FieldAttributes.Public;
+			if (isFamily)
+			{
+				field.Attributes |= FieldAttributes.FamORAssem;
+			}
+			else
+			{
+				field.Attributes |= FieldAttributes.Assembly;
+			}
 		}
 
 		private static void MakeTypePublic(TypeDef type)
@@ -80,12 +93,20 @@ namespace Nuterra.Installer
 			}
 		}
 
-		private static void MakeMethodPublic(TypeDef targetType, string methodName)
+		private static void MakeMethodInternal(TypeDef targetType, string methodName)
 		{
 			foreach (MethodDef method in targetType.Methods.Where(m => m.Name == methodName))
 			{
+				bool isFamily = method.IsFamily;
 				method.Attributes &= ~MethodAttributes.MemberAccessMask;
-				method.Attributes |= MethodAttributes.Public;
+				if (isFamily)
+				{
+					method.Attributes |= MethodAttributes.FamORAssem;
+				}
+				else
+				{
+					method.Attributes |= MethodAttributes.Assembly;
+				}
 			}
 		}
 	}
