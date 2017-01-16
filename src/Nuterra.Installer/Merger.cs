@@ -14,7 +14,7 @@ namespace Nuterra.Installer
 			string terraTech = Path.Combine(managedDir, "Assembly-CSharp-backup-0.dll");
 			string nuterra = "Nuterra.dll";
 			string output = Path.Combine(managedDir, "Assembly-CSharp.dll");
-			string accessFile = "access.txt";
+			string accessFile = "installer.access.txt";
 			MergeNuterra(managedDir, terraTech, nuterra, accessFile, output);//TODO: Run tests and then figure out if hooking works or not
 		}
 
