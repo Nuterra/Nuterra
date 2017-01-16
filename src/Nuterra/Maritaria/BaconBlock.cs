@@ -8,7 +8,7 @@ namespace Maritaria
 	{
 		public static readonly string SpriteFile = @"Assets/Blocks/Bacon/bacon_icon.png";
 		public static readonly string ModelFile = @"Assets/Blocks/Bacon/bacon.blend";
-		public static readonly string MaterialFile = @"Assets/Blocks/Bacon/bacon_material.mat";
+		public static readonly string MaterialFile = @"Assets/Blocks/Bacon/Materials/bacon_material.mat";
 
 		public static readonly int BlockID = 9001;
 
