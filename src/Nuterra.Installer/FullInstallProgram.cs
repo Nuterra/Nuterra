@@ -9,9 +9,9 @@ namespace Nuterra.Installer
 	{
 		public static readonly string NuterraDataDir = "Nuterra_Data";
 		public static readonly string NuterraAssemblyFile = "Nuterra.dll";
-		public static readonly string ExpectedHashFile = Path.Combine(NuterraDir, "installer.hash.txt");
-		public static readonly string AccessFile = Path.Combine(NuterraDir, "installer.access.txt");
-		public static readonly string TempOutputFile = Path.Combine(NuterraDir, "installer.modded.dll");
+		public static readonly string ExpectedHashFile = Path.Combine(NuterraDataDir, "installer.hash.txt");
+		public static readonly string AccessFile = Path.Combine(NuterraDataDir, "installer.access.txt");
+		public static readonly string TempOutputFile = Path.Combine(NuterraDataDir, "installer.modded.dll");
 		public static readonly string GalaxyAssemblyFile = "GalaxyCSharp.dll";
 
 		internal static void Main(string[] args)
