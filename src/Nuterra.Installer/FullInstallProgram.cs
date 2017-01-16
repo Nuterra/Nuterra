@@ -9,7 +9,7 @@ namespace Nuterra.Installer
 	{
 		public static readonly string NuterraDir = "Nuterra_Data";
 		public static readonly string NuterraAssemblyFile = "Nuterra.dll";
-		public static readonly string ExpectedHashFileName = Path.Combine(NuterraDir, "installer.hash.txt");
+		public static readonly string ExpectedHashFile = Path.Combine(NuterraDir, "installer.hash.txt");
 		public static readonly string AccessFile = Path.Combine(NuterraDir, "installer.access.txt");
 		public static readonly string TempOutputFile = Path.Combine(NuterraDir, "installer.modded.dll");
 
@@ -28,15 +28,14 @@ namespace Nuterra.Installer
 			}
 
 			//Check required files from package
-			string expectedHashFilePath = Path.Combine(terraTechRoot, ExpectedHashFileName);
-			if (!File.Exists(expectedHashFilePath))
+			if (!File.Exists(ExpectedHashFile))
 			{
-				Error.MissingFile(ExpectedHashFileName);
+				Error.MissingFile(ExpectedHashFile);
 				return;
 			}
 
 			//Find original assembly
-			string expectedHash = File.ReadAllText(expectedHashFilePath);
+			string expectedHash = File.ReadAllText(ExpectedHashFile);
 			string terraTechManagedDir = Path.Combine(terraTechData, "Managed");
 			string assemblyCSharpPath = Path.Combine(terraTechManagedDir, "Assembly-CSharp.dll");
 			string assemblyBackupDir = Path.Combine(terraTechManagedDir, "NuterraBackups");

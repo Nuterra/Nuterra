@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra", "Nuterra\Nuterra.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Installer", "Nuterra.Installer\Nuterra.Installer.csproj", "{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Test", "Nuterra.Test\Nuterra.Test.csproj", "{737C6FE2-2BD5-40B7-B65C-3E644154A7E4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{737C6FE2-2BD5-40B7-B65C-3E644154A7E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{737C6FE2-2BD5-40B7-B65C-3E644154A7E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{737C6FE2-2BD5-40B7-B65C-3E644154A7E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{737C6FE2-2BD5-40B7-B65C-3E644154A7E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

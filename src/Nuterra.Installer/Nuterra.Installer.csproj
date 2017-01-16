@@ -36,16 +36,8 @@
     <StartupObject>Nuterra.Installer.FullInstallProgram</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Assembly-CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="dnlib">
       <HintPath>..\..\lib\dnlib.dll</HintPath>
-    </Reference>
-    <Reference Include="Octokit, Version=0.23.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octokit.0.23.0\lib\net45\Octokit.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,6 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessModifier.cs" />
+    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra">
+      <Link>Nuterra_Data\mod-nuterra</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra.manifest">
+      <Link>Nuterra_Data\mod-nuterra.manifest</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="InstallProcess\AfterHooking.cs" />
     <None Include="InstallProcess\AfterMerge.cs" />
     <None Include="InstallProcess\Hooker.cs" />
@@ -92,7 +92,6 @@
     <Compile Include="ModuleImport\TypeDefOptions.cs" />
     <Compile Include="ModuleImport\TypeNodeCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -104,8 +103,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Nuterra_Data\installer.access.txt" />
-    <Content Include="Nuterra_Data\installer.hash.txt" />
+    <None Include="Nuterra_Data\installer.access.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Nuterra_Data\installer.hash.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

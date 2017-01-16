@@ -22,6 +22,10 @@ namespace Nuterra.Installer
 		public static string CreateAssemblyBackup(string sourceAssembly, string assemblyBackupDir, string hash)
 		{
 			string targetFile = Path.Combine(assemblyBackupDir, $"{hash}.dll");
+			if (Directory.Exists(assemblyBackupDir))
+			{
+				Directory.CreateDirectory(assemblyBackupDir);
+			}
 			if (!File.Exists(targetFile))
 			{
 				File.Copy(sourceAssembly, targetFile);

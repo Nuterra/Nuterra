@@ -10,40 +10,40 @@ namespace Nuterra.Installer.Hooking
 		public static void Apply(ModuleDefMD module)
 		{
 			//Booting Nuterra
-			Redirect(module, typeof(ManUI), typeof(Nuterra), new RedirectSettings(nameof(Nuterra.Start)) { PassArguments = false });
+			Redirect(module, "ManUI", typeof(Nuterra), new RedirectSettings(nameof(Nuterra.Start)) { PassArguments = false });
 
 			//Module overrides
-			Redirect(module, typeof(ModuleDrill), typeof(Maritaria.Modules.Drill), new RedirectSettings(nameof(Maritaria.Modules.Drill.ControlInput)) { ReplaceBody = true });
-			Redirect(module, typeof(ModuleEnergy), typeof(Maritaria.Modules.Energy), new RedirectSettings(nameof(Maritaria.Modules.Energy.OnUpdateSupplyEnergy)) { ReplaceBody = true });
-			Redirect(module, typeof(ModuleEnergy), typeof(Maritaria.Modules.Energy), new RedirectSettings(nameof(Maritaria.Modules.Energy.CheckOutputConditions)) { ReplaceBody = true });
-			Redirect(module, typeof(ModuleHammer), typeof(Maritaria.Modules.Hammer), new RedirectSettings(nameof(Maritaria.Modules.Hammer.ControlInput)) { ReplaceBody = true });
-			Redirect(module, typeof(ModuleItemHolderMagnet), typeof(Maritaria.Modules.Magnet), new RedirectSettings(nameof(Maritaria.Modules.Magnet.FixedUpdate)) { ReplaceBody = true });
-			Redirect(module, typeof(ModuleScoop), typeof(Maritaria.Modules.Scoop), new RedirectSettings(nameof(Maritaria.Modules.Scoop.ControlInput)) { ReplaceBody = true });
-			Redirect(module, typeof(ModuleWeapon), typeof(Maritaria.Modules.Weapon), new RedirectSettings(nameof(Maritaria.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
+			Redirect(module, "ModuleDrill", typeof(Maritaria.Modules.Drill), new RedirectSettings(nameof(Maritaria.Modules.Drill.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleEnergy", typeof(Maritaria.Modules.Energy), new RedirectSettings(nameof(Maritaria.Modules.Energy.OnUpdateSupplyEnergy)) { ReplaceBody = true });
+			Redirect(module, "ModuleEnergy", typeof(Maritaria.Modules.Energy), new RedirectSettings(nameof(Maritaria.Modules.Energy.CheckOutputConditions)) { ReplaceBody = true });
+			Redirect(module, "ModuleHammer", typeof(Maritaria.Modules.Hammer), new RedirectSettings(nameof(Maritaria.Modules.Hammer.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleItemHolderMagnet", typeof(Maritaria.Modules.Magnet), new RedirectSettings(nameof(Maritaria.Modules.Magnet.FixedUpdate)) { ReplaceBody = true });
+			Redirect(module, "ModuleScoop", typeof(Maritaria.Modules.Scoop), new RedirectSettings(nameof(Maritaria.Modules.Scoop.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleWeapon", typeof(Maritaria.Modules.Weapon), new RedirectSettings(nameof(Maritaria.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
 
 			//Creating custom blocks
-			Redirect(module, typeof(ManSpawn), typeof(Maritaria.BlockLoader.Hooks_ManSpawn), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_ManSpawn.Start)) { PassArguments = false, AppendToEnd = true });
-			Redirect(module, typeof(BlockUnlockTable), typeof(Maritaria.BlockLoader.Hooks_BlockUnlockTable), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_BlockUnlockTable.Init)));
-			Redirect(module, typeof(ManLicenses), typeof(Maritaria.BlockLoader.Hooks_ManLicenses), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_ManLicenses.SetupLicenses)));
+			Redirect(module, "ManSpawn", typeof(Maritaria.BlockLoader.Hooks_ManSpawn), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_ManSpawn.Start)) { PassArguments = false, AppendToEnd = true });
+			Redirect(module, "BlockUnlockTable", typeof(Maritaria.BlockLoader.Hooks_BlockUnlockTable), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_BlockUnlockTable.Init)));
+			Redirect(module, "ManLicenses", typeof(Maritaria.BlockLoader.Hooks_ManLicenses), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_ManLicenses.SetupLicenses)));
 
-			Redirect(module, typeof(ManStats.IntStatList), typeof(Maritaria.BlockLoader.Hooks_IntStatList), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_IntStatList.OnSerializing)) { ReplaceBody = true });
+			Redirect(module, "ManStats+IntStatList", typeof(Maritaria.BlockLoader.Hooks_IntStatList), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_IntStatList.OnSerializing)) { ReplaceBody = true });
 
 			Hook_StringLookup_GetString(module);
 			Hook_SpriteFetcher_GetSprite(module);
 			Hook_BugReportFlagger(module);
 			Hook_TankCamera_FixedUpdate(module);
 
-			Redirect(module, typeof(ModuleItemPickup), typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnSpawn)) { });
-			Redirect(module, typeof(ModuleItemPickup), typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnAttach)) { InsertionStart = 3 });//First 3 instructions are to set IsEnabled, which the hook overrides later
+			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnSpawn)) { });
+			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnAttach)) { InsertionStart = 3 });//First 3 instructions are to set IsEnabled, which the hook overrides later
 			Hook_ModuleHeart_IsOnline(module);
 
-			Redirect(module, typeof(ManSaveGame.State), typeof(Maritaria.SaveGameFlagger), new RedirectSettings(".ctor") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_State_ctor) });
-			Redirect(module, typeof(ManSaveGame.SaveData), typeof(Maritaria.SaveGameFlagger), new RedirectSettings("OnDeserialized") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_SaveData_OnDeserialized) });
+			Redirect(module, "ManSaveGame+State", typeof(Maritaria.SaveGameFlagger), new RedirectSettings(".ctor") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_State_ctor) });
+			Redirect(module, "ManSaveGame+SaveData", typeof(Maritaria.SaveGameFlagger), new RedirectSettings("OnDeserialized") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_SaveData_OnDeserialized) });
 		}
 
-		private static void Redirect(ModuleDefMD module, Type sourceType, Type targetType, RedirectSettings settings)
+		private static void Redirect(ModuleDefMD module, string sourceType, Type targetType, RedirectSettings settings)
 		{
-			TypeDef cecilSource = module.GetTerraTechType(sourceType);
+			TypeDef cecilSource = module.Find(sourceType, isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == settings.SourceMethod);
 			TypeDef cecilTarget = module.GetNuterraType(targetType);
 			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == settings.TargetMethod);
@@ -89,7 +89,7 @@ namespace Nuterra.Installer.Hooking
 
 		private static void Hook_StringLookup_GetString(ModuleDefMD module)
 		{
-			TypeDef cecilSource = module.GetTerraTechType(typeof(StringLookup));
+			TypeDef cecilSource = module.Find("StringLookup", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == "GetString");
 			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.BlockLoader.Hooks_StringLookup));
 			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Maritaria.BlockLoader.Hooks_StringLookup.GetString));
@@ -122,7 +122,7 @@ namespace Nuterra.Installer.Hooking
 
 		private static void Hook_SpriteFetcher_GetSprite(ModuleDefMD module)
 		{
-			TypeDef cecilSource = module.GetTerraTechType(typeof(SpriteFetcher));
+			TypeDef cecilSource = module.Find("SpriteFetcher", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.FullName == "UnityEngine.Sprite SpriteFetcher::GetSprite(ObjectTypes,System.Int32)");
 			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.BlockLoader.Hooks_SpriteFetcher));
 			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Maritaria.BlockLoader.Hooks_SpriteFetcher.GetSprite));
@@ -169,7 +169,7 @@ namespace Nuterra.Installer.Hooking
 			MethodDef markReportForm = bugReportFlagger.Methods.Single(m => m.Name == nameof(Maritaria.BugReportFlagger.MarkReportForm));
 			MethodDef markUserMessage = bugReportFlagger.Methods.Single(m => m.Name == nameof(Maritaria.BugReportFlagger.MarkUserMessage));
 
-			TypeDef bugReporter = module.GetTerraTechType(typeof(UIScreenBugReport));
+			TypeDef bugReporter = module.Find("UIScreenBugReport", isReflectionName: true);
 			TypeDef postIterator = bugReporter.NestedTypes.Single(t => t.FullName == "UIScreenBugReport/<PostIt>c__Iterator78");
 			MethodDef moveNext = postIterator.Methods.Single(m => m.Name == "MoveNext");
 
@@ -195,7 +195,7 @@ namespace Nuterra.Installer.Hooking
 		public static void Hook_TankCamera_FixedUpdate(ModuleDefMD module)
 		{
 			const string methodName = nameof(Maritaria.FirstPersonKeyBehaviour.Hooks_TankCamera.FixedUpdate);
-			TypeDef cecilSource = module.GetTerraTechType(typeof(TankCamera));
+			TypeDef cecilSource = module.Find("TankCamera", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
 			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.FirstPersonKeyBehaviour.Hooks_TankCamera));
 			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
@@ -231,7 +231,7 @@ namespace Nuterra.Installer.Hooking
 		private static void Hook_ModuleHeart_IsOnline(ModuleDefMD module)
 		{
 			const string methodName = nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_IsOnline);
-			TypeDef cecilSource = module.GetTerraTechType(typeof(ModuleHeart));
+			TypeDef cecilSource = module.Find("ModuleHeart", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
 			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart));
 			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
