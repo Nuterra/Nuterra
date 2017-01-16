@@ -15,10 +15,22 @@ namespace Nuterra.Installer
 
 		internal static void Main(string[] args)
 		{
-			Console.WriteLine("Verifying install location");
-
-			//Verify current directory
 			string terraTechRoot = Directory.GetCurrentDirectory();
+			if (args.Length == 1)
+			{
+				string path = args[0];
+				if (path.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+				{
+					path = Path.GetDirectoryName(path);
+				}
+				terraTechRoot = path;
+			}
+			else
+			{
+				terraTechRoot = Directory.GetCurrentDirectory();
+			}
+
+			Console.WriteLine("Verifying install location");
 			string terraTechData = Directory.EnumerateDirectories(terraTechRoot, "TerraTech*_Data").SingleOrDefault();
 
 			if (terraTechData == null)
