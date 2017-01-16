@@ -65,7 +65,7 @@ namespace Nuterra.Installer
 			Console.WriteLine("Installing modded Assembly-CSharp.dll");
 			File.Copy(TempOutputFile, assemblyCSharpPath, overwrite: true);
 
-			//Install GalaxyCSharp.dll dependency
+			Console.WriteLine("Installing dependency: GalaxyCSharp.dll");
 			File.Copy(Path.Combine(NuterraDataDir, GalaxyAssemblyFile), Path.Combine(terraTechManagedDir, GalaxyAssemblyFile), overwrite: true);
 
 			Console.WriteLine("Install completed, have fun :3");
