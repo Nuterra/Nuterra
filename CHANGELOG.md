@@ -13,9 +13,11 @@ All notable changes to this project will be documented in this file.
 - Self destruction key (Gamelynx mod)
 - Bacon block
 - Unity resource project (/data)
+- Installer
 
 ### Changed
 - Project name to nuterra
+- Code projects now added with build process for injecting into TerraTech
 
 ## [0.2.4]
 ### Added
