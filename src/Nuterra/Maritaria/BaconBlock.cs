@@ -77,7 +77,7 @@ namespace Maritaria
 			filter.mesh = AssetBundleImport.Load<Mesh>(ModelFile);
 
 			Vector3 targetSize = new Vector3(4, 0.5f, 2);
-			Vector3 modelOffset = new Vector3(0, 0.25f, 0.5f);
+			Vector3 modelOffset = new Vector3(0.5f, 0.25f, 0.5f);
 			Vector3 targetModelCenter = (targetSize / 2) - modelOffset;
 
 			renderObject.transform.localPosition = targetModelCenter;
