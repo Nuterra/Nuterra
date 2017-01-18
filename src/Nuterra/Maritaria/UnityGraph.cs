@@ -10,7 +10,7 @@ namespace Maritaria
 {
 	public static class UnityGraph
 	{
-		public static readonly ModConfig Config = new ModConfig();
+		public static readonly MaritariaConfig Config = new MaritariaConfig();
 
 		public static void LogGameObject(GameObject inst)
 		{

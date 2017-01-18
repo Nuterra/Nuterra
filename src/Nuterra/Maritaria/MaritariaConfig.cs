@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Maritaria
 {
-	public class ModConfig
+	public class MaritariaConfig
 	{
 		public static readonly string DefaultConfigContents = "# Lines starting with a # are ignored\n# Some settings are disabled by default, remove the # in front of the line to enable it\n# Settings format: [name] [value]\n# Setting names and values must be split by a single space\n# List of UnityEngine.KeyCode: https://docs.unity3d.com/ScriptReference/KeyCode.html\n\n# The key to trigger all drills on your current tech (UnityEngine.KeyCode)\nDrillKey Alpha1\n\n# The key to trigger all buzzsaws on your current tech (UnityEngine.KeyCode)\nSawKey Alpha2\n\n# The key to trigger all hammer blocks on your current tech (UnityEngine.KeyCode)\nHammerKey Alpha3\n\n# The key to trigger all scoop blocks on your current tech (UnityEngine.KeyCode)\nScoopKey Alpha4\n\n# The key to trigger all \"Plasma Cutter\" blocks on your current tech (UnityEngine.KeyCode)\nPlasmaKey Alpha5\n\n# The key to toggle your magnet blocks on/off; when disabled your magnets will not attract any blocks (UnityEngine.KeyCode)\nMagnetToggleKey M\n\n# Every hit after a block starts to explode lowers the explosion timer by a given amount of seconds (seconds)\n# Vanilla: 0.1\n#ExplodeTimerReductionPerHit 1.0\n\n# Enable solar panels to be used on techs\nMobileSolarPanels 1\n\n# Enable to allow changing time of day\n#TurnDayKey Alpha9\n#TurnNightKey Alpha0\n\n# This key allows you to switch to first-person mode when controlling a tech. The view is from a smiley cube which has to be present on the tech (blockID 9000).\n#FirstPersonKey F";
 		public string ConfigFileName = "\\mod.settings";
@@ -29,7 +29,7 @@ namespace Maritaria
 
 		public bool BuyIntoInventory;
 
-		public ModConfig()
+		public MaritariaConfig()
 		{
 			RestoreDefaultSettings();
 		}
@@ -97,37 +97,37 @@ namespace Maritaria
 			string a = settingName.ToLower();
 			if (a == "drillkey")
 			{
-				DrillKey = ModConfig.ParseKey(settingValue, KeyCode.None);
+				DrillKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "sawkey")
 			{
-				SawKey = ModConfig.ParseKey(settingValue, KeyCode.None);
+				SawKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "hammerkey")
 			{
-				HammerKey = ModConfig.ParseKey(settingValue, KeyCode.None);
+				HammerKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "scoopkey")
 			{
-				ScoopKey = ModConfig.ParseKey(settingValue, KeyCode.None);
+				ScoopKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "magnettogglekey")
 			{
-				MagnetToggleKey = ModConfig.ParseKey(settingValue, KeyCode.None);
+				MagnetToggleKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "plasmakey")
 			{
-				PlasmaKey = ModConfig.ParseKey(settingValue, KeyCode.None);
+				PlasmaKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "productiontogglekey")
 			{
-				ProductionToggleKey = ModConfig.ParseKey(settingValue, KeyCode.None);
+				ProductionToggleKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
 				return;
 			}
 			if (a == "explodetimerreductionperhit")
@@ -137,12 +137,12 @@ namespace Maritaria
 			}
 			if (a == "buyintoinventory")
 			{
-				BuyIntoInventory = ModConfig.ParseBoolean(settingValue);
+				BuyIntoInventory = MaritariaConfig.ParseBoolean(settingValue);
 				return;
 			}
 			if (a == "mobilesolarpanels")
 			{
-				MobileSolarPanels = ModConfig.ParseBoolean(settingValue);
+				MobileSolarPanels = MaritariaConfig.ParseBoolean(settingValue);
 				return;
 			}
 			if (a == "turnnightkey")

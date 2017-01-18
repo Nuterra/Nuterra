@@ -70,7 +70,7 @@
     <Compile Include="Maritaria\MagnetToggleKeyBehaviour.cs" />
     <Compile Include="Maritaria\MaritariaMod.cs" />
     <Compile Include="Maritaria\UnityGraph.cs" />
-    <Compile Include="Maritaria\ModConfig.cs" />
+    <Compile Include="Maritaria\MaritariaConfig.cs" />
     <Compile Include="Maritaria\Modules.cs" />
     <Compile Include="Maritaria\ProductionStoppedSign.cs" />
     <Compile Include="Maritaria\ProductionToggleKeyBehaviour.cs" />
