@@ -41,10 +41,10 @@ namespace Nuterra.Installer
 					ParseLine(module, reader.ReadLine());
 				}
 			}
-			MakeInternalsVisibleToNuterra(module);
+			MakeInternalsVisibleToAssembly(module, "Nuterra");
 		}
 
-		private static void MakeInternalsVisibleToNuterra(ModuleDefMD module)
+		private static void MakeInternalsVisibleToAssembly(ModuleDefMD module)
 		{
 			//Get type and method references / signatures
 			AssemblyRef mscorlib = module.CorLibTypes.AssemblyRef;
@@ -71,20 +71,20 @@ namespace Nuterra.Installer
 			switch (subject)
 			{
 				case "field":
-					MakeFieldInternal(targetType, parts[2]);
+					MakeFieldVisible(targetType, parts[2]);
 					break;
 
 				case "type":
-					MakeTypePublic(targetType);
+					MakeTypeVisible(targetType);
 					break;
 
 				case "method":
-					MakeMethodInternal(targetType, parts[2]);
+					MakeMethodVisible(targetType, parts[2]);
 					break;
 			}
 		}
 
-		private static void MakeFieldInternal(TypeDef type, string fieldName)
+		private static void MakeFieldVisible(TypeDef type, string fieldName)
 		{
 			FieldDef field = type.Fields.First(f => f.Name == fieldName);
 			bool isFamily = field.IsFamily;
@@ -99,7 +99,7 @@ namespace Nuterra.Installer
 			}
 		}
 
-		private static void MakeTypePublic(TypeDef type)
+		private static void MakeTypeVisible(TypeDef type)
 		{
 			type.Attributes &= ~TypeAttributes.VisibilityMask;
 			if (type.IsNested)
@@ -112,7 +112,7 @@ namespace Nuterra.Installer
 			}
 		}
 
-		private static void MakeMethodInternal(TypeDef targetType, string methodName)
+		private static void MakeMethodVisible(TypeDef targetType, string methodName)
 		{
 			foreach (MethodDef method in targetType.Methods.Where(m => m.Name == methodName))
 			{
