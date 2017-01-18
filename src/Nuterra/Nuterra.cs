@@ -12,7 +12,7 @@ namespace Nuterra
 		public static readonly string ModsFolder = Path.Combine(Application.dataPath, "..\\Nuterra_Data\\Mods");//TODO: Start using this
 		public static readonly string TerraTechAssemblyName = "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
 
-		public static void Start()
+		internal static void Start()
 		{
 			CleanLogger.Install();
 			Console.WriteLine($"Nuterra.Nuterra.Startup({CurrentVersion})");
