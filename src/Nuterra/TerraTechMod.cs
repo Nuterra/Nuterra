@@ -13,7 +13,6 @@ namespace Nuterra
 
 		public virtual void Load()
 		{
-			Console.WriteLine("Loading mod: {Name} ({Version})");
 			Configuration = ModConfig.Data[Name] as JObject;
 		}
 

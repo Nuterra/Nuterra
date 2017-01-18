@@ -42,8 +42,8 @@ namespace Nuterra
 
 		private void LoadMod(Type modClass)
 		{
-			Console.WriteLine($"Loading mod '{modClass.Name}'");
 			TerraTechMod mod = EnsureModInstance(modClass);
+			Console.WriteLine($"Loading mod: {mod.Name} (v{mod.Version})");
 			mod.Load();
 		}
 
@@ -52,6 +52,7 @@ namespace Nuterra
 			TerraTechMod mod;
 			if (!_modInstances.TryGetValue(modClass, out mod))
 			{
+				Console.WriteLine($"Creating mod instance '{modClass.Name}'");
 				mod = (TerraTechMod)Activator.CreateInstance(modClass);
 				_modInstances.Add(modClass, mod);
 			}
