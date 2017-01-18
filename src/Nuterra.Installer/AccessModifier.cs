@@ -41,6 +41,25 @@ namespace Nuterra.Installer
 					ParseLine(assembly, reader.ReadLine());
 				}
 			}
+			MakeInternalsVisibleToNuterra(assembly);
+		}
+
+		private static void MakeInternalsVisibleToNuterra(ModuleDefMD module)
+		{
+			//Get type and method references / signatures
+			AssemblyRef mscorlib = module.CorLibTypes.AssemblyRef;
+			TypeRefUser internalsVisibleToAttributeType = new TypeRefUser(module, new UTF8String("System.Runtime.CompilerServices"), new UTF8String("InternalsVisibleToAttribute"), mscorlib);
+			TypeSig objectSig = internalsVisibleToAttributeType.ToTypeSig();
+			MethodSig ctor = MethodSig.CreateInstance(module.CorLibTypes.Void, module.CorLibTypes.String);
+			MemberRefUser op_EqualityMethod = new MemberRefUser(module, new UTF8String(".ctor"), ctor, internalsVisibleToAttributeType);
+
+			//Create custom attribute declaration
+			CAArgument arg = new CAArgument(module.CorLibTypes.String, "Nuterra");
+			CustomAttribute attr = new CustomAttribute(op_EqualityMethod, new CAArgument[] { arg });
+
+			//Insert into assembly definition
+			module.Assembly.CustomAttributes.Add(attr);
+
 		}
 
 		private static void ParseLine(ModuleDefMD assembly, string line)
