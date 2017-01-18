@@ -1,0 +1,27 @@
+using System;
+using Nuterra;
+using UnityEngine;
+
+namespace Sylver
+{
+	[Mod]
+	public class Mod : TerraTechMod
+	{
+		public static GameObject BehaviorHolder;
+
+		public override string Name => "Sylver's Mod";
+
+		public override string Description => "A mod made by Sylver/Exund";
+
+		public override void Load()
+		{
+			base.Load();
+			Console.WriteLine("Sylver.Mod.Init()");
+			Mod.BehaviorHolder = new GameObject();
+			Mod.BehaviorHolder.AddComponent<SylverMod>();
+			Mod.BehaviorHolder.AddComponent<GUIRenderer>();
+			Mod.BehaviorHolder.AddComponent<SylverSpawn>();
+			UnityEngine.Object.DontDestroyOnLoad(Mod.BehaviorHolder);
+		}
+	}
+}

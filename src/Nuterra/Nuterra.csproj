@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="AssetBundleImport.cs" />
     <Compile Include="CleanLogger.cs" />
+    <Compile Include="Gameslinx\SuicideKeyBehaviour.cs" />
     <Compile Include="Maritaria\BaconBlock.cs" />
     <Compile Include="Maritaria\BlockLoader.cs" />
     <Compile Include="Maritaria\BugReportFlagger.cs" />
@@ -82,6 +83,10 @@
     <Compile Include="ModConfig.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="Nuterra.cs" />
+    <Compile Include="Sylver\GUIRenderer.cs" />
+    <Compile Include="Sylver\Mod.cs" />
+    <Compile Include="Sylver\SylverMod.cs" />
+    <Compile Include="Sylver\SylverSpawn.cs" />
     <Compile Include="TerraTechMod.cs" />
   </ItemGroup>
   <ItemGroup>

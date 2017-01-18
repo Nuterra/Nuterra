@@ -5,20 +5,20 @@ namespace Gameslynx
 {
 	public class SuicideKeyBehaviour : MonoBehaviour
 	{
-		public Update()
+		public void Update()
 		{
 			Tank player = Singleton.playerTank;
-			if (player != null && Input.GetKeyDown(Maritaria.Mod.Config.SuicideKey))
+			if (player != null && Input.GetKeyDown(Maritaria.UnityGraph.Config.SuicideKey))
 			{
 				KillTech(player);
 			}
 		}
-		
-		public static void KillTech(Tech target)
+
+		public static void KillTech(Tank target)
 		{
 			if (target == null) throw new ArgumentNullException(nameof(target));
-			BlockManager blockManager = player.blockman;
-			foreach(ModuleTechController controller in blockManager.IterateBlockComponents<ModuleTechController>())
+			BlockManager blockManager = target.blockman;
+			foreach (ModuleTechController controller in blockManager.IterateBlockComponents<ModuleTechController>())
 			{
 				controller.block.damage.SelfDestruct(1f);
 			}

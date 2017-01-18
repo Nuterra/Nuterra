@@ -25,6 +25,7 @@ namespace Maritaria
 			_behaviourHolder.AddComponent<TimeOfDayKeysBehaviour>();
 			_behaviourHolder.AddComponent<FirstPersonKeyBehaviour>();
 			_behaviourHolder.AddComponent<ProductionToggleKeyBehaviour>();
+			_behaviourHolder.AddComponent<Gameslynx.SuicideKeyBehaviour>();
 			UnityEngine.Object.DontDestroyOnLoad(_behaviourHolder);
 
 			SplashScreenHandler.Init();
