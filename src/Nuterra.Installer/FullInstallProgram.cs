@@ -80,7 +80,7 @@ namespace Nuterra.Installer
 			Console.WriteLine("Installing dependency: GalaxyCSharp.dll");
 			File.Copy(Path.Combine(NuterraDataDir, GalaxyAssemblyFile), Path.Combine(terraTechManagedDir, GalaxyAssemblyFile), overwrite: true);
 
-			Console.WriteLine("Install completed, have fun :3");
+			Console.WriteLine("Install completed, have fun :3 (press enter to finish)");
 			Console.ReadLine();
 		}
 	}
