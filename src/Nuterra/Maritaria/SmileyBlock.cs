@@ -7,9 +7,9 @@ namespace Maritaria
 {
 	public sealed class SmileyBlock : CustomBlock
 	{
-		public static readonly string SpriteFile = @"Assets/Blocks/Cockpit/cockpit_icon.png";
-		public static readonly string ModelFile = @"Assets/Blocks/Cockpit/cockpit.blend";
-		public static readonly string MaterialFile = @"Assets/Blocks/Cockpit/cockpit_material.mat";
+		public static readonly string SpriteFile = @"Assets/Blocks/Cockpit/GSO_Observatory_icon.png";
+		public static readonly string ModelFile = @"Assets/Blocks/Cockpit/GSO_Observatory.blend";
+		public static readonly string MaterialFile = @"Assets/Blocks/Cockpit/GSO_Observatory_material.mat";
 
 		public static readonly int BlockID = 9000;
 
@@ -50,27 +50,11 @@ namespace Maritaria
 			tankBlock.filledCells = new Vector3[] { new Vector3(0, 0, 0) };
 			tankBlock.partialCells = new Vector3[] { };
 
-			GameObject renderObject = new GameObject();
+			GameObject renderObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			renderObject.transform.parent = Prefab.transform;
 			renderObject.name = $"{Name}.Model";
 			renderObject.layer = Globals.inst.layerTank;
 
-			MeshRenderer renderer = renderObject.EnsureComponent<MeshRenderer>();
-			renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-
-			MeshFilter filter = renderObject.EnsureComponent<MeshFilter>();
-			filter.mesh = AssetBundleImport.Load<Mesh>(ModelFile);
-
-			Vector3 bounds = filter.mesh.bounds.size;
-			float largestSide = Mathf.Max(bounds.x, bounds.y, bounds.z, 1f);
-			float scale = 1f / largestSide;
-			renderObject.transform.localScale = new Vector3(scale, scale, scale);
-
-			BoxCollider collider = renderObject.EnsureComponent<BoxCollider>();
-			collider.center = Vector3.zero;
-			collider.size = new Vector3(largestSide, largestSide, largestSide);
-
-			renderer.material = AssetBundleImport.Load<Material>(MaterialFile);
 		}
 	}
 }
