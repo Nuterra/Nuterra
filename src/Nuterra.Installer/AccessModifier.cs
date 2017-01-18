@@ -59,7 +59,6 @@ namespace Nuterra.Installer
 
 			//Insert into assembly definition
 			module.Assembly.CustomAttributes.Add(attr);
-
 		}
 
 		private static void ParseLine(ModuleDefMD module, string line)
