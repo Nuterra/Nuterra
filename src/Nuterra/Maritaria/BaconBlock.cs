@@ -64,6 +64,7 @@ namespace Maritaria
 				new Vector3(3, 0, 1),
 			};
 			tankBlock.partialCells = new Vector3[] { };
+			tankBlock.m_DefaultMass = 10f;
 
 			GameObject renderObject = new GameObject();
 			renderObject.transform.parent = Prefab.transform;
