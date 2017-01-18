@@ -44,7 +44,7 @@ namespace Nuterra.Installer
 			MakeInternalsVisibleToAssembly(module, "Nuterra");
 		}
 
-		private static void MakeInternalsVisibleToAssembly(ModuleDefMD module)
+		private static void MakeInternalsVisibleToAssembly(ModuleDefMD module, string assemblyName)
 		{
 			//Get type and method references / signatures
 			AssemblyRef mscorlib = module.CorLibTypes.AssemblyRef;
@@ -54,7 +54,7 @@ namespace Nuterra.Installer
 			MemberRefUser op_EqualityMethod = new MemberRefUser(module, new UTF8String(".ctor"), ctor, internalsVisibleToAttributeType);
 
 			//Create custom attribute declaration
-			CAArgument arg = new CAArgument(module.CorLibTypes.String, "Nuterra");
+			CAArgument arg = new CAArgument(module.CorLibTypes.String, assemblyName);
 			CustomAttribute attr = new CustomAttribute(op_EqualityMethod, new CAArgument[] { arg });
 
 			//Insert into assembly definition
