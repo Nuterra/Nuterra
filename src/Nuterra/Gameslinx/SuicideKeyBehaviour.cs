@@ -8,7 +8,7 @@ namespace Gameslynx
 		public void Update()
 		{
 			Tank player = Singleton.playerTank;
-			if (player != null && Input.GetKeyDown(Maritaria.UnityGraph.Config.SuicideKey))
+			if (player != null && Input.GetKeyDown(Maritaria.MaritariaMod.Instance.Config.SuicideKey))
 			{
 				KillTech(player);
 			}

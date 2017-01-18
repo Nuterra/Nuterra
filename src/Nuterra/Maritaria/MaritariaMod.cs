@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 namespace Maritaria
 {
@@ -16,8 +17,15 @@ namespace Maritaria
 
 		private GameObject _behaviourHolder;
 
+		public MaritariaConfig Config { get; } = new MaritariaConfig();
+
+		internal static MaritariaMod Instance { get; private set; }
+
+
 		public override void Load()
 		{
+			Instance = this;
+
 			base.Load();
 
 			_behaviourHolder = new GameObject();
@@ -27,6 +35,8 @@ namespace Maritaria
 			_behaviourHolder.AddComponent<ProductionToggleKeyBehaviour>();
 			_behaviourHolder.AddComponent<Gameslynx.SuicideKeyBehaviour>();
 			UnityEngine.Object.DontDestroyOnLoad(_behaviourHolder);
+
+			Config.Load(ModConfig.Data.GetValue(Name, StringComparison.OrdinalIgnoreCase) as JObject);
 
 			SplashScreenHandler.Init();
 		}

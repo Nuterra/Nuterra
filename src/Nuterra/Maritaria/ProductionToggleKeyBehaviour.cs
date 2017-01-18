@@ -11,7 +11,7 @@ namespace Maritaria
 
 		public void Update()
 		{
-			if (Input.GetKeyDown(UnityGraph.Config.ProductionToggleKey))
+			if (Input.GetKeyDown(MaritariaMod.Instance.Config.ProductionToggleKey))
 			{
 				ProductionActive = !ProductionActive;
 				foreach (Tank tank in Singleton.Manager<ManTechs>.inst.IterateTechsWhere(IsTankOnPlayerTeam))

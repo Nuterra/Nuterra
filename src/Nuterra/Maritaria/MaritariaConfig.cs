@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Globalization;
-using System.IO;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace Maritaria
@@ -27,173 +26,106 @@ namespace Maritaria
 		public KeyCode FirstPersonKey;
 		public KeyCode SuicideKey;
 
-		public bool BuyIntoInventory;
-
 		public MaritariaConfig()
 		{
 			RestoreDefaultSettings();
 		}
 
-		public void Load()
-		{
-			RestoreDefaultSettings();
-			ReadFile();
-		}
-
-		private void ReadFile()
-		{
-			if (!File.Exists(ConfigFileName))
-			{
-				Console.WriteLine("Creating default config file: " + ConfigFileName);
-				using (StreamWriter streamWriter = File.CreateText(ConfigFileName))
-				{
-					streamWriter.WriteLine(DefaultConfigContents);
-				}
-			}
-			using (FileStream fileStream = new FileStream(ConfigFileName, FileMode.OpenOrCreate))
-			using (StreamReader streamReader = new StreamReader(fileStream))
-			{
-				while (!streamReader.EndOfStream)
-				{
-					Apply(streamReader.ReadLine());
-				}
-			}
-		}
-
 		private void RestoreDefaultSettings()
 		{
-			DrillKey = KeyCode.None;
-			HammerKey = KeyCode.None;
-			MagnetToggleKey = KeyCode.None;
-			ScoopKey = KeyCode.None;
-			PlasmaKey = KeyCode.None;
-			SawKey = KeyCode.None;
-
 			MobileSolarPanels = false;
 			MobileSolarVelocityThreshold = 0.1f;
 			MobileSolarMultiplier = 0.2f;
 
-			TurnNightKey = KeyCode.None;
-			TurnDayKey = KeyCode.None;
-			FirstPersonKey = KeyCode.None;
-
-			BuyIntoInventory = false;
 		}
 
-		private void Apply(string line)
+		public void Load(JObject json)
 		{
-			line = line.Trim();
-			if (!string.IsNullOrEmpty(line) && !line.StartsWith("#"))
-			{
-				string[] parts = line.Split(new char[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-				string settingName = parts[0];
-				string settingValue = parts[1];
-				Apply(settingName, settingValue);
-			}
+			if (json == null) return;
+
+			//Weapons
+			DrillKey = ParseKey(json, nameof(DrillKey), KeyCode.None);
+			HammerKey = ParseKey(json, nameof(HammerKey), KeyCode.None);
+			MagnetToggleKey = ParseKey(json, nameof(MagnetToggleKey), KeyCode.None);
+			ScoopKey = ParseKey(json, nameof(ScoopKey), KeyCode.None);
+			PlasmaKey = ParseKey(json, nameof(PlasmaKey), KeyCode.None);
+			SawKey = ParseKey(json, nameof(SawKey), KeyCode.None);
+
+			//Cheats
+			TurnNightKey = ParseKey(json, nameof(TurnNightKey), KeyCode.None);
+			TurnDayKey = ParseKey(json, nameof(TurnDayKey), KeyCode.None);
+			FirstPersonKey = ParseKey(json, nameof(FirstPersonKey), KeyCode.None);
+			SuicideKey = ParseKey(json, nameof(SuicideKey), KeyCode.None);
+
+			//Mobile solar
+			MobileSolarPanels = ParseBoolean(json, nameof(MobileSolarPanels), false);
+			MobileSolarVelocityThreshold = ParseFloat(json, nameof(MobileSolarVelocityThreshold), 0.1f);
+			MobileSolarMultiplier = ParseFloat(json, nameof(MobileSolarMultiplier), 0.2f);
 		}
 
-		private void Apply(string settingName, string settingValue)
-		{
-			string a = settingName.ToLower();
-			if (a == "drillkey")
-			{
-				DrillKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "sawkey")
-			{
-				SawKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "hammerkey")
-			{
-				HammerKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "scoopkey")
-			{
-				ScoopKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "magnettogglekey")
-			{
-				MagnetToggleKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "plasmakey")
-			{
-				PlasmaKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "productiontogglekey")
-			{
-				ProductionToggleKey = MaritariaConfig.ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "explodetimerreductionperhit")
-			{
-				Globals.inst.moduleDamageParams.explodeTimerReductionPerAdditionalHit = 1f;
-				return;
-			}
-			if (a == "buyintoinventory")
-			{
-				BuyIntoInventory = MaritariaConfig.ParseBoolean(settingValue);
-				return;
-			}
-			if (a == "mobilesolarpanels")
-			{
-				MobileSolarPanels = MaritariaConfig.ParseBoolean(settingValue);
-				return;
-			}
-			if (a == "turnnightkey")
-			{
-				TurnNightKey = ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "turndaykey")
-			{
-				TurnDayKey = ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "firstpersonkey")
-			{
-				FirstPersonKey = ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-			if (a == "suicidekey")
-			{
-				SuicideKey = ParseKey(settingValue, KeyCode.None);
-				return;
-			}
-		}
 
-		private static KeyCode ParseKey(string keyName, KeyCode fallback)
+		private static KeyCode ParseKey(JObject json, string keyName, KeyCode fallback)
 		{
-			KeyCode result;
+			if (json == null)
+			{
+				return fallback;
+			}
+			JToken token = json.GetValue(keyName, StringComparison.OrdinalIgnoreCase);
+			if (token == null)
+			{
+				return fallback;
+			}
 			try
 			{
-				result = (KeyCode)Enum.Parse(typeof(KeyCode), keyName, true);
+				string value = token.Value<string>();
+				return (KeyCode)Enum.Parse(typeof(KeyCode), value, true);
 			}
 			catch
 			{
-				result = fallback;
+				return fallback;
 			}
-			return result;
 		}
 
-		private static float ParseFloat(string input, float fallback)
+		private static float ParseFloat(JObject json, string keyName, float fallback)
 		{
-			float result;
-			if (float.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
+			if (json == null)
 			{
-				return result;
+				return fallback;
 			}
-			return fallback;
+			JToken token = json.GetValue(keyName, StringComparison.OrdinalIgnoreCase);
+			if (token == null)
+			{
+				return fallback;
+			}
+			try
+			{
+				return token.Value<float>();
+			}
+			catch
+			{
+				return fallback;
+			}
+		}
+		private bool ParseBoolean(JObject json, string keyName, bool fallback)
+		{
+			if (json == null)
+			{
+				return fallback;
+			}
+			JToken token = json.GetValue(keyName, StringComparison.OrdinalIgnoreCase);
+			if (token == null)
+			{
+				return fallback;
+			}
+			try
+			{
+				return token.Value<bool>();
+			}
+			catch
+			{
+				return fallback;
+			}
 		}
 
-		public static bool ParseBoolean(string input)
-		{
-			return input.Trim().Equals("1", StringComparison.Ordinal);
-		}
 	}
 }
