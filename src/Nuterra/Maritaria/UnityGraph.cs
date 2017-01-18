@@ -12,7 +12,7 @@ namespace Maritaria
 	{
 		public static void LogGameObject(GameObject inst)
 		{
-			if (inst == null)
+			if (System.Object.ReferenceEquals(inst, null))
 			{
 				return;
 			}
@@ -21,7 +21,7 @@ namespace Maritaria
 
 		public static void LogGameObject(GameObject inst, string prefix)
 		{
-			if (inst == null)
+			if (System.Object.ReferenceEquals(inst, null))
 			{
 				return;
 			}
