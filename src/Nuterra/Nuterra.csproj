@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AssetBundleImport.cs" />
     <Compile Include="CleanLogger.cs" />
     <Compile Include="Gameslinx\SuicideKeyBehaviour.cs" />
@@ -89,9 +90,7 @@
     <Compile Include="Sylver\SylverSpawn.cs" />
     <Compile Include="TerraTechMod.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
