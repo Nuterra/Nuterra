@@ -22,26 +22,26 @@ namespace Nuterra.Installer
 			AssemblyResolver resolver = new AssemblyResolver();
 			resolver.PreSearchPaths.Add(managedDir);
 			ModuleContext context = new ModuleContext();
-			ModuleDefMD assembly = ModuleDefMD.Load(inputAssemblyFile, context);
+			ModuleDefMD module = ModuleDefMD.Load(inputAssemblyFile, context);
 
-			Apply(assembly, accessFile);
+			Apply(module, accessFile);
 
 			ModuleWriterOptions writerOptions = new ModuleWriterOptions();
 			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveRids;
-			assembly.Write(outputAssemblyFile, writerOptions);
+			module.Write(outputAssemblyFile, writerOptions);
 		}
 
-		public static void Apply(ModuleDefMD assembly, string accessFile)
+		public static void Apply(ModuleDefMD module, string accessFile)
 		{
 			using (FileStream fs = File.OpenRead(accessFile))
 			using (StreamReader reader = new StreamReader(fs))
 			{
 				while (!reader.EndOfStream)
 				{
-					ParseLine(assembly, reader.ReadLine());
+					ParseLine(module, reader.ReadLine());
 				}
 			}
-			MakeInternalsVisibleToNuterra(assembly);
+			MakeInternalsVisibleToNuterra(module);
 		}
 
 		private static void MakeInternalsVisibleToNuterra(ModuleDefMD module)
@@ -62,12 +62,12 @@ namespace Nuterra.Installer
 
 		}
 
-		private static void ParseLine(ModuleDefMD assembly, string line)
+		private static void ParseLine(ModuleDefMD module, string line)
 		{
 			string[] parts = line.Split(new char[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
 
 			string subject = parts[0];
-			var targetType = assembly.Find(parts[1], isReflectionName: false);
+			var targetType = module.Find(parts[1], isReflectionName: false);
 			switch (subject)
 			{
 				case "field":
