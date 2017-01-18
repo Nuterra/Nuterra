@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Project name to nuterra
 - Code projects now added with build process for injecting into TerraTech
+- Existing mods are now loaded using modloader
 
 ## [0.2.4]
 ### Added
