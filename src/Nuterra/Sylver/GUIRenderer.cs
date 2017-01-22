@@ -19,6 +19,10 @@ namespace Sylver
 			{
 				return;
 			}
+			if (!SylverMod.IsRandD)
+			{
+				return;
+			}
 			if (!Singleton.Manager<DebugUtil>.inst.hideGUI)
 			{
 				this._content.text = string.Format(GUIRenderer.DisplayFormat, SylverMod.FriendlyAIName);
