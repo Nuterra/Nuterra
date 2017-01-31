@@ -39,5 +39,11 @@ namespace Nuterra.Installer
 			Console.WriteLine("Your local install cannot be used to install Nuterra into, and no compatible backup exists");
 			Console.ReadLine();
 		}
+
+		public static void InvalidInstallMode(string installMode)
+		{
+			Console.WriteLine($"Invalid installmode specified, valid values are: '{string.Join("', '", Enum.GetNames(typeof(InstallMode)))}'");
+			Console.ReadLine();
+		}
 	}
 }

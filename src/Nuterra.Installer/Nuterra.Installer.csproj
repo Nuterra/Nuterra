@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Nuterra.Installer.FullInstallProgram</StartupObject>
+    <StartupObject>Nuterra.Installer.InstallProgram</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="dnlib">
@@ -63,13 +63,14 @@
     <None Include="InstallProcess\AfterMerge.cs" />
     <None Include="InstallProcess\Hooker.cs" />
     <None Include="InstallProcess\RedirectSettings.cs" />
+    <Compile Include="AssemblyModifier.cs" />
     <Compile Include="Error.cs" />
-    <Compile Include="FullInstallProgram.cs" />
+    <Compile Include="InstallMode.cs" />
+    <Compile Include="InstallProgram.cs" />
     <Compile Include="Hooking\ReflectionExtensions.cs" />
     <Compile Include="Hooking\RedirectSettings.cs" />
     <Compile Include="Hooking\Hooker.cs" />
     <Compile Include="InstallerUtil.cs" />
-    <Compile Include="Merger.cs" />
     <Compile Include="ModuleImport\AddUpdatedNodesHelper.cs" />
     <Compile Include="ModuleImport\CompilerDiagnostic.cs" />
     <Compile Include="ModuleImport\CompilerDiagnosticSeverity.cs" />

@@ -4,30 +4,73 @@ using System.Linq;
 
 namespace Nuterra.Installer
 {
-	internal static class FullInstallProgram
+	internal static class InstallProgram
 	{
+		//Install data
 		public static readonly string NuterraDataDir = "Nuterra_Data";
+
 		public static readonly string NuterraAssemblyFile = "Nuterra.dll";
 		public static readonly string ExpectedHashFile = Path.Combine(NuterraDataDir, "installer.hash.txt");
 		public static readonly string AccessFile = Path.Combine(NuterraDataDir, "installer.access.txt");
 		public static readonly string TempOutputFile = Path.Combine(NuterraDataDir, "installer.modded.dll");
 		public static readonly string GalaxyAssemblyFile = "GalaxyCSharp.dll";
 
+		//Command line switches
+		public static readonly string InstallModeSwitch = "--mode";
+
+		public static readonly string OverrideTerraTechDirSwitch = "--dir";
+		public static readonly string OverrideAssemblyOutputSwitch = "--out";
+		public static readonly string OverrideAccessFileSwitch = "--accessfile";
+
 		internal static void Main(string[] args)
 		{
+			InstallMode installMode = InstallMode.FullInstall;
 			string terraTechRoot = Directory.GetCurrentDirectory();
-			if (args.Length == 1)
+			string assemblyCSharpOutputPathOverride = null;
+			string accessFileOverride = null;
+
+			for (int i = 0; i < args.Length; i++)
 			{
-				string path = args[0];
-				if (path.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+				string param = args[i];
+				string next = (i < args.Length) ? args[i + 1] : null;
+				bool skipNext = false;
+
+				//--mode:
+				if (param.StartsWith(InstallModeSwitch, StringComparison.OrdinalIgnoreCase))
 				{
-					path = Path.GetDirectoryName(path);
+					if (!Enum.TryParse(next, out installMode))
+					{
+						Error.InvalidInstallMode(next);
+						return;
+					}
+					skipNext = true;
 				}
-				terraTechRoot = path;
-			}
-			else
-			{
-				terraTechRoot = Directory.GetCurrentDirectory();
+
+				//--help
+				if (param.StartsWith(OverrideTerraTechDirSwitch, StringComparison.OrdinalIgnoreCase))
+				{
+					terraTechRoot = next;
+					skipNext = true;
+				}
+
+				//--out
+				if (param.StartsWith(OverrideAssemblyOutputSwitch, StringComparison.OrdinalIgnoreCase))
+				{
+					assemblyCSharpOutputPathOverride = next;
+					skipNext = true;
+				}
+
+				//--accessfile
+				if (param.StartsWith(OverrideAccessFileSwitch, StringComparison.OrdinalIgnoreCase))
+				{
+					accessFileOverride = next;
+					skipNext = true;
+				}
+
+				if (skipNext)
+				{
+					i++;
+				}
 			}
 
 			Console.WriteLine("Verifying install location");
@@ -70,15 +113,41 @@ namespace Nuterra.Installer
 				assemblyBackupPath = backupPath;
 			}
 
-			//Mod assembly
 			Console.WriteLine("Modding Assembly-CSharp.dll");
-			Merger.MergeNuterra(terraTechManagedDir, assemblyBackupPath, NuterraAssemblyFile, AccessFile, TempOutputFile);
+			AssemblyModifier modder = new AssemblyModifier(terraTechManagedDir, assemblyBackupPath);
+			switch (installMode)
+			{
+				case InstallMode.FullInstall:
+					modder.ApplyAccessorMod(accessFileOverride ?? AccessFile);
+					modder.MergeNuterra(NuterraAssemblyFile);
+					modder.HookNuterra();
+					break;
 
-			Console.WriteLine("Installing modded Assembly-CSharp.dll");
-			File.Copy(TempOutputFile, assemblyCSharpPath, overwrite: true);
+				case InstallMode.AccessorOnly:
+					modder.ApplyAccessorMod(accessFileOverride ?? AccessFile);
+					break;
 
-			Console.WriteLine("Installing dependency: GalaxyCSharp.dll");
-			File.Copy(Path.Combine(NuterraDataDir, GalaxyAssemblyFile), Path.Combine(terraTechManagedDir, GalaxyAssemblyFile), overwrite: true);
+				default:
+					throw new NotSupportedException();
+			}
+			modder.Write(TempOutputFile);
+
+			if (assemblyCSharpOutputPathOverride != null)
+			{
+				Console.WriteLine("Copying Assembly-CSharp.dll to target destination");
+				File.Copy(TempOutputFile, assemblyCSharpOutputPathOverride, overwrite: true);
+			}
+			else
+			{
+				Console.WriteLine("Installing modded Assembly-CSharp.dll");
+				File.Copy(TempOutputFile, assemblyCSharpPath, overwrite: true);
+			}
+
+			if (installMode == InstallMode.FullInstall)
+			{
+				Console.WriteLine("Installing dependency: GalaxyCSharp.dll");
+				File.Copy(Path.Combine(NuterraDataDir, GalaxyAssemblyFile), Path.Combine(terraTechManagedDir, GalaxyAssemblyFile), overwrite: true);
+			}
 
 			Console.WriteLine("Install completed, have fun :3 (press enter to finish)");
 			Console.ReadLine();
