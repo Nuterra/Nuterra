@@ -9,10 +9,8 @@ namespace Maritaria
 	{
 		public static readonly string SpriteFile = @"Assets/Blocks/Cockpit/GSO_Observatory_icon.png";
 		public static readonly string ModelFile = @"Assets/Blocks/Cockpit/TT_GSO_Observatory_Block.blend";
-		public static readonly string MaterialFile = @"Assets/Blocks/Cockpit/GSO_Observatory_material.mat";
 
 		public static readonly int BlockID = 9000;
-		private static GameObject renderPrefab;
 		int CustomBlock.BlockID => BlockID;
 		public string Name => "GSO Cockpit";
 		public string Description => "Pop in here and have a first-person look at the world from this block";
@@ -45,10 +43,7 @@ namespace Maritaria
 			tankBlock.filledCells = new Vector3[] { new Vector3(0, 0, 0) };
 			tankBlock.partialCells = new Vector3[] { };
 
-			//GameObject renderObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			GameObject renderObject = AssetBundleImport.Load<GameObject>(ModelFile);
-			renderPrefab = renderObject;
-			//GameObject.DontDestroyOnLoad(renderPrefab);
 			Console.WriteLine("Renderobject:");
 			UnityGraph.LogGameObject(renderObject);
 			renderObject.transform.parent = Prefab.transform;
