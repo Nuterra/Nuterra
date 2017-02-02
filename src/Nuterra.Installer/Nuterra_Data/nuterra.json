@@ -18,5 +18,8 @@
     "MobileSolarPanels": true,
     "MobileSolarVelocityThreshold": 1,
     "MobileSolarMultiplier": 10,
+  },
+  "CustomCursorMod": {
+    "Folder": "Nuterra_Data/CustomCursor/HighVis_Black"
   }
 }
