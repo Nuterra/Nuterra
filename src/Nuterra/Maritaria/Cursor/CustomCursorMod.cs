@@ -2,10 +2,10 @@
 using System.Linq;
 using Nuterra;
 
-namespace Maritaria
+namespace Maritaria.Cursor
 {
 	[Mod]
-	public sealed class CustomCursor : TerraTechMod
+	public sealed class CustomCursorMod : TerraTechMod
 	{
 		public override string Name => "Custom Cursor";
 		public override string Description => "Allows the cursor to be changed using a png image";
