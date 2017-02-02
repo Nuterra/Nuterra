@@ -21,6 +21,7 @@ namespace Sylver
 			Mod.BehaviorHolder.AddComponent<SylverMod>();
 			Mod.BehaviorHolder.AddComponent<GUIRenderer>();
 			Mod.BehaviorHolder.AddComponent<SylverSpawn>();
+			Mod.BehaviorHolder.AddComponent<SylverGyro>();
 			UnityEngine.Object.DontDestroyOnLoad(Mod.BehaviorHolder);
 		}
 	}
