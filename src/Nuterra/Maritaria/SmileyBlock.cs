@@ -44,8 +44,6 @@ namespace Maritaria
 			tankBlock.partialCells = new Vector3[] { };
 
 			GameObject renderObject = AssetBundleImport.Load<GameObject>(ModelFile);
-			Console.WriteLine("Renderobject:");
-			UnityGraph.LogGameObject(renderObject);
 			renderObject.transform.parent = Prefab.transform;
 			renderObject.name = $"{Name}.Model";
 			renderObject.layer = Globals.inst.layerTank;
