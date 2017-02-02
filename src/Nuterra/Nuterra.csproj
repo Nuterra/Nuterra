@@ -89,7 +89,9 @@
     <Compile Include="ModLoader.cs" />
     <Compile Include="Nuterra.cs" />
     <Compile Include="Sylver\GUIRenderer.cs" />
+    <Compile Include="Sylver\GyroRotor.cs" />
     <Compile Include="Sylver\Mod.cs" />
+    <Compile Include="Sylver\SylverGyro.cs" />
     <Compile Include="Sylver\SylverMod.cs" />
     <Compile Include="Sylver\SylverSpawn.cs" />
     <Compile Include="TerraTechMod.cs" />
