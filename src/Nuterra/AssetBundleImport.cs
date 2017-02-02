@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Nuterra
 	{
 		public static readonly string AssetFilename = "mod-nuterra";
 		public static readonly AssetBundle NuterraAssetBundle;
+		private static Dictionary<string, object> CachedAssets = new Dictionary<string, object>();
 
 		static AssetBundleImport()
 		{
@@ -24,7 +26,13 @@ namespace Nuterra
 			{
 				throw new InvalidOperationException("AssetBundle is not loaded");
 			}
-			return NuterraAssetBundle.LoadAsset<T>(path);
+			object result;
+			if (!CachedAssets.TryGetValue(path, out result))
+			{
+				result = NuterraAssetBundle.LoadAsset<T>(path);
+				CachedAssets.Add(path, result);
+			}
+			return (T)result;
 		}
 	}
 }
