@@ -27,6 +27,7 @@ namespace Maritaria
 			{
 				RegisterCustomBlock(new SmileyBlock());
 				RegisterCustomBlock(new BaconBlock());
+				RegisterCustomBlock(new Sylver.GyroRotor());
 			}
 		}
 
