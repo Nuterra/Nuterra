@@ -13,7 +13,7 @@ namespace Nuterra
 		public static ModLoader Instance { get; } = new ModLoader();
 
 		private Dictionary<Type, TerraTechMod> _modInstances = new Dictionary<Type, TerraTechMod>();
-		private Dictionary<string, Type> _modNames = new Dictionary<string, Type>();
+		private Dictionary<string, Type> _modNames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
 
 		public void LoadAllMods(Assembly asm)
 		{
