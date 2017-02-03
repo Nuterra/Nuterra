@@ -55,6 +55,7 @@ namespace Nuterra
 				Console.WriteLine($"Creating mod instance '{modClass.Name}'");
 				mod = (TerraTechMod)Activator.CreateInstance(modClass);
 				_modInstances.Add(modClass, mod);
+				_modNames.Add(mod.Name, modClass);
 			}
 			return mod;
 		}
