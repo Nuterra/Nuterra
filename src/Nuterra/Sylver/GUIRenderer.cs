@@ -15,15 +15,7 @@ namespace Sylver
 
 		public void OnGUI()
 		{
-			if (!Singleton.playerTank)
-			{
-				return;
-			}
-			if (!SylverMod.IsRandD)
-			{
-				return;
-			}
-			if (!Singleton.Manager<DebugUtil>.inst.hideGUI)
+			if (Singleton.playerTank && SylverMod.IsRandD && !Singleton.Manager<DebugUtil>.inst.hideGUI && !Singleton.Manager<ManPauseGame>.inst.IsPaused)
 			{
 				this._content.text = string.Format(GUIRenderer.DisplayFormat, SylverMod.FriendlyAIName);
 				this._style.fontSize = Screen.height / 60;
