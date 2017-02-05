@@ -33,7 +33,7 @@ namespace Maritaria
 
 		public void OnGUI()
 		{
-			if (!Singleton.playerTank || Singleton.playerTank.blockman.IterateBlockComponents<ModuleItemHolderMagnet>().FirstOrDefault() == null || Singleton.Manager<ManPauseGame>.inst.IsPaused)
+			if (Singleton.playerTank && !(Singleton.playerTank.blockman.IterateBlockComponents<ModuleItemHolderMagnet>().FirstOrDefault() == null) && !Singleton.Manager<ManPauseGame>.inst.IsPaused)
 			{
 				//No tank or no magnet blocks
 				return;
