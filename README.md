@@ -20,6 +20,12 @@ Check the [Releases] page for the latest version of the mod. Every distrubution 
 The main tool used to develop the mod is [dnSpy], a tool to decompile and edit managed assemblies. All modifications to the game are collected in the Maritaria namespace, merged into the original assembly and finally the original code is redirected to pass through the mod code. The documentation includes instructions about usage of [dnSpy].
 
 # Roadmap
+## Mod API Approach
+- [ ] Create event/hook system such that hooking will only be used for nuterra code
+- [ ] Restructure project and refactor into per-feature mods
+- [ ] Separate mods into individual projects/dlls
+- [ ] Add loading external dll support to modloader
+
 ## v1.0
 - [ ] Create modding API without references to original Assembly-CSharp.dll
 - [ ] Hotswappable mod loading
@@ -30,9 +36,3 @@ The main tool used to develop the mod is [dnSpy], a tool to decompile and edit m
 
 ## v2.0
 Support for multiplayer will be planned as soon as Terra Tech has build-in multiplayer.
-
-## Mod API Approach
-- [ ] Create event/hook system such that hooking will only be used for nuterra code
-- [ ] Restructure project and refactor into per-feature mods
-- [ ] Separate mods into individual projects/dlls
-- [ ] Add loading external dll support to modloader
