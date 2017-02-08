@@ -30,3 +30,9 @@ The main tool used to develop the mod is [dnSpy], a tool to decompile and edit m
 
 ## v2.0
 Support for multiplayer will be planned as soon as Terra Tech has build-in multiplayer.
+
+## Mod API Approach
+- [ ] Create event/hook system such that hooking will only be used for nuterra code
+- [ ] Restructure project and refactor into per-feature mods
+- [ ] Separate mods into individual projects/dlls
+- [ ] Add loading external dll support to modloader
