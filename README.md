@@ -20,19 +20,10 @@ Check the [Releases] page for the latest version of the mod. Every distrubution 
 The main tool used to develop the mod is [dnSpy], a tool to decompile and edit managed assemblies. All modifications to the game are collected in the Maritaria namespace, merged into the original assembly and finally the original code is redirected to pass through the mod code. The documentation includes instructions about usage of [dnSpy].
 
 # Roadmap
-## v0.2
-- [x] Add first custom block
-- [ ] Add rename current tech UI
-
-## v0.3
-- [ ] Generic custom block loading system
-- [ ] Remove the need to edit accessors
-- [ ] Base building blocks (GeoCorp)
-
 ## v1.0
 - [ ] Create modding API without references to original Assembly-CSharp.dll
 - [ ] Hotswappable mod loading
-- [ ] API for registering new blocktypes
+- [x] API for registering new blocktypes
 - [ ] API for registering configuration UI
 - [ ] Modular UI creation
 - [ ] Robust save system to allow loading worlds with missing mods
