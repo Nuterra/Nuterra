@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Maritaria\CheatBlocks\CheatBlockMod.cs" />
     <Compile Include="Maritaria\Cursor\CursorManager.cs" />
     <Compile Include="Maritaria\Cursor\CursorType.cs" />
     <Compile Include="Maritaria\Cursor\CustomCursorMod.cs" />
