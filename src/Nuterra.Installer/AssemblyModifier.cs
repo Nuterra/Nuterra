@@ -2,6 +2,7 @@
 using System.IO;
 using dnlib.DotNet;
 using dnlib.DotNet.Writer;
+using Nuterra.Build;
 using Nuterra.Installer.ModuleImport;
 
 namespace Nuterra.Installer

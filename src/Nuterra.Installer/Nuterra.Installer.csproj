@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessModifier.cs" />
     <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra">
       <Link>Nuterra_Data\mod-nuterra</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -70,7 +69,6 @@
     <Compile Include="Hooking\ReflectionExtensions.cs" />
     <Compile Include="Hooking\RedirectSettings.cs" />
     <Compile Include="Hooking\Hooker.cs" />
-    <Compile Include="InstallerUtil.cs" />
     <Compile Include="ModuleImport\AddUpdatedNodesHelper.cs" />
     <Compile Include="ModuleImport\CompilerDiagnostic.cs" />
     <Compile Include="ModuleImport\CompilerDiagnosticSeverity.cs" />
@@ -107,6 +105,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nuterra.Build\Nuterra.Build.csproj">
+      <Project>{F953D402-AAE3-4335-90A6-13BDBDF6D4FA}</Project>
+      <Name>Nuterra.Build</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nuterra\Nuterra.csproj">
       <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
       <Name>Nuterra</Name>

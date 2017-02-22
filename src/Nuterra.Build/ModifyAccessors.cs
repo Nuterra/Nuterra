@@ -2,36 +2,17 @@
 using System.IO;
 using System.Linq;
 using dnlib.DotNet;
-using dnlib.DotNet.Writer;
 
-namespace Nuterra.Installer
+namespace Nuterra.Build
 {
-	public static class AccessModifier
+	public sealed class ModifyAccessors : ModificationStep
 	{
-		internal static void Main()
+		protected override void Perform(ModificationInfo info)
 		{
-			string managedDir = @"D:\Program Files (x86)\Steam\steamapps\common\TerraTech Beta\TerraTechWin64_Data\Managed";
-			string assemblyPath = Path.Combine(managedDir, "Assembly-CSharp.dll");
-			string accessFile = "access.txt";
-			string outputFile = Path.Combine(managedDir, "Assembly-CSharp-access.dll");
-			Apply(managedDir, assemblyPath, accessFile, outputFile);
+			Apply(info.AssemblyCSharp, info.AccessFilePath);
 		}
 
-		public static void Apply(string managedDir, string inputAssemblyFile, string accessFile, string outputAssemblyFile)
-		{
-			AssemblyResolver resolver = new AssemblyResolver();
-			resolver.PreSearchPaths.Add(managedDir);
-			ModuleContext context = new ModuleContext();
-			ModuleDefMD module = ModuleDefMD.Load(inputAssemblyFile, context);
-
-			Apply(module, accessFile);
-
-			ModuleWriterOptions writerOptions = new ModuleWriterOptions();
-			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveRids;
-			module.Write(outputAssemblyFile, writerOptions);
-		}
-
-		public static void Apply(ModuleDefMD module, string accessFile)
+		private static void Apply(ModuleDefMD module, string accessFile)
 		{
 			using (FileStream fs = File.OpenRead(accessFile))
 			using (StreamReader reader = new StreamReader(fs))

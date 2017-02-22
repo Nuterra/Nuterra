@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Nuterra.Build;
 
 namespace Nuterra.Installer
 {
@@ -16,8 +17,6 @@ namespace Nuterra.Installer
 		public static readonly string GalaxyAssemblyFile = "GalaxyCSharp.dll";
 
 		//Command line switches
-		public static readonly string InstallModeSwitch = "--mode";
-
 		public static readonly string OverrideTerraTechDirSwitch = "--dir";
 		public static readonly string OverrideAssemblyOutputSwitch = "--out";
 		public static readonly string OverrideAccessFileSwitch = "--accessfile";
@@ -35,18 +34,7 @@ namespace Nuterra.Installer
 				string next = (i < args.Length) ? args[i + 1] : null;
 				bool skipNext = false;
 
-				//--mode:
-				if (param.StartsWith(InstallModeSwitch, StringComparison.OrdinalIgnoreCase))
-				{
-					if (!Enum.TryParse(next, out installMode))
-					{
-						Error.InvalidInstallMode(next);
-						return;
-					}
-					skipNext = true;
-				}
-
-				//--help
+				//--dir
 				if (param.StartsWith(OverrideTerraTechDirSwitch, StringComparison.OrdinalIgnoreCase))
 				{
 					terraTechRoot = next;
@@ -94,17 +82,17 @@ namespace Nuterra.Installer
 			string terraTechManagedDir = Path.Combine(terraTechData, "Managed");
 			string assemblyCSharpPath = Path.Combine(terraTechManagedDir, "Assembly-CSharp.dll");
 			string assemblyBackupDir = Path.Combine(terraTechManagedDir, "NuterraBackups");
-			string assemblyHash = InstallerUtil.GetFileHash(assemblyCSharpPath);
+			string assemblyHash = AssemblyCSharpUtil.GetFileHash(assemblyCSharpPath);
 			string assemblyBackupPath;
 			if (assemblyHash == expectedHash)
 			{
 				//Current assembly is clean install, make backup
-				assemblyBackupPath = InstallerUtil.CreateAssemblyBackup(assemblyCSharpPath, assemblyBackupDir, assemblyHash);
+				assemblyBackupPath = AssemblyCSharpUtil.CreateAssemblyBackup(assemblyCSharpPath, assemblyBackupDir, assemblyHash);
 			}
 			else
 			{
 				//Current assembly is dirty, check for backup and otherwise warn
-				string backupPath = InstallerUtil.FormatBackupPath(assemblyBackupDir, expectedHash);
+				string backupPath = AssemblyCSharpUtil.FormatBackupPath(assemblyBackupDir, expectedHash);
 				if (!File.Exists(backupPath))
 				{
 					Error.NoCleanBackup();
