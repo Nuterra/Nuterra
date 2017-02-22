@@ -14,7 +14,7 @@ namespace Maritaria
 			int blockID = block.BlockID;
 			CustomBlocks.Add(blockID, block);
 			int hashCode = ItemTypeInfo.GetHashCode(ObjectTypes.Block, blockID);
-			ManSpawn spawnManager = Singleton.Manager<ManSpawn>.inst;
+			ManSpawn spawnManager = ManSpawn.inst;
 			spawnManager.VisibleTypeInfo.SetDescriptor<FactionSubTypes>(hashCode, block.Faction);
 			spawnManager.VisibleTypeInfo.SetDescriptor<BlockCategories>(hashCode, block.Category);
 			spawnManager.AddBlockToDictionary(block.Prefab);
