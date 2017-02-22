@@ -21,28 +21,32 @@ namespace Maritaria.CheatBlocks
 
 		private void OnAttach()
 		{
-			foreach (TankBlock block in block.tank.blockman.IterateBlocks())
+			foreach (Damageable dmg in block.tank.blockman.IterateBlockComponents<Damageable>())
 			{
-				block.visible.damageable.SetInvulnerable(true, true);
+				dmg.SetInvulnerable(true, true);
+				dmg.InitHealth(Damageable.kRefillHealth);
 			}
 		}
 
 		private void OnDetach()
 		{
-			bool retainGodmode = false;
-			foreach (TankBlock block in block.tank.blockman.IterateBlocks())
+			if (!HasAnotherGodModule())
 			{
-				var otherBlock = block.GetComponent<ModuleGodMode>();
-				if (otherBlock != this)
+				block.tank.SetInvulnerable(false, true);
+			}
+		}
+
+		private bool HasAnotherGodModule()
+		{
+			foreach (TankBlock otherBlock in block.tank.blockman.IterateBlocks())
+			{
+				var otherGodModule = otherBlock.GetComponent<ModuleGodMode>();
+				if ((otherGodModule != null) && (this != otherGodModule))
 				{
-					retainGodmode = true;
-					break;
+					return true;
 				}
 			}
-			if (!retainGodmode)
-			{
-				block.visible.damageable.SetInvulnerable(false, true);
-			}
+			return false;
 		}
 	}
 }
