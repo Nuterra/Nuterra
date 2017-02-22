@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Nuterra.InstallProcess
+namespace Nuterra.Hooking
 {
 	/// <summary>
 	/// This class is used by the installer to hook up the code, this is done after merging nuterra into Assembly-CSharp.dll

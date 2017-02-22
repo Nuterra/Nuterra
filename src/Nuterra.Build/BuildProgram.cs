@@ -1,11 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
-using Nuterra.Build;
 
-namespace Nuterra.Installer
+namespace Nuterra.Build
 {
-	internal static class InstallProgram
+	internal static class BuildProgram
 	{
 		internal static void Main(string[] args)
 		{
@@ -29,10 +26,7 @@ namespace Nuterra.Installer
 				.SetNext(new FindCleanAssembly())
 				.SetNext(new LoadAssemblyCSharp())
 				.SetNext(new ModifyAccessors())
-				.SetNext(new AbsorbNuterra())
-				.SetNext(new HookNuterra())
-				.SetNext(new SaveAssemblyCSharp())
-				.SetNext(new FixMissingDependencies());
+				.SetNext(new SaveAssemblyCSharp());
 
 			modificationChain.ExecuteSteps(info);
 		}
