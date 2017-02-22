@@ -77,8 +77,6 @@ namespace Nuterra.Build
 			{
 				Console.WriteLine("Install failed");
 			}
-			Console.WriteLine("Press enter to finish program");
-			Console.ReadLine();
 		}
 	}
 }

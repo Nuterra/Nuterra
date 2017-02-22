@@ -58,13 +58,10 @@
       <Link>Nuterra_Data\mod-nuterra.manifest</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="InstallProcess\AfterHooking.cs" />
-    <None Include="InstallProcess\AfterMerge.cs" />
-    <None Include="InstallProcess\Hooker.cs" />
-    <None Include="InstallProcess\RedirectSettings.cs" />
+    <None Include="Hooking\AfterMerge.cs" />
+    <Compile Include="AbsorbNuterra.cs" />
     <Compile Include="AssemblyModifier.cs" />
     <Compile Include="Error.cs" />
-    <Compile Include="InstallMode.cs" />
     <Compile Include="InstallProgram.cs" />
     <Compile Include="Hooking\ReflectionExtensions.cs" />
     <Compile Include="Hooking\RedirectSettings.cs" />

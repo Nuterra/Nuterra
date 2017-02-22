@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nuterra.Installer
 {
-	public enum InstallMode
+	class AbsorbNuterra
 	{
-		FullInstall,
-		AccessorOnly,
 	}
 }
