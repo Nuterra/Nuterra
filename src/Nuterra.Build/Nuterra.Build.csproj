@@ -61,10 +61,17 @@
     <Compile Include="VerifyRootDirectory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Compile Include="LoadAssemblyCSharp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoadAssemblyCSharp.cs" />
+    <None Include="installer.access.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="installer.hash.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

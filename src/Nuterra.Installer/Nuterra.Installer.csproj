@@ -115,14 +115,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Nuterra_Data\installer.access.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\installer.hash.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\..\lib\GalaxyCSharp.dll">
       <Link>Nuterra_Data\GalaxyCSharp.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
