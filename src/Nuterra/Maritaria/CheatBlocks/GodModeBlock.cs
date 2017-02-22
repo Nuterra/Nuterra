@@ -8,13 +8,14 @@ namespace Maritaria.CheatBlocks
 	{
 		public static readonly int BlockID = 9003;
 		public static readonly string ModelPrefab = @"Assets/Blocks/Powerups/Shield/GodBlock.prefab";
+		public static readonly string SpritePrefab = @"Assets/Blocks/Powerups/Shield/block_icon.png";
 
 		int CustomBlock.BlockID => BlockID;
 		public string Name => "Godmode Block";
 		public string Description => "Protects all attached blocks from all incomming damage";
 		public BlockCategories Category => BlockCategories.Accessories;
 		public FactionSubTypes Faction => FactionSubTypes.EXP;
-		public Sprite DisplaySprite => null;
+		public Sprite DisplaySprite { get; } = AssetBundleImport.Load<Sprite>(SpritePrefab);
 		public GameObject Prefab { get; }
 
 		public GodModeBlock()
