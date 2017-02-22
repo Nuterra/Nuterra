@@ -64,12 +64,12 @@
     <Compile Include="LoadAssemblyCSharp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="installer.access.txt">
+    <None Include="Nuterra_Data\build.access.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="installer.hash.txt">
+    <None Include="Nuterra_Data\build.hash.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
