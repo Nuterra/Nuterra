@@ -12,6 +12,7 @@ namespace Maritaria.CheatBlocks
 		public override void Load()
 		{
 			base.Load();
+			BlockLoader.Register(new GodModeBlock());
 		}
 
 	}
