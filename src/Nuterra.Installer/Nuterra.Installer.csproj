@@ -60,8 +60,8 @@
     </None>
     <None Include="Hooking\AfterMerge.cs" />
     <Compile Include="AbsorbNuterra.cs" />
-    <Compile Include="AssemblyModifier.cs" />
-    <Compile Include="Error.cs" />
+    <Compile Include="HookNuterra.cs" />
+    <Compile Include="FixMissingDependencies.cs" />
     <Compile Include="InstallProgram.cs" />
     <Compile Include="Hooking\ReflectionExtensions.cs" />
     <Compile Include="Hooking\RedirectSettings.cs" />

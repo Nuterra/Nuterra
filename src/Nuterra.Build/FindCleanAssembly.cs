@@ -15,7 +15,6 @@ namespace Nuterra.Build
 			if (cleanAssemblyPath == null)
 			{
 				Error.NoCleanBackup();
-				return;
 			}
 			info.CleanAssemblyPath = cleanAssemblyPath;
 		}

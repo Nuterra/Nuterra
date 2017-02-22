@@ -27,18 +27,9 @@ namespace Nuterra.Build
 			}
 		}
 
-		public bool ExecuteSteps(ModificationInfo info)
+		public void ExecuteSteps(ModificationInfo info)
 		{
-			try
-			{
-				PerformInternal(info);
-				return true;
-			}
-			catch (ModificationException ex)
-			{
-				Console.WriteLine(ex.Message);
-				return false;
-			}
+			PerformInternal(info);
 		}
 	}
 }

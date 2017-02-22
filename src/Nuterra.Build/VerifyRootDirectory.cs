@@ -11,7 +11,7 @@ namespace Nuterra.Build
 			string terraTechData = Directory.EnumerateDirectories(info.TerraTechRoot, "TerraTech*_Data").SingleOrDefault();
 			if (terraTechData == null)
 			{
-				throw new ModificationException("Please start the game from the TerraTech root directory (TerraTech*_Data could not be found).");
+				Error.InvalidRootDirectory();
 			}
 			info.TerraTechData = terraTechData;
 		}
