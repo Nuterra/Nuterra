@@ -26,6 +26,9 @@ ModelImporter:
     4300000: BaseCirleCrossSection
     4300002: BaseCircle
     4300004: Foot
+    6400000: BaseCircle
+    6400002: BaseCirleCrossSection
+    6400004: Foot
     7400000: Default Take
     9500000: //RootNode
   materials:
