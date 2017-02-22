@@ -12,9 +12,11 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Gyro stabalized Hawkeye rotor
 - Custom cursor mod
+- Cheat block mod (godmode)
 
 ### Changed
 - Upgraded model for the first person block
+- Split off build steps from installer to avoid a circular dependency
 
 ## [0.3.0]
 ### Added
