@@ -50,6 +50,7 @@ namespace Maritaria
 			ScoopKey = ParseKey(json, nameof(ScoopKey), KeyCode.None);
 			PlasmaKey = ParseKey(json, nameof(PlasmaKey), KeyCode.None);
 			SawKey = ParseKey(json, nameof(SawKey), KeyCode.None);
+			ProductionToggleKey = ParseKey(json, nameof(ProductionToggleKey), KeyCode.None);
 
 			//Cheats
 			TurnNightKey = ParseKey(json, nameof(TurnNightKey), KeyCode.None);

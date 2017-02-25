@@ -21,11 +21,6 @@ namespace Sylver
 		{
 		}
 
-		public ComponentPool.PoolDelegates OnPool()
-		{
-			return new ComponentPool.PoolDelegates(null, null);
-		}
-
 		public void FixedUpdate()
 		{
 			if (base.block.tank)
