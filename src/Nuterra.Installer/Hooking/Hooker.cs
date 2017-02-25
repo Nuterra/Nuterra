@@ -35,7 +35,9 @@ namespace Nuterra.Installer.Hooking
 
 			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnSpawn)) { });
 			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnAttach)) { InsertionStart = 3 });//First 3 instructions are to set IsEnabled, which the hook overrides later
-			Hook_ModuleHeart_IsOnline(module);
+
+			Redirect(module, "ModuleHeart", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_CanPowerUp)) { });
+			//Hook_ModuleHeart_IsOnline(module);
 
 			Redirect(module, "ManSaveGame+State", typeof(Maritaria.SaveGameFlagger), new RedirectSettings(".ctor") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_State_ctor) });
 			Redirect(module, "ManSaveGame+SaveData", typeof(Maritaria.SaveGameFlagger), new RedirectSettings("OnDeserialized") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_SaveData_OnDeserialized) });
@@ -228,40 +230,6 @@ namespace Nuterra.Installer.Hooking
 
 				Make sure to replace jumps to #471 to the first injected opcode
 			 */
-		}
-
-		private static void Hook_ModuleHeart_IsOnline(ModuleDefMD module)
-		{
-			const string methodName = nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_IsOnline);
-			TypeDef cecilSource = module.Find("ModuleHeart", isReflectionName: true);
-			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart));
-			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
-
-			var body = sourceMethod.Body.Instructions;
-
-			Instruction returnFalseStartInstruction = body[15];
-
-			int index = 13;
-			body.Replace(index++, new Instruction(OpCodes.Ble_Un_S, returnFalseStartInstruction));
-			body.Replace(index++, new Instruction(OpCodes.Ldarg_0));
-			body.Insert(index++, new Instruction(OpCodes.Call, targetMethod));
-			body.Insert(index++, new Instruction(OpCodes.Ret));
-
-			/*
-			Before:
-			13	0035	cgt
-			14	0037	br.s	16 (003A) ret
-			15	0039	ldc.i4.0
-			16	003A	ret
-			After:
-			13	002F	ble.un.s	17 (0038) ldc.i4.0
-			14	0031	ldnull
-			15	0032	call	bool Maritaria.ProductionToggleKeyBehaviour::ModuleHeart_get_IsOnline(class ModuleHeart)
-			16	0037	ret
-			17	0038	ldc.i4.0
-			18	0039	ret
-			*/
 		}
 	}
 }
