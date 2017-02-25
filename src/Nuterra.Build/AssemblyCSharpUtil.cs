@@ -21,7 +21,7 @@ namespace Nuterra.Build
 
 		public static string CreateAssemblyBackup(string sourceAssembly, string assemblyBackupDir, string hash)
 		{
-			string targetFile = Path.Combine(assemblyBackupDir, $"{hash}.dll");
+			string targetFile = FormatBackupPath(assemblyBackupDir, hash);
 			if (!Directory.Exists(assemblyBackupDir))
 			{
 				Directory.CreateDirectory(assemblyBackupDir);
@@ -35,6 +35,7 @@ namespace Nuterra.Build
 
 		public static string FormatBackupPath(string assemblyBackupDir, string hash)
 		{
+			hash = hash.Replace('/', '-');
 			return Path.Combine(assemblyBackupDir, $"{hash}.dll");
 		}
 
