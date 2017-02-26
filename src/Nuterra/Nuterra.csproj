@@ -85,7 +85,7 @@
     <Compile Include="Maritaria\ProductionStoppedSign.cs" />
     <Compile Include="Maritaria\ProductionToggleKeyBehaviour.cs" />
     <Compile Include="Maritaria\SaveGameFlagger.cs" />
-    <Compile Include="Maritaria\SmileyBlock.cs" />
+    <Compile Include="Maritaria\CockpitBlock.cs" />
     <Compile Include="Maritaria\SplashScreenHandler.cs" />
     <Compile Include="Maritaria\SpriteFactory.cs" />
     <Compile Include="Maritaria\TimeOfDayKeysBehaviour.cs" />

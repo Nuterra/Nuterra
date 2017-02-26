@@ -42,7 +42,7 @@ namespace Maritaria
 				{
 					RegisterImmediatly(queuedBlock);
 				}
-				Register(new SmileyBlock());
+				Register(new CockpitBlock());
 				Register(new BaconBlock());
 				Register(new Sylver.GyroRotor());
 			}

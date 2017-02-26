@@ -14,8 +14,8 @@ namespace Maritaria.CheatBlocks
 		public static readonly string SpritePrefab = @"Assets/Blocks/Powerups/Fuel/block_icon.png";
 
 		int CustomBlock.BlockID => BlockID;
-		public string Name => "Fuel Cheat";
-		public string Description => "Gives infinite fuel";
+		public string Name => "Cheat: Fuel";
+		public string Description => "Gives infinite fuel to any tech placed on it";
 		public BlockCategories Category => BlockCategories.Accessories;
 		public FactionSubTypes Faction => FactionSubTypes.EXP;
 		public Sprite DisplaySprite { get; } = AssetBundleImport.Load<Sprite>(SpritePrefab);

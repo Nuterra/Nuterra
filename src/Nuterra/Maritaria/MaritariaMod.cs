@@ -1,10 +1,10 @@
-﻿using Nuterra;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using System;
 using Newtonsoft.Json.Linq;
+using Nuterra;
+
+using System;
+
+using UnityEngine;
 
 namespace Maritaria
 {
@@ -20,7 +20,6 @@ namespace Maritaria
 		public MaritariaConfig Config { get; } = new MaritariaConfig();
 
 		internal static MaritariaMod Instance { get; private set; }
-
 
 		public override void Load()
 		{
@@ -38,8 +37,9 @@ namespace Maritaria
 
 			Config.Load(ModConfig.Data.GetValue(Name, StringComparison.OrdinalIgnoreCase) as JObject);
 
+			BlockLoader.Register(new CockpitBlock());
+
 			SplashScreenHandler.Init();
 		}
-
 	}
 }

@@ -11,7 +11,7 @@ namespace Maritaria.CheatBlocks
 		public static readonly string SpritePrefab = @"Assets/Blocks/Powerups/Shield/block_icon.png";
 
 		int CustomBlock.BlockID => BlockID;
-		public string Name => "Godmode Block";
+		public string Name => "Cheat: Godmode";
 		public string Description => "Protects all attached blocks from all incomming damage";
 		public BlockCategories Category => BlockCategories.Accessories;
 		public FactionSubTypes Faction => FactionSubTypes.EXP;
