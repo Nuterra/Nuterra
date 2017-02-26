@@ -109,7 +109,7 @@ namespace Nuterra.Build
 
 			if (info.NuterraAssembly == null)
 			{
-				info.NuterraAssembly = Path.Combine(info.NuterraData, "Nuterra.dll");
+				info.NuterraAssembly = "Nuterra.dll";
 			}
 
 			return info;
