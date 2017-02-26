@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Maritaria
 {
-	public sealed class SmileyBlock : CustomBlock
+	public sealed class CockpitBlock : CustomBlock
 	{
 		public static readonly string SpriteFile = @"Assets/Blocks/Cockpit/GSO_Observatory_icon.png";
 		public static readonly string ModelFile = @"Assets/Blocks/Cockpit/TT_GSO_Observatory_Block.blend";
@@ -19,7 +19,7 @@ namespace Maritaria
 		public GameObject Prefab { get; }
 		public Sprite DisplaySprite { get; } = AssetBundleImport.Load<Sprite>(SpriteFile);
 
-		public SmileyBlock()
+		public CockpitBlock()
 		{
 			Prefab = new GameObject();
 			GameObject.DontDestroyOnLoad(Prefab);
