@@ -4,6 +4,12 @@ namespace Maritaria.CheatBlocks
 {
 	public sealed class ModuleGodMode : Module
 	{
+		private void OnPool()
+		{
+			block.AttachEvent += OnAttach;
+			block.DetachEvent += OnDetach;
+		}
+
 		private void OnSpawn()
 		{
 		}
