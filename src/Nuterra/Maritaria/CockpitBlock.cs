@@ -7,7 +7,7 @@ namespace Maritaria
 {
 	public sealed class CockpitBlock : CustomBlock
 	{
-		public static readonly string SpriteFile = @"Assets/Blocks/Cockpit/GSO_Observatory_icon.png";
+		public static readonly string SpriteFile = @"Assets/Blocks/Cockpit/block_icon.png";
 		public static readonly string ModelFile = @"Assets/Blocks/Cockpit/TT_GSO_Observatory_Block.blend";
 
 		public static readonly int BlockID = 9000;
@@ -33,8 +33,8 @@ namespace Maritaria
 			Damageable dmg = Prefab.EnsureComponent<Damageable>();
 			ModuleDamage modDamage = Prefab.EnsureComponent<ModuleDamage>();
 			AutoSpriteRenderer spriteRenderer = Prefab.EnsureComponent<AutoSpriteRenderer>();
-			Prefab.EnsureComponent<TankBlock>();
-			TankBlock tankBlock = Prefab.GetComponent<TankBlock>();
+
+			TankBlock tankBlock = Prefab.EnsureComponent<TankBlock>();
 
 			tankBlock.m_BlockCategory = Category;
 			tankBlock.attachPoints = new Vector3[]{

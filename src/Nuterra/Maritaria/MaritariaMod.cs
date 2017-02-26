@@ -38,6 +38,8 @@ namespace Maritaria
 
 			Config.Load(ModConfig.Data.GetValue(Name, StringComparison.OrdinalIgnoreCase) as JObject);
 
+			BlockLoader.Register(new CockpitBlock());
+
 			SplashScreenHandler.Init();
 		}
 
