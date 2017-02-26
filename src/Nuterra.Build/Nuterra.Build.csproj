@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessModifier.cs" />
     <Compile Include="AssemblyCSharpUtil.cs" />
     <Compile Include="BuildProgram.cs" />
     <Compile Include="CommonSwitches.cs" />

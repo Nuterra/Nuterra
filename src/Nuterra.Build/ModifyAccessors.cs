@@ -61,6 +61,10 @@ namespace Nuterra.Build
 				case "method":
 					MakeMethodVisible(targetType, parts[2]);
 					break;
+
+				case "method+virtual":
+					MakeMethodVirtual(targetType, parts[2]);
+					break;
 			}
 		}
 
@@ -106,6 +110,14 @@ namespace Nuterra.Build
 				{
 					method.Attributes |= MethodAttributes.Assembly;
 				}
+			}
+		}
+
+		private static void MakeMethodVirtual(TypeDef targetType, string methodName)
+		{
+			foreach (MethodDef method in targetType.Methods.Where(m => m.Name == methodName))
+			{
+				method.IsVirtual = true;
 			}
 		}
 	}
