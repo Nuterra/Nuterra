@@ -46,7 +46,7 @@ namespace Maritaria.CheatBlocks
 			tankBlock.partialCells = new Vector3[] { };
 			tankBlock.m_DefaultMass = 0.01f;
 
-			GameObject renderObject = AssetBundleImport.Load<GameObject>(ModelPrefab);
+			GameObject renderObject = GameObject.Instantiate(AssetBundleImport.Load<GameObject>(ModelPrefab));
 			renderObject.transform.parent = Prefab.transform;
 			renderObject.name = $"{Name}.Model";
 			renderObject.layer = Globals.inst.layerTank;
