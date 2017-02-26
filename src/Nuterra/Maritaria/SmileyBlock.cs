@@ -15,7 +15,7 @@ namespace Maritaria
 		public string Name => "GSO Cockpit";
 		public string Description => "Pop in here and have a first-person look at the world from this block";
 		public FactionSubTypes Faction => FactionSubTypes.GSO;
-		public BlockCategories Category => BlockCategories.Accessories;
+		public BlockCategories Category => BlockCategories.Control;
 		public GameObject Prefab { get; }
 		public Sprite DisplaySprite { get; } = AssetBundleImport.Load<Sprite>(SpriteFile);
 
