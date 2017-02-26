@@ -5,9 +5,9 @@ namespace Maritaria
 {
 	public class MagnetToggleKeyBehaviour : MonoBehaviour
 	{
-		private GUIContent _content;
+		private GUIContent _content = new GUIContent();
 
-		private GUIStyle _style;
+		private GUIStyle _style = new GUIStyle();
 
 		public static readonly string DisplayFormat = "<color=white><b>Magnets: </b>{0}</color>";
 
@@ -23,19 +23,17 @@ namespace Maritaria
 			}
 		}
 
-		public MagnetToggleKeyBehaviour()
+		private void Start()
 		{
-			_style = new GUIStyle();
-			_style.richText=(true);
-			_style.alignment=(TextAnchor)(4);
-			_content = new GUIContent();
+			_style.richText = true;
+			_style.alignment = TextAnchor.MiddleCenter;
 		}
 
 		public void OnGUI()
 		{
-			if (Singleton.playerTank && !(Singleton.playerTank.blockman.IterateBlockComponents<ModuleItemHolderMagnet>().FirstOrDefault() == null) && !Singleton.Manager<ManPauseGame>.inst.IsPaused)
+			if (!Singleton.playerTank || (Singleton.playerTank.blockman.IterateBlockComponents<ModuleItemHolderMagnet>().FirstOrDefault() == null) || ManPauseGame.inst.IsPaused)
 			{
-				//No tank or no magnet blocks
+				//No tank, magnet blocks or game is paused
 				return;
 			}
 			if (Modules.Magnet.DisabledForPlayerControlledTank)
