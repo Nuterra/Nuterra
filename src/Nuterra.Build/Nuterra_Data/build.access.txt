@@ -39,3 +39,6 @@ field MousePointer m_OverGrabbableCursor
 field MousePointer m_HoldingGrabbableCursor
 field MousePointer m_PaintingCursor
 field ModuleHeart m_HasAnchor
+field ModuleFuelTank m_MaterialsToUpdate
+method+virtual ModuleFuelTank get_RefillRate
+method+virtual ModuleFuelTank get_Capacity

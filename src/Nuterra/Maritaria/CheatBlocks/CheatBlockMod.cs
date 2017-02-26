@@ -13,6 +13,7 @@ namespace Maritaria.CheatBlocks
 		{
 			base.Load();
 			BlockLoader.Register(new GodModeBlock());
+			BlockLoader.Register(new InfiniteFuelBlock());
 		}
 
 	}
