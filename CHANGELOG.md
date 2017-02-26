@@ -1,4 +1,5 @@
-[Unreleased]: https://github.com/maritaria/nuterra/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/maritaria/nuterra/compare/v0.3.1...HEAD
+[0.3.0]: https://github.com/maritaria/nuterra/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/maritaria/nuterra/compare/v0.2.4...v0.3.0
 [0.2.4]: https://github.com/maritaria/nuterra/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/maritaria/nuterra/compare/v0.2.2...v0.2.3
@@ -9,14 +10,24 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+Nothing
+
+## [0.3.1]
 ### Added
 - Gyro stabalized Hawkeye rotor
 - Custom cursor mod
-- Cheat block mod (godmode)
+- Cheat block mod (godmode & infinite fuel)
+- Support for mods to register custom blocks
 
 ### Changed
+- Support for 0.7.3
 - Upgraded model for the first person block
 - Split off build steps from installer to avoid a circular dependency
+- Fixed magnet status always showing
+- Improved wiki pages
+
+### Removed
+- Support for 0.7.2
 
 ## [0.3.0]
 ### Added
