@@ -8,7 +8,7 @@ namespace Maritaria
 	public sealed class CockpitBlock : CustomBlock
 	{
 		public static readonly string SpriteFile = @"Assets/Blocks/Cockpit/block_icon.png";
-		public static readonly string ModelFile = @"Assets/Blocks/Cockpit/TT_GSO_Observatory_Block.blend";
+		public static readonly string ModelFile = @"Assets/Blocks/Cockpit/CockpitBlock.prefab";
 
 		public static readonly int BlockID = 9000;
 		int CustomBlock.BlockID => BlockID;
@@ -43,7 +43,7 @@ namespace Maritaria
 			tankBlock.filledCells = new Vector3[] { new Vector3(0, 0, 0) };
 			tankBlock.partialCells = new Vector3[] { };
 
-			GameObject renderObject = AssetBundleImport.Load<GameObject>(ModelFile);
+			GameObject renderObject = GameObject.Instantiate(AssetBundleImport.Load<GameObject>(ModelFile));
 			renderObject.transform.parent = Prefab.transform;
 			renderObject.name = $"{Name}.Model";
 			renderObject.layer = Globals.inst.layerTank;
