@@ -44,6 +44,12 @@ namespace Nuterra.Build
 
 		private static void ParseLine(ModuleDefMD module, string line)
 		{
+			line = line?.Trim();
+			if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+			{
+				return;
+			}
+
 			string[] parts = line.Split(new char[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
 
 			string subject = parts[0];
