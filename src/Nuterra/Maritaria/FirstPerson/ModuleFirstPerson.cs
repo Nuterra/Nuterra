@@ -1,11 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using UnityEngine;
 
 namespace Maritaria.FirstPerson
 {
 	internal sealed class ModuleFirstPerson : Module
 	{
+		private GameObject _anchor;
+
+		public GameObject FirstPersonAnchor
+		{
+			get
+			{
+				if (!_anchor)
+				{
+					_anchor = gameObject.FindChildGameObject("FirstPersonAnchor");
+				}
+				return _anchor;
+			}
+		}
 	}
 }

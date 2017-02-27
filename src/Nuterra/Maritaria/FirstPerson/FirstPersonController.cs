@@ -18,7 +18,6 @@ namespace Maritaria.FirstPerson
 		{
 			if (Input.GetKeyDown(MaritariaMod.Instance.Config.FirstPersonKey))
 			{
-				Console.WriteLine("KeyDown");
 				FirstPersonEnabled = !FirstPersonEnabled;
 				if (FirstPersonEnabled)
 				{
@@ -39,19 +38,16 @@ namespace Maritaria.FirstPerson
 				Tank player = Singleton.playerTank;
 				if (!player)
 				{
-					Console.WriteLine("No player");
 					RevertCamera();
 				}
 				if (player.beam.IsActive)
 				{
-					Console.WriteLine("Beam active");
 					RevertCamera();
 				}
 				_camera.Tank = player;
 				var module = player.blockman.IterateBlockComponents<ModuleFirstPerson>().FirstOrDefault();
 				if (!module)
 				{
-					Console.WriteLine("No module");
 					RevertCamera();
 				}
 				_camera.Module = module;

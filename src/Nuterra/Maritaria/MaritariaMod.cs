@@ -40,6 +40,7 @@ namespace Maritaria
 
 			BlockLoader.Register(new CockpitBlock());
 			BlockLoader.Register(new BaconBlock());
+			BlockLoader.Register(new LargeCockpitBlock());
 
 			SplashScreenHandler.Init();
 		}
