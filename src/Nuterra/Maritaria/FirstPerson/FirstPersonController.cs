@@ -83,7 +83,7 @@ namespace Maritaria.FirstPerson
 		{
 			public static void StartCameraSpin(ManPointer inst)
 			{
-				if (CameraManager.inst.IsCurrent<TankCamera>())
+				if (CameraManager.inst.IsCurrent<FirstPersonCamera>())
 				{
 					FirstPersonCamera.inst.BeginSpinControl();
 				}
@@ -91,7 +91,7 @@ namespace Maritaria.FirstPerson
 
 			public static void StopCameraSpin(ManPointer inst)
 			{
-				if (CameraManager.inst.IsCurrent<TankCamera>())
+				if (CameraManager.inst.IsCurrent<FirstPersonCamera>())
 				{
 					FirstPersonCamera.inst.EndSpinControl();
 				}

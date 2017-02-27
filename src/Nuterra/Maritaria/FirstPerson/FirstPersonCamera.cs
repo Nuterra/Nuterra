@@ -45,12 +45,10 @@ namespace Maritaria.FirstPerson
 
 		internal void BeginSpinControl()
 		{
-			throw new NotImplementedException();
 		}
 
 		internal void EndSpinControl()
 		{
-			throw new NotImplementedException();
 		}
 	}
 }
