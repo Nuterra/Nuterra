@@ -12,10 +12,10 @@ namespace Maritaria.FirstPerson
 
 		public static readonly int BlockID = 9005;
 		int CustomBlock.BlockID => BlockID;
-		public string Name => "GSO Cockpit";
-		public string Description => "Pop in here and have a first-person look at the world from this block";
+		public string Name => "GSO Observatory";
+		public string Description => "Mount this gigantic hamsterball to your tech to be right in the action!";
 		public FactionSubTypes Faction => FactionSubTypes.GSO;
-		public BlockCategories Category => BlockCategories.Control;
+		public BlockCategories Category => BlockCategories.Accessories;
 		public GameObject Prefab { get; }
 		public Sprite DisplaySprite { get; } = AssetBundleImport.Load<Sprite>(SpriteFile);
 
