@@ -40,10 +40,6 @@ namespace Maritaria.FirstPerson
 				{
 					RevertCamera();
 				}
-				if (player.beam.IsActive)
-				{
-					RevertCamera();
-				}
 				_camera.Tank = player;
 				var module = player.blockman.IterateBlockComponents<ModuleFirstPerson>().FirstOrDefault();
 				if (!module)
