@@ -70,6 +70,7 @@ namespace Nuterra.Installer.Hooking
 					insertedInstructionCounter = body.Count - 1;//Last IL before ret instruction
 				}
 			}
+			int insertionStart = insertedInstructionCounter;
 			if (settings.PassArguments)
 			{
 				for (int i = 0; i < sourceMethod.Parameters.Count; i++)
@@ -78,6 +79,22 @@ namespace Nuterra.Installer.Hooking
 				}
 			}
 			body.Insert(insertedInstructionCounter++, OpCodes.Call.ToInstruction(targetMethod));
+
+			if (settings.AppendToEnd)
+			{
+				Instruction ret = body.Last();
+				foreach (Instruction instr in body)
+				{
+					if (instr.Operand is Instruction)
+					{
+						Instruction jumpTarget = instr.Operand as Instruction;
+						if (jumpTarget == ret)
+						{
+							instr.Operand = body[insertionStart];
+						}
+					}
+				}
+			}
 		}
 
 		private static Instruction GetLoadArgOpCode(int i)
