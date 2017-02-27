@@ -5,6 +5,7 @@ using Nuterra;
 using System;
 
 using UnityEngine;
+using Maritaria.FirstPerson;
 
 namespace Maritaria
 {
@@ -30,7 +31,7 @@ namespace Maritaria
 			_behaviourHolder = new GameObject();
 			_behaviourHolder.AddComponent<MagnetToggleKeyBehaviour>();
 			_behaviourHolder.AddComponent<TimeOfDayKeysBehaviour>();
-			_behaviourHolder.AddComponent<FirstPersonKeyBehaviour>();
+			_behaviourHolder.AddComponent<FirstPersonController>();
 			_behaviourHolder.AddComponent<ProductionToggleKeyBehaviour>();
 			_behaviourHolder.AddComponent<Gameslynx.SuicideKeyBehaviour>();
 			UnityEngine.Object.DontDestroyOnLoad(_behaviourHolder);
@@ -38,6 +39,8 @@ namespace Maritaria
 			Config.Load(ModConfig.Data.GetValue(Name, StringComparison.OrdinalIgnoreCase) as JObject);
 
 			BlockLoader.Register(new CockpitBlock());
+			BlockLoader.Register(new BaconBlock());
+			BlockLoader.Register(new LargeCockpitBlock());
 
 			SplashScreenHandler.Init();
 		}
