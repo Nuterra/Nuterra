@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-namespace Maritaria
+namespace Maritaria.FirstPerson
 {
 	public sealed class CockpitBlock : CustomBlock
 	{
@@ -33,6 +33,7 @@ namespace Maritaria
 			Damageable dmg = Prefab.EnsureComponent<Damageable>();
 			ModuleDamage modDamage = Prefab.EnsureComponent<ModuleDamage>();
 			AutoSpriteRenderer spriteRenderer = Prefab.EnsureComponent<AutoSpriteRenderer>();
+			ModuleFirstPerson firstPerson = Prefab.EnsureComponent<ModuleFirstPerson>();
 
 			TankBlock tankBlock = Prefab.EnsureComponent<TankBlock>();
 

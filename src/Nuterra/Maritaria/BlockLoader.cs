@@ -42,8 +42,6 @@ namespace Maritaria
 				{
 					RegisterImmediatly(queuedBlock);
 				}
-				Register(new CockpitBlock());
-				Register(new BaconBlock());
 				Register(new Sylver.GyroRotor());
 			}
 		}
