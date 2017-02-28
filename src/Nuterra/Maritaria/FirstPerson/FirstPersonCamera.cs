@@ -18,6 +18,15 @@ namespace Maritaria.FirstPerson
 		private void Awake()
 		{
 			inst = this;
+			ManGameMode.inst.PreExitModeEvent.Subscribe(OnGameModeChange);
+		}
+
+		private static void OnGameModeChange(Mode obj)
+		{
+			if (CameraManager.inst.IsCurrent<FirstPersonCamera>())
+			{
+				CameraManager.inst.Switch<TankCamera>();
+			}
 		}
 
 		public override void Enable()

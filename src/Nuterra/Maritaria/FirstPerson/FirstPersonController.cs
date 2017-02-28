@@ -35,16 +35,22 @@ namespace Maritaria.FirstPerson
 		{
 			if (FirstPersonEnabled)
 			{
+				Console.WriteLine(1);
 				Tank player = Singleton.playerTank;
-				if (!player)
+				Console.WriteLine(2);
+				if (player == null || !player || _camera == null)
 				{
+					Console.WriteLine(3);
 					RevertCamera();
+					return;
 				}
+				Console.WriteLine(4);
 				_camera.Tank = player;
 				var module = player.blockman.IterateBlockComponents<ModuleFirstPerson>().FirstOrDefault();
-				if (!module)
+				if (module == null || !module)
 				{
 					RevertCamera();
+					return;
 				}
 				_camera.Module = module;
 			}
