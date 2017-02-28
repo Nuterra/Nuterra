@@ -48,6 +48,14 @@ namespace Maritaria.FirstPerson
 				changeAroundY += _rotationStart.eulerAngles.y;
 				changeAroundX += _rotationStart.eulerAngles.x;
 
+				if (changeAroundX > 180f)
+				{
+					changeAroundX -= 360f;
+				}
+
+				float before = changeAroundX;
+				changeAroundX = Mathf.Clamp(changeAroundX, -80, 80);
+				Console.WriteLine($"Float: {before} => {changeAroundX}");
 				Quaternion newRotation = Quaternion.Euler(changeAroundX, changeAroundY, 0);
 				_rotation = newRotation;
 			}
