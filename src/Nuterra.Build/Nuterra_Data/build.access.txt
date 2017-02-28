@@ -42,3 +42,4 @@ field ModuleHeart m_HasAnchor
 field ModuleFuelTank m_MaterialsToUpdate
 method+virtual ModuleFuelTank get_RefillRate
 method+virtual ModuleFuelTank get_Capacity
+field RecipeManager m_BlockPriceLookup

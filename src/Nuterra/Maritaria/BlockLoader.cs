@@ -31,6 +31,7 @@ namespace Maritaria
 			spawnManager.VisibleTypeInfo.SetDescriptor<FactionSubTypes>(hashCode, block.Faction);
 			spawnManager.VisibleTypeInfo.SetDescriptor<BlockCategories>(hashCode, block.Category);
 			spawnManager.AddBlockToDictionary(block.Prefab);
+			RecipeManager.inst.m_BlockPriceLookup.Add(blockID, block.Price);
 		}
 
 		public static class Hooks_ManSpawn

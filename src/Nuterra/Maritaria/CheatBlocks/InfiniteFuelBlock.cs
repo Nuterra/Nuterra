@@ -16,6 +16,7 @@ namespace Maritaria.CheatBlocks
 		int CustomBlock.BlockID => BlockID;
 		public string Name => "Cheat: Fuel";
 		public string Description => "Gives infinite fuel to any tech placed on it";
+		public int Price => 9000;
 		public BlockCategories Category => BlockCategories.Accessories;
 		public FactionSubTypes Faction => FactionSubTypes.EXP;
 		public Sprite DisplaySprite { get; } = AssetBundleImport.Load<Sprite>(SpritePrefab);

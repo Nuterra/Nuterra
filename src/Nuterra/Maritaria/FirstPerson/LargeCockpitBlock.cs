@@ -14,6 +14,7 @@ namespace Maritaria.FirstPerson
 		int CustomBlock.BlockID => BlockID;
 		public string Name => "GSO Observatory";
 		public string Description => "Mount this gigantic hamsterball to your tech to be right in the action!";
+		public int Price => 300;
 		public FactionSubTypes Faction => FactionSubTypes.GSO;
 		public BlockCategories Category => BlockCategories.Accessories;
 		public GameObject Prefab { get; }

@@ -13,6 +13,7 @@ namespace Maritaria.CheatBlocks
 		int CustomBlock.BlockID => BlockID;
 		public string Name => "Cheat: Godmode";
 		public string Description => "Protects all attached blocks from all incomming damage";
+		public int Price => 9000;
 		public BlockCategories Category => BlockCategories.Accessories;
 		public FactionSubTypes Faction => FactionSubTypes.EXP;
 		public Sprite DisplaySprite { get; } = AssetBundleImport.Load<Sprite>(SpritePrefab);

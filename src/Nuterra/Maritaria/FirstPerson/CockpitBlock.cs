@@ -14,6 +14,7 @@ namespace Maritaria.FirstPerson
 		int CustomBlock.BlockID => BlockID;
 		public string Name => "GSO Cockpit";
 		public string Description => "Pop in here and have a first-person look at the world from this block";
+		public int Price => 300;
 		public FactionSubTypes Faction => FactionSubTypes.GSO;
 		public BlockCategories Category => BlockCategories.Accessories;
 		public GameObject Prefab { get; }
