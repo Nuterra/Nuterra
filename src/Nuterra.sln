@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Installer", "Nuterr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Build", "Nuterra.Build\Nuterra.Build.csproj", "{F953D402-AAE3-4335-90A6-13BDBDF6D4FA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CC96E61F-75DD-4644-AC51-D9B783C00680}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{129AE68B-6968-44C4-A386-68C0E1E9A63E} = {CC96E61F-75DD-4644-AC51-D9B783C00680}
+		{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3} = {CC96E61F-75DD-4644-AC51-D9B783C00680}
+		{F953D402-AAE3-4335-90A6-13BDBDF6D4FA} = {CC96E61F-75DD-4644-AC51-D9B783C00680}
 	EndGlobalSection
 EndGlobal
