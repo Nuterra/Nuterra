@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Maritaria
+namespace Nuterra
 {
 	public interface CustomBlock
 	{

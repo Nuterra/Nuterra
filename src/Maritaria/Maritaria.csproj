@@ -31,16 +31,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\lib\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\lib\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaconBlock.cs" />
-    <Compile Include="BlockLoader.cs" />
     <Compile Include="BugReportFlagger.cs" />
     <Compile Include="CheatBlocks\CheatBlockMod.cs" />
     <Compile Include="CheatBlocks\GodModeBlock.cs" />
@@ -51,13 +60,11 @@
     <Compile Include="Cursor\CursorType.cs" />
     <Compile Include="Cursor\CustomCursorMod.cs" />
     <Compile Include="Cursor\GameCursor.cs" />
-    <Compile Include="CustomBlock.cs" />
     <Compile Include="FirstPerson\CockpitBlock.cs" />
     <Compile Include="FirstPerson\FirstPersonCamera.cs" />
     <Compile Include="FirstPerson\FirstPersonController.cs" />
     <Compile Include="FirstPerson\LargeCockpitBlock.cs" />
     <Compile Include="FirstPerson\ModuleFirstPerson.cs" />
-    <Compile Include="GameObjectExtensions.cs" />
     <Compile Include="MagnetToggleKeyBehaviour.cs" />
     <Compile Include="MaritariaConfig.cs" />
     <Compile Include="MaritariaMod.cs" />
@@ -71,6 +78,12 @@
     <Compile Include="SuicideKeyBehaviour.cs" />
     <Compile Include="TimeOfDayKeysBehaviour.cs" />
     <Compile Include="UnityGraph.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nuterra\Nuterra.csproj">
+      <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
+      <Name>Nuterra</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

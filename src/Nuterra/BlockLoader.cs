@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace Maritaria
+namespace Nuterra
 {
 	public static class BlockLoader
 	{
@@ -43,7 +43,6 @@ namespace Maritaria
 				{
 					RegisterImmediatly(queuedBlock);
 				}
-				Register(new Sylver.GyroRotor());
 			}
 		}
 

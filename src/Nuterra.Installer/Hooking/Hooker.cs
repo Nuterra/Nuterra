@@ -2,6 +2,7 @@
 using System.Linq;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
+using Nuterra.Internal;
 
 namespace Nuterra.Installer.Hooking
 {
@@ -10,28 +11,29 @@ namespace Nuterra.Installer.Hooking
 		public static void Apply(ModuleDefMD module)
 		{
 			//Booting Nuterra
-			Redirect(module, "ManUI", typeof(Nuterra), new RedirectSettings(nameof(Nuterra.Start)) { PassArguments = false });
+			Redirect(module, "ManUI", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Startup)) { PassArguments = false });
 
-			//Module overrides
-			Redirect(module, "ModuleDrill", typeof(Maritaria.Modules.Drill), new RedirectSettings(nameof(Maritaria.Modules.Drill.ControlInput)) { ReplaceBody = true });
-			Redirect(module, "ModuleEnergy", typeof(Maritaria.Modules.Energy), new RedirectSettings(nameof(Maritaria.Modules.Energy.OnUpdateSupplyEnergy)) { ReplaceBody = true });
-			Redirect(module, "ModuleEnergy", typeof(Maritaria.Modules.Energy), new RedirectSettings(nameof(Maritaria.Modules.Energy.CheckOutputConditions)) { ReplaceBody = true });
-			Redirect(module, "ModuleHammer", typeof(Maritaria.Modules.Hammer), new RedirectSettings(nameof(Maritaria.Modules.Hammer.ControlInput)) { ReplaceBody = true });
-			Redirect(module, "ModuleItemHolderMagnet", typeof(Maritaria.Modules.Magnet), new RedirectSettings(nameof(Maritaria.Modules.Magnet.FixedUpdate)) { ReplaceBody = true });
-			Redirect(module, "ModuleScoop", typeof(Maritaria.Modules.Scoop), new RedirectSettings(nameof(Maritaria.Modules.Scoop.ControlInput)) { ReplaceBody = true });
-			Redirect(module, "ModuleWeapon", typeof(Maritaria.Modules.Weapon), new RedirectSettings(nameof(Maritaria.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
-
-			//Creating custom blocks
-			Redirect(module, "ManSpawn", typeof(Maritaria.BlockLoader.Hooks_ManSpawn), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_ManSpawn.Start)) { PassArguments = false, AppendToEnd = true });
-			Redirect(module, "BlockUnlockTable", typeof(Maritaria.BlockLoader.Hooks_BlockUnlockTable), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_BlockUnlockTable.Init)));
-			Redirect(module, "ManLicenses", typeof(Maritaria.BlockLoader.Hooks_ManLicenses), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_ManLicenses.SetupLicenses)));
-
-			Redirect(module, "ManStats+IntStatList", typeof(Maritaria.BlockLoader.Hooks_IntStatList), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_IntStatList.OnSerializing)) { ReplaceBody = true });
-
-			Hook_StringLookup_GetString(module);
-			Hook_SpriteFetcher_GetSprite(module);
+			//Modded game flagging
 			Hook_BugReportFlagger(module);
 
+			//Manager events
+			Redirect(module, "ManLicenses", typeof(Hooks.Managers.Licenses), new RedirectSettings(nameof(Hooks.Managers.Licenses.Init)));
+			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StartCameraSpin)) { AppendToEnd = true });
+			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StopCameraSpin)) { AppendToEnd = true });
+
+			//Module events
+			Redirect(module, "ModuleDrill", typeof(Hooks.Modules.Drill), new RedirectSettings(nameof(Hooks.Modules.Drill.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleEnergy", typeof(Hooks.Modules.Energy), new RedirectSettings(nameof(Hooks.Modules.Energy.OnUpdateSupplyEnergy)) { ReplaceBody = true });
+			Redirect(module, "ModuleHammer", typeof(Hooks.Modules.Hammer), new RedirectSettings(nameof(Hooks.Modules.Hammer.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleScoop", typeof(Hooks.Modules.Scoop), new RedirectSettings(nameof(Hooks.Modules.Scoop.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleWeapon", typeof(Hooks.Modules.Weapon), new RedirectSettings(nameof(Hooks.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
+
+			//Custom block support
+			Redirect(module, "ManStats+IntStatList", typeof(Hooks.Managers.Stats.IntStatList), new RedirectSettings(nameof(Hooks.Managers.Stats.IntStatList.OnSerializing)) { ReplaceBody = true });
+			Hook_StringLookup_GetString(module);
+			Hook_SpriteFetcher_GetSprite(module);
+
+			//Misc
 			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnSpawn)) { });
 			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnAttach)) { InsertionStart = 3 });//First 3 instructions are to set IsEnabled, which the hook overrides later
 			Redirect(module, "ModuleHeart", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_CanPowerUp)) { ReplaceBody = true });
@@ -42,8 +44,6 @@ namespace Nuterra.Installer.Hooking
 			Redirect(module, "Mode", typeof(Sylver.SylverMod.Hooks_Mode), new RedirectSettings(nameof(Sylver.SylverMod.Hooks_Mode.EnterMode)));
 
 			Hook_TankControl_PlayerInput(module);
-			Redirect(module, "ManPointer", typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer), new RedirectSettings(nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer.StartCameraSpin)) { AppendToEnd = true });
-			Redirect(module, "ManPointer", typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer), new RedirectSettings(nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer.StopCameraSpin)) { AppendToEnd = true });
 		}
 
 		private static void Redirect(ModuleDefMD module, string sourceType, Type targetType, RedirectSettings settings)

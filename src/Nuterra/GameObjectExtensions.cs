@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Maritaria
+namespace Nuterra
 {
 	public static class GameObjectExtensions
 	{
@@ -9,7 +9,7 @@ namespace Maritaria
 		{
 			return obj.GetComponent<T>() ?? obj.AddComponent<T>();
 		}
-		
+
 		public static GameObject FindChildGameObject(this GameObject root, string targetName)
 		{
 			Transform[] ts = root.transform.GetComponentsInChildren<Transform>();

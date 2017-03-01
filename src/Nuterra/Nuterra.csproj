@@ -58,6 +58,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockLoader.cs" />
+    <Compile Include="CustomBlock.cs" />
+    <Compile Include="GameObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AssetBundleImport.cs" />
     <Compile Include="CleanLogger.cs" />

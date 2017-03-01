@@ -106,9 +106,9 @@
       <Project>{F953D402-AAE3-4335-90A6-13BDBDF6D4FA}</Project>
       <Name>Nuterra.Build</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Nuterra\Nuterra.csproj">
-      <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
-      <Name>Nuterra</Name>
+    <ProjectReference Include="..\Nuterra.Internal\Nuterra.Internal.csproj">
+      <Project>{306b93ed-dc73-4899-bb32-d9571152c554}</Project>
+      <Name>Nuterra.Internal</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

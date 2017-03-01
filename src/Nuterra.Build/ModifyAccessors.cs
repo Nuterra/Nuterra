@@ -22,7 +22,7 @@ namespace Nuterra.Build
 					ParseLine(module, reader.ReadLine());
 				}
 			}
-			MakeInternalsVisibleToAssembly(module, "Nuterra");
+			MakeInternalsVisibleToAssembly(module, "Nuterra.Internal");
 		}
 
 		private static void MakeInternalsVisibleToAssembly(ModuleDefMD module, string assemblyName)
