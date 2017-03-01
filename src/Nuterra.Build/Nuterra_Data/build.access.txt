@@ -31,7 +31,6 @@ method ModuleHeart DropAllItems
 field ModuleItemPickup m_Holder
 field ManSplashScreen m_MyCanvas
 field ManSplashScreen m_SplashScreenIndex
-field ManSaveGame/SaveData m_State
 field ManSpawn tankPresets
 field ManSpawn m_BlockPrefabs
 field MousePointer m_DefaultPointer

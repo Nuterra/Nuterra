@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Nuterra
 {
-	public static class Nuterra
+	public static class NuterraMain
 	{
 		public static readonly Version CurrentVersion = new Version(0, 3, 0);
 		public static readonly string DataFolder = Path.Combine(Application.dataPath, "..\\Nuterra_Data");

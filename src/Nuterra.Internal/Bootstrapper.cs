@@ -8,7 +8,7 @@ namespace Nuterra.Internal
 {
 	internal sealed class Bootstrapper
 	{
-		public static void Startup()
+		public static void Start()
 		{
 			Assembly nuterra = AppDomain.CurrentDomain.Load("Nuterra");
 			nuterra.GetType("Nuterra.ModLoader.Load()");

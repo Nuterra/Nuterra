@@ -165,6 +165,22 @@ namespace Nuterra.Internal
 
 				public static event Action<FireEvent<ModuleWeapon>> OnFire;
 			}
+
+			public static class TankControl
+			{
+				internal static bool PlayerInput(global::TankControl tank)
+				{
+					bool isAllowedCamera = CameraManager.inst.IsCurrent<TankCamera>();
+					bool isLockedDebugCamera = CameraManager.inst.IsCurrent<DebugCamera>() && CameraManager.inst.GetDebugCamera().IsLocked;
+					bool defaultResult = (isAllowedCamera || isLockedDebugCamera);
+
+					var eventResult = new CanControlTankEvent(tank, defaultResult);
+					CanControlTank?.Invoke(eventResult);
+					return eventResult.CanControl;
+				}
+
+				public static event Action<CanControlTankEvent> CanControlTank;
+			}
 		}
 
 		public static class Managers
@@ -172,7 +188,7 @@ namespace Nuterra.Internal
 			public static class Licenses
 			{
 				//Hook to be called at the end of Licenses.Init
-				internal static void Init()
+				internal static void Init(ManLicenses inst)
 				{
 					OnInitializing?.Invoke();
 				}
@@ -216,10 +232,125 @@ namespace Nuterra.Internal
 
 				public static event Action OnCameraSpinEnd;
 			}
+
+			public static class SaveGame
+			{
+				internal static bool SaveSaveData(ManSaveGame.SaveData saveData, string filePath)
+				{
+					Console.WriteLine($"Flagging save file (current={saveData.State.m_OverlayData ?? "null"})");
+					saveData.State.m_OverlayData = "Save loaded by modded game";
+					var saveEvent = new SaveGameEvent(saveData, filePath);
+					OnSave?.Invoke(saveEvent);
+					return saveEvent.CancelSave;
+				}
+
+				public static event Action<SaveGameEvent> OnSave;
+			}
 		}
 
-		public static class Game
+		public static class BugReports
 		{
+			internal static void MarkReportForm(WWWForm form)
+			{
+				PreBugReportSubmit?.Invoke(form);
+			}
+
+			public static event Action<WWWForm> PreBugReportSubmit;
+
+			internal static string MarkUserMessage(string userMessage)
+			{
+				var messageEvent = new BugReportMessageEvent(userMessage);
+				AlterUserMessage?.Invoke(messageEvent);
+				return messageEvent.UserMessage;
+			}
+
+			public static event Action<BugReportMessageEvent> AlterUserMessage;
+		}
+
+		public static class ResourceLookup
+		{
+			//Hook at start of method, override result if not null (http://prntscr.com/dqv0zy)
+			internal static string GetString(int itemType, LocalisationEnums.StringBanks itemEnum)
+			{
+				var lookupEvent = new StringLookupEvent(itemEnum, itemType);
+				OnStringLookup?.Invoke(lookupEvent);
+				return lookupEvent.Result;
+			}
+
+			public static event Action<StringLookupEvent> OnStringLookup;
+
+			//Hook at start of method, override result if not null (http://prntscr.com/dqvhrh)
+			internal static Sprite GetSprite(ObjectTypes objectType, int itemType)
+			{
+				var lookupEvent = new SpriteLookupEvent(objectType, itemType);
+				OnSpriteLookup?.Invoke(lookupEvent);
+				return lookupEvent.Result;
+			}
+
+			public static event Action<SpriteLookupEvent> OnSpriteLookup;
+		}
+	}
+
+	public sealed class CanControlTankEvent
+	{
+		public TankControl ControlComponent { get; }
+		public bool CanControl { get; set; }
+
+		public CanControlTankEvent(TankControl control, bool canControl)
+		{
+			if (control == null) throw new ArgumentNullException(nameof(control));
+			ControlComponent = control;
+			CanControl = canControl;
+		}
+	}
+
+	public sealed class SpriteLookupEvent
+	{
+		public ObjectTypes ObjectType { get; }
+		public int ItemType { get; }
+
+		public Sprite Result { get; set; }
+
+		public SpriteLookupEvent(ObjectTypes objectType, int itemType)
+		{
+			ObjectType = objectType;
+			ItemType = itemType;
+		}
+	}
+
+	public sealed class StringLookupEvent
+	{
+		public LocalisationEnums.StringBanks EnumType { get; }
+		public int EnumValue { get; }
+		public string Result { get; set; }
+
+		public StringLookupEvent(LocalisationEnums.StringBanks type, int value)
+		{
+			EnumType = type;
+			EnumValue = value;
+		}
+	}
+
+	public sealed class SaveGameEvent
+	{
+		public ManSaveGame.SaveData Data { get; }
+		public string FilePath { get; set; }
+		public bool CancelSave { get; set; } = false;
+
+		public SaveGameEvent(ManSaveGame.SaveData data, string filePath)
+		{
+			Data = data;
+			FilePath = filePath;
+		}
+	}
+
+	public sealed class BugReportMessageEvent
+	{
+		public string UserMessage { get; set; }
+
+		public BugReportMessageEvent(string userMessage)
+		{
+			UserMessage = userMessage;
 		}
 	}
 

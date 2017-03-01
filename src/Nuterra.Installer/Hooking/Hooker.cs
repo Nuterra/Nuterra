@@ -11,13 +11,14 @@ namespace Nuterra.Installer.Hooking
 		public static void Apply(ModuleDefMD module)
 		{
 			//Booting Nuterra
-			Redirect(module, "ManUI", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Startup)) { PassArguments = false });
+			Redirect(module, "ManUI", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Start)) { PassArguments = false });
 
 			//Modded game flagging
 			Hook_BugReportFlagger(module);
+			Hook_ManSaveGame_SaveSaveData(module);
 
 			//Manager events
-			Redirect(module, "ManLicenses", typeof(Hooks.Managers.Licenses), new RedirectSettings(nameof(Hooks.Managers.Licenses.Init)));
+			Redirect(module, "ManLicenses", typeof(Hooks.Managers.Licenses), new RedirectSettings(nameof(Hooks.Managers.Licenses.Init)) { AppendToEnd = true });
 			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StartCameraSpin)) { AppendToEnd = true });
 			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StopCameraSpin)) { AppendToEnd = true });
 
@@ -34,14 +35,13 @@ namespace Nuterra.Installer.Hooking
 			Hook_SpriteFetcher_GetSprite(module);
 
 			//Misc
+			/*
 			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnSpawn)) { });
 			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnAttach)) { InsertionStart = 3 });//First 3 instructions are to set IsEnabled, which the hook overrides later
 			Redirect(module, "ModuleHeart", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_CanPowerUp)) { ReplaceBody = true });
 
-			Redirect(module, "ManSaveGame+State", typeof(Maritaria.SaveGameFlagger), new RedirectSettings(".ctor") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_State_ctor) });
-			Redirect(module, "ManSaveGame+SaveData", typeof(Maritaria.SaveGameFlagger), new RedirectSettings("OnDeserialized") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_SaveData_OnDeserialized) });
-
 			Redirect(module, "Mode", typeof(Sylver.SylverMod.Hooks_Mode), new RedirectSettings(nameof(Sylver.SylverMod.Hooks_Mode.EnterMode)));
+			*/
 
 			Hook_TankControl_PlayerInput(module);
 		}
@@ -113,8 +113,8 @@ namespace Nuterra.Installer.Hooking
 		{
 			TypeDef cecilSource = module.Find("StringLookup", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == "GetString");
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.BlockLoader.Hooks_StringLookup));
-			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Maritaria.BlockLoader.Hooks_StringLookup.GetString));
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Hooks.ResourceLookup));
+			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Hooks.ResourceLookup.GetString));
 
 			var body = sourceMethod.Body.Instructions;
 
@@ -146,8 +146,8 @@ namespace Nuterra.Installer.Hooking
 		{
 			TypeDef cecilSource = module.Find("SpriteFetcher", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.FullName == "UnityEngine.Sprite SpriteFetcher::GetSprite(ObjectTypes,System.Int32)");
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.BlockLoader.Hooks_SpriteFetcher));
-			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Maritaria.BlockLoader.Hooks_SpriteFetcher.GetSprite));
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Hooks.ResourceLookup));
+			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Hooks.ResourceLookup.GetSprite));
 
 			AssemblyRef unityEngine = module.GetAssemblyRef(new UTF8String("UnityEngine"));
 			TypeRefUser unityEngine_Object = new TypeRefUser(module, new UTF8String("UnityEngine"), new UTF8String("Object"), unityEngine);
@@ -187,9 +187,9 @@ namespace Nuterra.Installer.Hooking
 
 		private static void Hook_BugReportFlagger(ModuleDefMD module)
 		{
-			TypeDef bugReportFlagger = module.GetNuterraType(typeof(Maritaria.BugReportFlagger));
-			MethodDef markReportForm = bugReportFlagger.Methods.Single(m => m.Name == nameof(Maritaria.BugReportFlagger.MarkReportForm));
-			MethodDef markUserMessage = bugReportFlagger.Methods.Single(m => m.Name == nameof(Maritaria.BugReportFlagger.MarkUserMessage));
+			TypeDef bugReportFlagger = module.GetNuterraType(typeof(Hooks.BugReports));
+			MethodDef markReportForm = bugReportFlagger.Methods.Single(m => m.Name == nameof(Hooks.BugReports.MarkReportForm));
+			MethodDef markUserMessage = bugReportFlagger.Methods.Single(m => m.Name == nameof(Hooks.BugReports.MarkUserMessage));
 
 			TypeDef bugReporter = module.Find("UIScreenBugReport", isReflectionName: true);
 			TypeDef postIterator = bugReporter.NestedTypes.Single(t => t.FullName == "UIScreenBugReport/<PostIt>c__Iterator78");
@@ -216,10 +216,10 @@ namespace Nuterra.Installer.Hooking
 
 		public static void Hook_TankControl_PlayerInput(ModuleDefMD module)
 		{
-			const string methodName = nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_TankControl.PlayerInput);
+			const string methodName = nameof(Hooks.Modules.TankControl.PlayerInput);
 			TypeDef cecilSource = module.Find("TankControl", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_TankControl));
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Hooks.Modules.TankControl));
 			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
 
 			var body = sourceMethod.Body.Instructions;
@@ -251,8 +251,30 @@ namespace Nuterra.Installer.Hooking
 
 			So it becomes:
 			call hook
-			if hook returns false then jump to 50
+			if hook returns false then jump to ret instruction
 
+			 */
+		}
+
+		public static void Hook_ManSaveGame_SaveSaveData(ModuleDefMD module)
+		{
+			const string methodName = nameof(Hooks.Managers.SaveGame.SaveSaveData);
+			TypeDef cecilSource = module.Find("ManSaveGame", isReflectionName: true);
+			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Hooks.Managers.SaveGame));
+			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
+
+			var body = sourceMethod.Body.Instructions;
+
+			body.Insert(0, new Instruction(OpCodes.Ldarg_0));
+			body.Insert(1, new Instruction(OpCodes.Ldarg_1));
+			body.Insert(2, new Instruction(OpCodes.Call, targetMethod));
+			body.Insert(3, OpCodes.Brtrue_S.ToInstruction(body.Last()));
+
+			/*
+				Load arguments
+				Call hook
+				If hook returns true, jump to last instruction (ret)
 			 */
 		}
 	}
