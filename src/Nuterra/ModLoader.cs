@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace Nuterra
 {
@@ -14,6 +15,17 @@ namespace Nuterra
 
 		private Dictionary<Type, TerraTechMod> _modInstances = new Dictionary<Type, TerraTechMod>();
 		private Dictionary<string, Type> _modNames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+
+		public void LoadAllMods(string directory)
+		{
+			foreach (string assemblyFileName in Directory.GetFiles(directory, "*.dll"))
+			{
+				Console.WriteLine($"Loading mod assembly: {assemblyFileName}");
+				string path = Path.Combine(directory, assemblyFileName);
+				Assembly asm = Assembly.LoadFile(path);
+				LoadAllMods(asm);
+			}
+		}
 
 		public void LoadAllMods(Assembly asm)
 		{

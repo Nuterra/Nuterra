@@ -23,24 +23,7 @@ namespace Nuterra
 				return;
 			}
 
-			Assembly terraTech = FindTerraTechAssembly();
-			if (terraTech != null)
-			{
-				ModLoader.Instance.LoadAllMods(terraTech);
-			}
-		}
-
-		private static Assembly FindTerraTechAssembly()
-		{
-			foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-			{
-				if (asm.FullName.Equals(TerraTechAssemblyName))
-				{
-					return asm;
-				}
-			}
-			Console.WriteLine($"Unable to find '{TerraTechAssemblyName}'");
-			return null;
+			ModLoader.Instance.LoadAllMods(ModsFolder);
 		}
 	}
 }
