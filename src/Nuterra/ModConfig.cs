@@ -10,7 +10,7 @@ namespace Nuterra
 
 		static ModConfig()
 		{
-			string configData = File.ReadAllText(Path.Combine(Nuterra.DataFolder, "nuterra.json"));
+			string configData = File.ReadAllText(Path.Combine(NuterraMain.DataFolder, "nuterra.json"));
 			Console.WriteLine($"configData: {configData}");
 			Data = JObject.Parse(configData);
 		}

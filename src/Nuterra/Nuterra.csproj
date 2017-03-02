@@ -67,7 +67,7 @@
     <Compile Include="ModAttribute.cs" />
     <Compile Include="ModConfig.cs" />
     <Compile Include="ModLoader.cs" />
-    <Compile Include="Nuterra.cs" />
+    <Compile Include="NuterraMain.cs" />
     <Compile Include="TerraTechMod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

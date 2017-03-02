@@ -9,7 +9,7 @@ namespace Nuterra
 	{
 		public static readonly Version CurrentVersion = new Version(0, 3, 0);
 		public static readonly string DataFolder = Path.Combine(Application.dataPath, "..\\Nuterra_Data");
-		public static readonly string ModsFolder = Path.Combine(Application.dataPath, "..\\Nuterra_Data\\Mods");//TODO: Start using this
+		public static readonly string ModsFolder = Path.Combine(Application.dataPath, "..\\Nuterra_Data\\Mods");
 		public static readonly string TerraTechAssemblyName = "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
 
 		internal static void Start()
