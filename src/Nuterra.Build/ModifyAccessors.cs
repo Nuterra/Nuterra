@@ -23,6 +23,7 @@ namespace Nuterra.Build
 				}
 			}
 			MakeInternalsVisibleToAssembly(module, "Nuterra.Internal");
+			MakeInternalsVisibleToAssembly(module, "Nuterra");
 		}
 
 		private static void MakeInternalsVisibleToAssembly(ModuleDefMD module, string assemblyName)
