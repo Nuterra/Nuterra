@@ -219,7 +219,7 @@ namespace Nuterra.Internal
 				//Hook to be called at the end of ManPointer.StartCameraSpin
 				internal static void StartCameraSpin(ManPointer inst)
 				{
-					OnCameraSpinEnd?.Invoke();
+					OnCameraSpinStart?.Invoke();
 				}
 
 				public static event Action OnCameraSpinStart;
