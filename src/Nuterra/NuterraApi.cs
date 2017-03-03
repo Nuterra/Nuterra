@@ -17,6 +17,7 @@ namespace Nuterra
 		internal static void Start()
 		{
 			CleanLogger.Install();
+			BugReportFlagger.Init();
 			Console.WriteLine($"Nuterra.NuterraApi.Start({CurrentVersion})");
 
 			if (!Directory.Exists(DataFolder))
