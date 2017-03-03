@@ -58,10 +58,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Maritaria\CheatBlocks\CheatBlockMod.cs" />
+    <Compile Include="Maritaria\CheatBlocks\InfiniteFuelBlock.cs" />
+    <Compile Include="Maritaria\CheatBlocks\ModuleGodMode.cs" />
+    <Compile Include="Maritaria\CheatBlocks\GodModeBlock.cs" />
+    <Compile Include="Maritaria\CheatBlocks\ModuleInfiniteFuel.cs" />
     <Compile Include="Maritaria\Cursor\CursorManager.cs" />
     <Compile Include="Maritaria\Cursor\CursorType.cs" />
     <Compile Include="Maritaria\Cursor\CustomCursorMod.cs" />
     <Compile Include="Maritaria\Cursor\GameCursor.cs" />
+    <Compile Include="Maritaria\FirstPerson\FirstPersonCamera.cs" />
+    <Compile Include="Maritaria\FirstPerson\LargeCockpitBlock.cs" />
+    <Compile Include="Maritaria\FirstPerson\ModuleFirstPerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AssetBundleImport.cs" />
     <Compile Include="CleanLogger.cs" />
@@ -70,7 +78,7 @@
     <Compile Include="Maritaria\BlockLoader.cs" />
     <Compile Include="Maritaria\BugReportFlagger.cs" />
     <Compile Include="Maritaria\CustomBlock.cs" />
-    <Compile Include="Maritaria\FirstPersonKeyBehaviour.cs" />
+    <Compile Include="Maritaria\FirstPerson\FirstPersonController.cs" />
     <Compile Include="Maritaria\GameObjectExtensions.cs" />
     <Compile Include="Maritaria\MagnetToggleKeyBehaviour.cs" />
     <Compile Include="Maritaria\MaritariaMod.cs" />
@@ -80,7 +88,7 @@
     <Compile Include="Maritaria\ProductionStoppedSign.cs" />
     <Compile Include="Maritaria\ProductionToggleKeyBehaviour.cs" />
     <Compile Include="Maritaria\SaveGameFlagger.cs" />
-    <Compile Include="Maritaria\SmileyBlock.cs" />
+    <Compile Include="Maritaria\FirstPerson\CockpitBlock.cs" />
     <Compile Include="Maritaria\SplashScreenHandler.cs" />
     <Compile Include="Maritaria\SpriteFactory.cs" />
     <Compile Include="Maritaria\TimeOfDayKeysBehaviour.cs" />
@@ -89,7 +97,9 @@
     <Compile Include="ModLoader.cs" />
     <Compile Include="Nuterra.cs" />
     <Compile Include="Sylver\GUIRenderer.cs" />
+    <Compile Include="Sylver\GyroRotor.cs" />
     <Compile Include="Sylver\Mod.cs" />
+    <Compile Include="Sylver\SylverGyro.cs" />
     <Compile Include="Sylver\SylverMod.cs" />
     <Compile Include="Sylver\SylverSpawn.cs" />
     <Compile Include="TerraTechMod.cs" />

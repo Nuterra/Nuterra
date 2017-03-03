@@ -31,16 +31,19 @@ namespace Nuterra.Installer.Hooking
 			Hook_StringLookup_GetString(module);
 			Hook_SpriteFetcher_GetSprite(module);
 			Hook_BugReportFlagger(module);
-			Hook_TankCamera_FixedUpdate(module);
 
 			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnSpawn)) { });
 			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnAttach)) { InsertionStart = 3 });//First 3 instructions are to set IsEnabled, which the hook overrides later
-			Hook_ModuleHeart_IsOnline(module);
+			Redirect(module, "ModuleHeart", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_CanPowerUp)) { ReplaceBody = true });
 
 			Redirect(module, "ManSaveGame+State", typeof(Maritaria.SaveGameFlagger), new RedirectSettings(".ctor") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_State_ctor) });
 			Redirect(module, "ManSaveGame+SaveData", typeof(Maritaria.SaveGameFlagger), new RedirectSettings("OnDeserialized") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_SaveData_OnDeserialized) });
 
 			Redirect(module, "Mode", typeof(Sylver.SylverMod.Hooks_Mode), new RedirectSettings(nameof(Sylver.SylverMod.Hooks_Mode.EnterMode)));
+
+			Hook_TankControl_PlayerInput(module);
+			Redirect(module, "ManPointer", typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer), new RedirectSettings(nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer.StartCameraSpin)) { AppendToEnd = true });
+			Redirect(module, "ManPointer", typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer), new RedirectSettings(nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer.StopCameraSpin)) { AppendToEnd = true });
 		}
 
 		private static void Redirect(ModuleDefMD module, string sourceType, Type targetType, RedirectSettings settings)
@@ -67,6 +70,7 @@ namespace Nuterra.Installer.Hooking
 					insertedInstructionCounter = body.Count - 1;//Last IL before ret instruction
 				}
 			}
+			int insertionStart = insertedInstructionCounter;
 			if (settings.PassArguments)
 			{
 				for (int i = 0; i < sourceMethod.Parameters.Count; i++)
@@ -75,6 +79,22 @@ namespace Nuterra.Installer.Hooking
 				}
 			}
 			body.Insert(insertedInstructionCounter++, OpCodes.Call.ToInstruction(targetMethod));
+
+			if (settings.AppendToEnd)
+			{
+				Instruction ret = body.Last();
+				foreach (Instruction instr in body)
+				{
+					if (instr.Operand is Instruction)
+					{
+						Instruction jumpTarget = instr.Operand as Instruction;
+						if (jumpTarget == ret)
+						{
+							instr.Operand = body[insertionStart];
+						}
+					}
+				}
+			}
 		}
 
 		private static Instruction GetLoadArgOpCode(int i)
@@ -194,74 +214,46 @@ namespace Nuterra.Installer.Hooking
 			body.Insert(index + 2, new Instruction(OpCodes.Call, markUserMessage));
 		}
 
-		public static void Hook_TankCamera_FixedUpdate(ModuleDefMD module)
+		public static void Hook_TankControl_PlayerInput(ModuleDefMD module)
 		{
-			const string methodName = nameof(Maritaria.FirstPersonKeyBehaviour.Hooks_TankCamera.FixedUpdate);
-			TypeDef cecilSource = module.Find("TankCamera", isReflectionName: true);
+			const string methodName = nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_TankControl.PlayerInput);
+			TypeDef cecilSource = module.Find("TankControl", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.FirstPersonKeyBehaviour.Hooks_TankCamera));
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_TankControl));
 			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
 
 			var body = sourceMethod.Body.Instructions;
 
-			int index = 472;
-			Instruction injectBeforeInstruction = body[index];
+			for (int i = 0; i < 9; i++)
+			{
+				body.RemoveAt(0);
+			}
 
-			//Call target, takes no args, returns a bool
-			Instruction callTargetInstruction = new Instruction(OpCodes.Call, targetMethod);
-			body.Insert(index++, callTargetInstruction);
-
-			//If the value is false, execute the next instruction, if true call {injectBeforeInstruction}
-			Instruction branchInstruction = new Instruction(OpCodes.Brtrue_S, injectBeforeInstruction);
-			body.Insert(index++, branchInstruction);
-
-			//If the target method returned true exit the method
-			Instruction returnInstruction = new Instruction(OpCodes.Ret);
-			body.Insert(index++, returnInstruction);
+			body.Insert(0, new Instruction(OpCodes.Ldarg_0));
+			body.Insert(1, new Instruction(OpCodes.Call, targetMethod));
 
 			/*
-				... instruction #471 ...
-				call		Maritaria.FirstPersonKeyBehaviour.Hooks_TankCamera::FixedUpdate()
-				brtrue.s	{ original next instruction }
-				ret
+				0	0000	ldsfld	!0 class Singleton/Manager`1<class CameraManager>::inst
+				1	0005	callvirt	instance bool CameraManager::IsCurrent<class TankCamera>()
+				2	000A	brtrue	10 (0032) ldarg.0
+				3	000F	ldsfld	!0 class Singleton/Manager`1<class CameraManager>::inst
+				4	0014	callvirt	instance bool CameraManager::IsCurrent<class DebugCamera>()
+				5	0019	brfalse	50 (00B6) ret
+				6	001E	ldsfld	!0 class Singleton/Manager`1<class CameraManager>::inst
+				7	0023	callvirt	instance class DebugCamera CameraManager::GetDebugCamera()
+				8	0028	callvirt	instance bool DebugCamera::get_IsLocked()
+				9	002D	brfalse	50 (00B6) ret
 				... remaining code ...
 
-				Make sure to replace jumps to #471 to the first injected opcode
+				Remove all instructions up to 9, then insert:
+				load self
+				call hook
+
+			So it becomes:
+			call hook
+			if hook returns false then jump to 50
+
 			 */
-		}
-
-		private static void Hook_ModuleHeart_IsOnline(ModuleDefMD module)
-		{
-			const string methodName = nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_IsOnline);
-			TypeDef cecilSource = module.Find("ModuleHeart", isReflectionName: true);
-			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart));
-			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
-
-			var body = sourceMethod.Body.Instructions;
-
-			Instruction returnFalseStartInstruction = body[15];
-
-			int index = 13;
-			body.Replace(index++, new Instruction(OpCodes.Ble_Un_S, returnFalseStartInstruction));
-			body.Replace(index++, new Instruction(OpCodes.Ldarg_0));
-			body.Insert(index++, new Instruction(OpCodes.Call, targetMethod));
-			body.Insert(index++, new Instruction(OpCodes.Ret));
-
-			/*
-			Before:
-			13	0035	cgt
-			14	0037	br.s	16 (003A) ret
-			15	0039	ldc.i4.0
-			16	003A	ret
-			After:
-			13	002F	ble.un.s	17 (0038) ldc.i4.0
-			14	0031	ldnull
-			15	0032	call	bool Maritaria.ProductionToggleKeyBehaviour::ModuleHeart_get_IsOnline(class ModuleHeart)
-			16	0037	ret
-			17	0038	ldc.i4.0
-			18	0039	ret
-			*/
 		}
 	}
 }

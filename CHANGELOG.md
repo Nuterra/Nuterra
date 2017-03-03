@@ -1,4 +1,6 @@
-[Unreleased]: https://github.com/maritaria/nuterra/compare/v0.2.4...HEAD
+[Unreleased]: https://github.com/maritaria/nuterra/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/maritaria/nuterra/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/maritaria/nuterra/compare/v0.2.4...v0.3.0
 [0.2.4]: https://github.com/maritaria/nuterra/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/maritaria/nuterra/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/maritaria/nuterra/compare/v0.2.0...v0.2.2
@@ -8,6 +10,33 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Large cockpit block
+- Lookaround support in first person mode
+- Firstperson mode no longer exits on activating build beam
+
+### Changed
+- Fixed firstperson mode dragging behind on large craft speeds
+- Improved customizability of firstperson blocks
+
+## [0.3.1]
+### Added
+- Gyro stabalized Hawkeye rotor
+- Custom cursor mod
+- Cheat block mod (godmode & infinite fuel)
+- Support for mods to register custom blocks
+
+### Changed
+- Support for 0.7.3
+- Upgraded model for the first person block
+- Split off build steps from installer to avoid a circular dependency
+- Fixed magnet status always showing
+- Improved wiki pages
+
+### Removed
+- Support for 0.7.2
+
+## [0.3.0]
 ### Added
 - Modloader
 - Self destruction key (Gamelynx mod)

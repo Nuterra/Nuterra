@@ -62,9 +62,9 @@ namespace Maritaria
 		public static class Hooks_ModuleHeart
 		{
 			//Hook by &&-ing result of this function
-			public static bool get_IsOnline(ModuleHeart heart)
+			public static bool get_CanPowerUp(ModuleHeart heart)
 			{
-				return Singleton.Manager<ProductionToggleKeyBehaviour>.inst.ProductionActive;
+				return heart.block.tank && (!heart.m_HasAnchor || heart.block.tank.IsAnchored) && ProductionToggleKeyBehaviour.inst.ProductionActive;
 			}
 		}
 

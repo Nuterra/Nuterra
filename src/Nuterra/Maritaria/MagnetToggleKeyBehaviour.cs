@@ -5,9 +5,9 @@ namespace Maritaria
 {
 	public class MagnetToggleKeyBehaviour : MonoBehaviour
 	{
-		private GUIContent _content;
+		private GUIContent _content = new GUIContent();
 
-		private GUIStyle _style;
+		private GUIStyle _style = new GUIStyle();
 
 		public static readonly string DisplayFormat = "<color=white><b>Magnets: </b>{0}</color>";
 
@@ -23,31 +23,29 @@ namespace Maritaria
 			}
 		}
 
-		public MagnetToggleKeyBehaviour()
+		private void Start()
 		{
-			_style = new GUIStyle();
-			_style.richText=(true);
-			_style.alignment=(TextAnchor)(4);
-			_content = new GUIContent();
+			_style.richText = true;
+			_style.alignment = TextAnchor.MiddleCenter;
 		}
 
 		public void OnGUI()
 		{
-			if (Singleton.playerTank && !(Singleton.playerTank.blockman.IterateBlockComponents<ModuleItemHolderMagnet>().FirstOrDefault() == null) && !Singleton.Manager<ManPauseGame>.inst.IsPaused)
+			if (!Singleton.playerTank || (Singleton.playerTank.blockman.IterateBlockComponents<ModuleItemHolderMagnet>().FirstOrDefault() == null) || ManPauseGame.inst.IsPaused)
 			{
-				//No tank or no magnet blocks
+				//No tank, magnet blocks or game is paused
 				return;
 			}
 			if (Modules.Magnet.DisabledForPlayerControlledTank)
 			{
-				_content.text=(string.Format(MagnetToggleKeyBehaviour.DisplayFormat, MagnetToggleKeyBehaviour.OfflineStatus));
+				_content.text = (string.Format(DisplayFormat, OfflineStatus));
 			}
 			else
 			{
-				_content.text=(string.Format(MagnetToggleKeyBehaviour.DisplayFormat, MagnetToggleKeyBehaviour.OnlineStatus));
+				_content.text = (string.Format(DisplayFormat, OnlineStatus));
 			}
-			_style.fontSize=(Screen.height / 60);
-			Vector2 vector=new Vector2((float)Screen.width * 0.5f, (float)Screen.height * 0.95f);
+			_style.fontSize = (Screen.height / 60);
+			Vector2 vector = new Vector2((float)Screen.width * 0.5f, (float)Screen.height * 0.95f);
 			Vector2 vector2 = _style.CalcSize(_content);
 			vector.y -= vector2.y * 0.5f;
 			vector.x -= vector2.x * 0.5f;

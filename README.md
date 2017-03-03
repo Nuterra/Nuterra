@@ -10,29 +10,29 @@
 [![Downloads for All Releases](https://img.shields.io/github/downloads/maritaria/nuterra/total.svg)][Releases]
 
 # Installation
-Check the [Releases] page for the latest version of the mod. Every distrubution will include a copy of seperate install instructions for that particular release. In general, the installation process should be something like:
+Check the [Releases] page for the latest version of the mod.
 
-1. Unpack the release package
-2. Replace /TerraTechWin64_Data/Managed/Assembly-CSharp.dll with the same-named .dll in the package.
-3. Run the game
+1. Download Nuterra release package (.zip)
+2. Unpack into Terra Tech install directory (the one where the executable is located)
+3. Run `Nuterra.Installer.exe`
+4. Start the game
+
+For more detailed information on installing Nuterra and troubleshooting, see this [wiki page](https://github.com/Nuterra/nuterra/wiki/How-to-install-Nuterra).
 
 # Development
 The main tool used to develop the mod is [dnSpy], a tool to decompile and edit managed assemblies. All modifications to the game are collected in the Maritaria namespace, merged into the original assembly and finally the original code is redirected to pass through the mod code. The documentation includes instructions about usage of [dnSpy].
 
 # Roadmap
-## v0.2
-- [x] Add first custom block
-- [ ] Add rename current tech UI
-
-## v0.3
-- [ ] Generic custom block loading system
-- [ ] Remove the need to edit accessors
-- [ ] Base building blocks (GeoCorp)
+## Mod API Approach
+- [ ] Create event/hook system such that hooking will only be used for nuterra code
+- [ ] Restructure project and refactor into per-feature mods
+- [ ] Separate mods into individual projects/dlls
+- [ ] Add loading external dll support to modloader
 
 ## v1.0
 - [ ] Create modding API without references to original Assembly-CSharp.dll
 - [ ] Hotswappable mod loading
-- [ ] API for registering new blocktypes
+- [x] API for registering new blocktypes
 - [ ] API for registering configuration UI
 - [ ] Modular UI creation
 - [ ] Robust save system to allow loading worlds with missing mods

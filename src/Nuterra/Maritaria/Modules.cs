@@ -53,7 +53,7 @@ namespace Maritaria
 
 			public static bool CheckOutputConditions_DayTime(ModuleEnergy module)
 			{
-				return (module.m_OutputConditions & ModuleEnergy.OutputConditionFlags.DayTime) == (ModuleEnergy.OutputConditionFlags)0 || !Singleton.Manager<ManTimeOfDay>.inst.NightTime;
+				return (module.m_OutputConditions & ModuleEnergy.OutputConditionFlags.DayTime) == (ModuleEnergy.OutputConditionFlags)0 || !ManTimeOfDay.inst.NightTime;
 			}
 
 			public static bool CheckOutputConditions_ThermalSource(ModuleEnergy module)
@@ -64,9 +64,9 @@ namespace Maritaria
 			public static float GetOutputMultiplier(ModuleEnergy module)
 			{
 				float result = 1f;
-				if (module.block.BlockType == BlockTypes.GSOGeneratorSolar_141 && MaritariaMod.Instance.Config.MobileSolarPanels)
+				if (module.block.BlockType == BlockTypes.GSOGeneratorSolar_141 && MaritariaMod.Instance.Config.MobileSolarPanels && module.block.tank && module.block.tank.IsAnchored)
 				{
-					result = 0.1f;
+					result = MaritariaMod.Instance.Config.MobileSolarMultiplier;
 				}
 				if ((module.m_OutputConditions & ModuleEnergy.OutputConditionFlags.Thermal) != (ModuleEnergy.OutputConditionFlags)0)
 				{

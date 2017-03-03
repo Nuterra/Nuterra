@@ -8,16 +8,30 @@ namespace Maritaria
 	public static class BlockLoader
 	{
 		private static readonly Dictionary<int, CustomBlock> CustomBlocks = new Dictionary<int, CustomBlock>();
+		private static readonly List<CustomBlock> PreBootRegistrationQueue = new List<CustomBlock>();
 
-		public static void RegisterCustomBlock(CustomBlock block)
+		public static void Register(CustomBlock block)
+		{
+			if (PreBootRegistrationQueue != null)
+			{
+				PreBootRegistrationQueue.Add(block);
+			}
+			else
+			{
+				RegisterImmediatly(block);
+			}
+		}
+
+		private static void RegisterImmediatly(CustomBlock block)
 		{
 			int blockID = block.BlockID;
 			CustomBlocks.Add(blockID, block);
 			int hashCode = ItemTypeInfo.GetHashCode(ObjectTypes.Block, blockID);
-			ManSpawn spawnManager = Singleton.Manager<ManSpawn>.inst;
+			ManSpawn spawnManager = ManSpawn.inst;
 			spawnManager.VisibleTypeInfo.SetDescriptor<FactionSubTypes>(hashCode, block.Faction);
 			spawnManager.VisibleTypeInfo.SetDescriptor<BlockCategories>(hashCode, block.Category);
 			spawnManager.AddBlockToDictionary(block.Prefab);
+			RecipeManager.inst.m_BlockPriceLookup.Add(blockID, block.Price);
 		}
 
 		public static class Hooks_ManSpawn
@@ -25,9 +39,11 @@ namespace Maritaria
 			//Hook to be called at the end of ManSpawn.Start
 			public static void Start()
 			{
-				RegisterCustomBlock(new SmileyBlock());
-				RegisterCustomBlock(new BaconBlock());
-				RegisterCustomBlock(new Sylver.GyroRotor());
+				foreach (CustomBlock queuedBlock in PreBootRegistrationQueue)
+				{
+					RegisterImmediatly(queuedBlock);
+				}
+				Register(new Sylver.GyroRotor());
 			}
 		}
 

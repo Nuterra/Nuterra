@@ -15,6 +15,7 @@ namespace Maritaria
 		int CustomBlock.BlockID => BlockID;
 		public string Name => "GSO Bacon strip";
 		public string Description => "A long strip of bacon with bullet absoring grease";
+		public int Price => 500;
 		public FactionSubTypes Faction => FactionSubTypes.GSO;
 		public BlockCategories Category => BlockCategories.Accessories;
 		public GameObject Prefab { get; }
