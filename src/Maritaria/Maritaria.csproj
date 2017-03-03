@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaconBlock.cs" />
-    <Compile Include="BugReportFlagger.cs" />
     <Compile Include="CheatBlocks\CheatBlockMod.cs" />
     <Compile Include="CheatBlocks\GodModeBlock.cs" />
     <Compile Include="CheatBlocks\InfiniteFuelBlock.cs" />
