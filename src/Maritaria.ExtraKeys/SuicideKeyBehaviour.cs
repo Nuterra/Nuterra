@@ -1,14 +1,15 @@
 using System;
 using UnityEngine;
 
-namespace Gameslynx
+namespace Maritaria.ExtraKeys
 {
 	public class SuicideKeyBehaviour : MonoBehaviour
 	{
+		public ExtraKeysMod Mod { get; set; }
 		public void Update()
 		{
 			Tank player = Singleton.playerTank;
-			if (player != null && Input.GetKeyDown(Maritaria.MaritariaMod.Instance.Config.SuicideKey))
+			if (player != null && Input.GetKeyDown(Mod.KeyConfig.SuicideKey))
 			{
 				KillTech(player);
 			}

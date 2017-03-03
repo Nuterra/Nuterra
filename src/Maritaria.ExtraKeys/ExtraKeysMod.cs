@@ -10,6 +10,7 @@ namespace Maritaria.ExtraKeys
 	[Mod]
 	public sealed class ExtraKeysMod : TerraTechMod
 	{
+		private GameObject _obj;
 		public override string Name => "ExtraKeys";
 		public override string Description => "Adds new keybindings to some things";
 
@@ -36,6 +37,10 @@ namespace Maritaria.ExtraKeys
 			Hooks.Modules.Hammer.CanFire += Hammer_CanFire;
 			Hooks.Modules.Scoop.CanFire += Scoop_CanFire;
 			Hooks.Modules.Weapon.CanFire += Weapon_CanFire;
+			_obj = new GameObject();
+			_obj.AddComponent<SuicideKeyBehaviour>().Mod = this;
+			_obj.AddComponent<TimeOfDayKeysBehaviour>().Mod = this;
+			UnityEngine.Object.DontDestroyOnLoad(_obj);
 		}
 
 		public override void Unload()
@@ -45,6 +50,7 @@ namespace Maritaria.ExtraKeys
 			Hooks.Modules.Hammer.CanFire -= Hammer_CanFire;
 			Hooks.Modules.Scoop.CanFire -= Scoop_CanFire;
 			Hooks.Modules.Weapon.CanFire -= Weapon_CanFire;
+			UnityEngine.Object.Destroy(_obj);
 		}
 
 		public override JObject CreateDefaultConfiguration()

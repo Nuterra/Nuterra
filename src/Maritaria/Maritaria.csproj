@@ -73,8 +73,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplashScreenHandler.cs" />
     <Compile Include="SpriteFactory.cs" />
-    <Compile Include="SuicideKeyBehaviour.cs" />
-    <Compile Include="TimeOfDayKeysBehaviour.cs" />
     <Compile Include="UnityGraph.cs" />
   </ItemGroup>
   <ItemGroup>
