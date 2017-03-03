@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockLoader.cs" />
+    <Compile Include="BugReportFlagger.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="CustomBlock.cs" />
     <Compile Include="EnumExtensions.cs" />

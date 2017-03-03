@@ -71,7 +71,6 @@
     <Compile Include="ProductionStoppedSign.cs" />
     <Compile Include="ProductionToggleKeyBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveGameFlagger.cs" />
     <Compile Include="SplashScreenHandler.cs" />
     <Compile Include="SpriteFactory.cs" />
     <Compile Include="SuicideKeyBehaviour.cs" />
