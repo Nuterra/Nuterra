@@ -1,11 +1,8 @@
 using System;
-using System.Reflection;
-using UnityEngine;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace Nuterra
 {
@@ -22,7 +19,15 @@ namespace Nuterra
 			{
 				Console.WriteLine($"Loading mod assembly: {assemblyFileName}");
 				string path = Path.Combine(directory, assemblyFileName);
-				Assembly asm = Assembly.LoadFile(path);
+				byte[] assemblyBytes = File.ReadAllBytes(path);
+				string symbolFile = path + ".mdb";
+				byte[] symbolStore = null;
+				if (File.Exists(symbolFile))
+				{
+					Console.WriteLine("Also loading symbols");
+					symbolStore = File.ReadAllBytes(symbolFile);
+				}
+				Assembly asm = Assembly.Load(assemblyBytes, symbolStore);
 				LoadAllMods(asm);
 			}
 		}

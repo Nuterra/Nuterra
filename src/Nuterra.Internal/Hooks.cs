@@ -385,7 +385,7 @@ namespace Nuterra.Internal
 	public sealed class FireEvent<T> where T : Module
 	{
 		public T Module { get; }
-		public bool PerformVanillaBehaviour { get; set; } = false;
+		public bool PerformVanillaBehaviour { get; set; } = true;
 
 		public FireEvent(T module)
 		{

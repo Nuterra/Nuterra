@@ -23,7 +23,7 @@ namespace Maritaria.Cursor
 		{
 			base.Load();
 
-			if (Configuration == null)
+			if (Config == null)
 			{
 				LogError($"No configuration section");
 				return;
@@ -49,7 +49,7 @@ namespace Maritaria.Cursor
 
 		private void OverrideCursors()
 		{
-			string cursorFolder = Configuration.GetValue("Folder", StringComparison.OrdinalIgnoreCase)?.ToObject<string>();
+			string cursorFolder = Config.GetValue("Folder", StringComparison.OrdinalIgnoreCase)?.ToObject<string>();
 			if (cursorFolder == null)
 			{
 				return;

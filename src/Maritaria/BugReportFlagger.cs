@@ -14,7 +14,7 @@ namespace Maritaria
 
 		public static string MarkUserMessage(string userMessage)
 		{
-			return $"Maritaria.BugReportFlagger({Nuterra.NuterraMain.CurrentVersion})\n\n{userMessage}";
+			return $"Maritaria.BugReportFlagger({Nuterra.NuterraApi.CurrentVersion})\n\n{userMessage}";
 		}
 	}
 }

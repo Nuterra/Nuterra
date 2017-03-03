@@ -10,9 +10,8 @@ namespace Nuterra.Internal
 	{
 		public static void Start()
 		{
-			Console.WriteLine("Bootstrapper.HeyMayoverse");
 			Assembly nuterra = AppDomain.CurrentDomain.Load("Nuterra");
-			Type nuterraMain = nuterra.GetType("Nuterra.NuterraMain");
+			Type nuterraMain = nuterra.GetType("Nuterra.NuterraApi");
 			MethodInfo start = nuterraMain.GetMethod("Start", BindingFlags.Static | BindingFlags.NonPublic);
 			start.Invoke(null, new object[] { });
 		}
