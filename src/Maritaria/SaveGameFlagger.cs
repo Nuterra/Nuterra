@@ -13,9 +13,9 @@ namespace Maritaria
 		//Hook at beginning of method, passing m_State
 		public static void ManSaveGame_SaveData_OnDeserialized(ManSaveGame.SaveData saveData, bool loadInfoOnly)
 		{
-			if (saveData.m_State != null)
+			if (saveData.State != null)
 			{
-				ManSaveGame_State_ctor(saveData.m_State);
+				ManSaveGame_State_ctor(saveData.State);
 			}
 		}
 	}
