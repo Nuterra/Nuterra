@@ -35,18 +35,11 @@ namespace Nuterra.Installer.Hooking
 			Redirect(module, "ManStats+IntStatList", typeof(Hooks.Managers.Stats.IntStatList), new RedirectSettings(nameof(Hooks.Managers.Stats.IntStatList.OnSerializing)) { ReplaceBody = true });
 			Hook_StringLookup_GetString(module);
 			Hook_SpriteFetcher_GetSprite(module);
-
-			//Misc
-			/*
-			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnSpawn)) { });
-			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnAttach)) { InsertionStart = 3 });//First 3 instructions are to set IsEnabled, which the hook overrides later
-			Redirect(module, "ModuleHeart", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_CanPowerUp)) { ReplaceBody = true });
-
-			Redirect(module, "Mode", typeof(Sylver.SylverMod.Hooks_Mode), new RedirectSettings(nameof(Sylver.SylverMod.Hooks_Mode.EnterMode)));
-			*/
-
+			
+			//Custom camera support
 			Hook_TankControl_PlayerInput(module);
 
+			//Misc
 			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanAcceptItem));
 			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanReleaseItem));
 		}
@@ -389,37 +382,6 @@ namespace Nuterra.Installer.Hooking
 				Call hook
 				If hook returns true, jump to last instruction (ret)
 			 */
-		}
-
-		private static void Hook_ModulePickupItem_CanAcceptItem(ModuleDefMD module)
-		{
-			const string methodName = nameof(Hooks.Modules.ItemPickup.CanAcceptItem);
-			TypeDef sourceType = module.Find("ModuleItemPickup", isReflectionName: true);
-			MethodDef sourceMethod = sourceType.Methods.Single(m => m.Name == methodName);
-			TypeDef targetType = module.GetNuterraType(typeof(Hooks.Modules.ItemPickup));
-			MethodDef targetMethod = targetType.Methods.Single(m => m.Name == methodName);
-
-			MethodDefUser clonedSource = new MethodDefUser(sourceMethod.Name + "_Original", sourceMethod.MethodSig, sourceMethod.Attributes);
-
-			clonedSource.Body = new CilBody(sourceMethod.Body.InitLocals, sourceMethod.Body.Instructions, sourceMethod.Body.ExceptionHandlers, sourceMethod.Body.Variables);
-			sourceType.Methods.Add(clonedSource);
-
-			var body = sourceMethod.Body.Instructions;
-			body.Clear();
-			int i = 0;
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[0]));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[0]));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[1]));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[2]));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[3]));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[4]));
-			body.Insert(i++, OpCodes.Call.ToInstruction(clonedSource));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[1]));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[2]));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[3]));
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[4]));
-			body.Insert(i++, OpCodes.Call.ToInstruction(targetMethod));
-			body.Insert(i++, OpCodes.Ret.ToInstruction());
 		}
 	}
 }
