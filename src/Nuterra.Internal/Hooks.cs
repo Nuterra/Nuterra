@@ -181,6 +181,46 @@ namespace Nuterra.Internal
 
 				public static event Action<CanControlTankEvent> CanControlTank;
 			}
+
+			public static class Heart
+			{
+				internal static void Update(ModuleHeart module)
+				{
+					bool onlineOriginal = module.IsOnline;
+					var updateEvent = new HeartUpdateEvent(module, onlineOriginal);
+
+					OnUpdate?.Invoke(updateEvent);
+
+					if (!updateEvent.IsOnline && onlineOriginal)
+					{
+						module.DropAllItems(false);
+						module.m_ReadyAfterTime = Time.time + 0.0001f;
+					}
+				}
+
+				public static event Action<HeartUpdateEvent> OnUpdate;
+			}
+
+			public static class ItemPickup
+			{
+				internal static bool CanAcceptItem(ModuleItemPickup module, bool defaultResult, Visible item, ModuleItemHolder.Stack fromStack, ModuleItemHolder.Stack toStack, ModuleItemHolder.PassType passType)
+				{
+					var canPickupEvent = new ItemPickupEvent(module, defaultResult, item, fromStack, toStack, passType);
+					CanPickup?.Invoke(canPickupEvent);
+					return canPickupEvent.CanPickup;
+				}
+
+				public static event Action<ItemPickupEvent> CanPickup;
+
+				internal static bool CanReleaseItem(ModuleItemPickup module, bool defaultResult, Visible item, ModuleItemHolder.Stack fromStack, ModuleItemHolder.Stack toStack, ModuleItemHolder.PassType passType)
+				{
+					var canPickupEvent = new ItemPickupEvent(module, defaultResult, item, fromStack, toStack, passType);
+					CanRelease?.Invoke(canPickupEvent);
+					return canPickupEvent.CanPickup;
+				}
+
+				public static event Action<ItemPickupEvent> CanRelease;
+			}
 		}
 
 		public static class Managers
@@ -288,6 +328,40 @@ namespace Nuterra.Internal
 			}
 
 			public static event Action<SpriteLookupEvent> OnSpriteLookup;
+		}
+	}
+
+	public sealed class ItemPickupEvent
+	{
+		public ModuleItemPickup Module { get; }
+		public bool CanPickup { get; set; }
+		public Visible Item { get; }
+		public ModuleItemHolder.Stack Source { get; }
+		public ModuleItemHolder.Stack Target { get; }
+		public ModuleItemHolder.PassType PassType { get; }
+
+		public ItemPickupEvent(ModuleItemPickup module, bool canPickup, Visible item, ModuleItemHolder.Stack fromStack, ModuleItemHolder.Stack toStack, ModuleItemHolder.PassType passType)
+		{
+			if (module == null) throw new ArgumentNullException(nameof(item));
+			Module = module;
+			CanPickup = canPickup;
+			Item = item;
+			Source = fromStack;
+			Target = toStack;
+			PassType = passType;
+		}
+	}
+
+	public sealed class HeartUpdateEvent
+	{
+		public ModuleHeart Module { get; }
+		public bool IsOnline { get; set; }
+
+		public HeartUpdateEvent(ModuleHeart module, bool isOnlineOriginal)
+		{
+			if (module == null) throw new ArgumentNullException(nameof(module));
+			Module = module;
+			IsOnline = isOnlineOriginal;
 		}
 	}
 

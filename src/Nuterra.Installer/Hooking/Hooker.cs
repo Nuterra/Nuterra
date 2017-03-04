@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
@@ -28,6 +29,7 @@ namespace Nuterra.Installer.Hooking
 			Redirect(module, "ModuleHammer", typeof(Hooks.Modules.Hammer), new RedirectSettings(nameof(Hooks.Modules.Hammer.ControlInput)) { ReplaceBody = true });
 			Redirect(module, "ModuleScoop", typeof(Hooks.Modules.Scoop), new RedirectSettings(nameof(Hooks.Modules.Scoop.ControlInput)) { ReplaceBody = true });
 			Redirect(module, "ModuleWeapon", typeof(Hooks.Modules.Weapon), new RedirectSettings(nameof(Hooks.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
+			Redirect(module, "ModuleHeart", typeof(Hooks.Modules.Heart), new RedirectSettings(nameof(Hooks.Modules.Heart.Update)));
 
 			//Custom block support
 			Redirect(module, "ManStats+IntStatList", typeof(Hooks.Managers.Stats.IntStatList), new RedirectSettings(nameof(Hooks.Managers.Stats.IntStatList.OnSerializing)) { ReplaceBody = true });
@@ -44,6 +46,9 @@ namespace Nuterra.Installer.Hooking
 			*/
 
 			Hook_TankControl_PlayerInput(module);
+
+			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanAcceptItem));
+			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanReleaseItem));
 		}
 
 		private static void Redirect(ModuleDefMD module, string sourceType, Type targetType, RedirectSettings settings)
@@ -95,6 +100,114 @@ namespace Nuterra.Installer.Hooking
 					}
 				}
 			}
+		}
+
+		private static void CreateHook(ModuleDefMD module, string source, Type target, string methodName)
+		{
+			TypeDef sourceType = module.Find(source, isReflectionName: true);
+			MethodDef sourceMethod = sourceType.Methods.Single(m => m.Name == methodName);
+			TypeDef targetType = module.GetNuterraType(target);
+			MethodDef targetMethod = targetType.Methods.Single(m => m.Name == methodName);
+
+			MethodDefUser clonedSource = CloneMethod(sourceMethod);
+			sourceType.Methods.Add(clonedSource);
+
+			var body = sourceMethod.Body.Instructions;
+			body.Clear();
+
+			int i = 0;
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[0]));
+			for (int j = 0; j < sourceMethod.Parameters.Count; j++)
+			{
+				body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[j]));
+			}
+			body.Insert(i++, OpCodes.Call.ToInstruction(clonedSource));
+			for (int j = 1; j < sourceMethod.Parameters.Count; j++)
+			{
+				body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[j]));
+			}
+			body.Insert(i++, OpCodes.Call.ToInstruction(targetMethod));
+			body.Insert(i++, OpCodes.Ret.ToInstruction());
+		}
+
+		private static MethodDefUser CloneMethod(MethodDef sourceMethod)
+		{
+			MethodDefUser clonedSource = new MethodDefUser(sourceMethod.Name + "_Original", sourceMethod.MethodSig, sourceMethod.Attributes);
+			var clonedBody = new CilBody();
+
+			Dictionary<Local, Local> variableTable = new Dictionary<Local, Local>();
+			foreach (Local oldLocal in sourceMethod.Body.Variables)
+			{
+				var newLocal = new Local(oldLocal.Type, oldLocal.Name, oldLocal.Index);
+				variableTable.Add(oldLocal, newLocal);
+				clonedBody.Variables.Add(newLocal);
+			}
+
+			Dictionary<Parameter, Parameter> parameterTable = new Dictionary<Parameter, Parameter>();
+			foreach (Parameter oldParam in sourceMethod.Parameters)
+			{
+				Parameter newParam = clonedSource.Parameters[oldParam.Index];
+				parameterTable.Add(oldParam, newParam);
+			}
+
+			Dictionary<Instruction, Instruction> instructionTable = new Dictionary<Instruction, Instruction>();
+			foreach (Instruction oldInstr in sourceMethod.Body.Instructions)
+			{
+				var newInstr = new Instruction(oldInstr.OpCode, oldInstr.Operand);
+				instructionTable.Add(oldInstr, newInstr);
+				clonedBody.Instructions.Add(newInstr);
+			}
+
+			//Update instruction operands
+			foreach (Instruction newInstr in clonedBody.Instructions)
+			{
+				object operand = newInstr.Operand;
+				if (operand is Instruction)
+				{
+					operand = instructionTable[(Instruction)operand];
+				}
+				if (operand is Local)
+				{
+					operand = variableTable[(Local)operand];
+				}
+				if (operand is Parameter)
+				{
+					operand = parameterTable[(Parameter)operand];
+				}
+				newInstr.Operand = operand;
+			}
+
+			Dictionary<ExceptionHandler, ExceptionHandler> handlerTable = new Dictionary<ExceptionHandler, ExceptionHandler>();
+			foreach (ExceptionHandler oldHandler in sourceMethod.Body.ExceptionHandlers)
+			{
+				var newHandler = new ExceptionHandler(oldHandler.HandlerType);
+				newHandler.CatchType = oldHandler.CatchType;
+				if (oldHandler.FilterStart != null)
+				{
+					newHandler.FilterStart = instructionTable[oldHandler.FilterStart];
+				}
+				if (oldHandler.HandlerStart != null)
+				{
+					newHandler.HandlerStart = instructionTable[oldHandler.HandlerStart];
+				}
+				if (oldHandler.HandlerEnd != null)
+				{
+					newHandler.HandlerEnd = instructionTable[oldHandler.HandlerEnd];
+				}
+				newHandler.HandlerType = oldHandler.HandlerType;
+				if (oldHandler.TryStart != null)
+				{
+					newHandler.TryStart = instructionTable[oldHandler.TryStart];
+				}
+				if (oldHandler.TryEnd != null)
+				{
+					newHandler.TryEnd = instructionTable[oldHandler.TryEnd];
+				}
+				clonedBody.ExceptionHandlers.Add(newHandler);
+			}
+
+			clonedSource.Body = clonedBody;
+			return clonedSource;
 		}
 
 		private static Instruction GetLoadArgOpCode(int i)
@@ -276,6 +389,37 @@ namespace Nuterra.Installer.Hooking
 				Call hook
 				If hook returns true, jump to last instruction (ret)
 			 */
+		}
+
+		private static void Hook_ModulePickupItem_CanAcceptItem(ModuleDefMD module)
+		{
+			const string methodName = nameof(Hooks.Modules.ItemPickup.CanAcceptItem);
+			TypeDef sourceType = module.Find("ModuleItemPickup", isReflectionName: true);
+			MethodDef sourceMethod = sourceType.Methods.Single(m => m.Name == methodName);
+			TypeDef targetType = module.GetNuterraType(typeof(Hooks.Modules.ItemPickup));
+			MethodDef targetMethod = targetType.Methods.Single(m => m.Name == methodName);
+
+			MethodDefUser clonedSource = new MethodDefUser(sourceMethod.Name + "_Original", sourceMethod.MethodSig, sourceMethod.Attributes);
+
+			clonedSource.Body = new CilBody(sourceMethod.Body.InitLocals, sourceMethod.Body.Instructions, sourceMethod.Body.ExceptionHandlers, sourceMethod.Body.Variables);
+			sourceType.Methods.Add(clonedSource);
+
+			var body = sourceMethod.Body.Instructions;
+			body.Clear();
+			int i = 0;
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[0]));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[0]));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[1]));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[2]));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[3]));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[4]));
+			body.Insert(i++, OpCodes.Call.ToInstruction(clonedSource));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[1]));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[2]));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[3]));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[4]));
+			body.Insert(i++, OpCodes.Call.ToInstruction(targetMethod));
+			body.Insert(i++, OpCodes.Ret.ToInstruction());
 		}
 	}
 }

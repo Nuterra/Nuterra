@@ -1,11 +1,11 @@
-using System;
 using UnityEngine;
 
 namespace Maritaria.ExtraKeys
 {
-	public class TimeOfDayKeysBehaviour : MonoBehaviour
+	public class TimeOfDayKeys : MonoBehaviour
 	{
 		public ExtraKeysMod Mod { get; set; }
+
 		public void Update()
 		{
 			if (Input.GetKeyDown(Mod.KeyConfig.TurnDayKey))

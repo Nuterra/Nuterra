@@ -3,9 +3,10 @@ using UnityEngine;
 
 namespace Maritaria.ExtraKeys
 {
-	public class SuicideKeyBehaviour : MonoBehaviour
+	public class SuicideKey : MonoBehaviour
 	{
 		public ExtraKeysMod Mod { get; set; }
+
 		public void Update()
 		{
 			Tank player = Singleton.playerTank;

@@ -42,3 +42,4 @@ field ModuleFuelTank m_MaterialsToUpdate
 method+virtual ModuleFuelTank get_RefillRate
 method+virtual ModuleFuelTank get_Capacity
 field RecipeManager m_BlockPriceLookup
+field ModuleHeart m_ReadyAfterTime

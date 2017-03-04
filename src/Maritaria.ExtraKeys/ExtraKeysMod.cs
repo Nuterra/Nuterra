@@ -38,8 +38,9 @@ namespace Maritaria.ExtraKeys
 			Hooks.Modules.Scoop.CanFire += Scoop_CanFire;
 			Hooks.Modules.Weapon.CanFire += Weapon_CanFire;
 			_obj = new GameObject();
-			_obj.AddComponent<SuicideKeyBehaviour>().Mod = this;
-			_obj.AddComponent<TimeOfDayKeysBehaviour>().Mod = this;
+			_obj.AddComponent<SuicideKey>().Mod = this;
+			_obj.AddComponent<TimeOfDayKeys>().Mod = this;
+			_obj.AddComponent<ProductionToggleKey>().Mod = this;
 			UnityEngine.Object.DontDestroyOnLoad(_obj);
 		}
 
