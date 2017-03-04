@@ -31,6 +31,9 @@ namespace Nuterra.Installer.Hooking
 			Redirect(module, "ModuleWeapon", typeof(Hooks.Modules.Weapon), new RedirectSettings(nameof(Hooks.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
 			Redirect(module, "ModuleHeart", typeof(Hooks.Modules.Heart), new RedirectSettings(nameof(Hooks.Modules.Heart.Update)));
 
+			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanAcceptItem));
+			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanReleaseItem));
+
 			//Custom block support
 			Redirect(module, "ManStats+IntStatList", typeof(Hooks.Managers.Stats.IntStatList), new RedirectSettings(nameof(Hooks.Managers.Stats.IntStatList.OnSerializing)) { ReplaceBody = true });
 			Hook_StringLookup_GetString(module);
@@ -38,10 +41,6 @@ namespace Nuterra.Installer.Hooking
 			
 			//Custom camera support
 			Hook_TankControl_PlayerInput(module);
-
-			//Misc
-			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanAcceptItem));
-			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanReleaseItem));
 		}
 
 		private static void Redirect(ModuleDefMD module, string sourceType, Type targetType, RedirectSettings settings)
@@ -103,18 +102,23 @@ namespace Nuterra.Installer.Hooking
 			MethodDef targetMethod = targetType.Methods.Single(m => m.Name == methodName);
 
 			MethodDefUser clonedSource = CloneMethod(sourceMethod);
-			sourceType.Methods.Add(clonedSource);
+
+			sourceMethod.Body.Variables.Clear();
+			var defaultValueLocal = new Local(clonedSource.ReturnType, "defaultValue");
+			sourceMethod.Body.Variables.Add(defaultValueLocal);
 
 			var body = sourceMethod.Body.Instructions;
 			body.Clear();
 
 			int i = 0;
-			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[0]));
 			for (int j = 0; j < sourceMethod.Parameters.Count; j++)
 			{
 				body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[j]));
 			}
 			body.Insert(i++, OpCodes.Call.ToInstruction(clonedSource));
+			body.Insert(i++, OpCodes.Stloc.ToInstruction(defaultValueLocal));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[0]));
+			body.Insert(i++, OpCodes.Ldloc.ToInstruction(defaultValueLocal));
 			for (int j = 1; j < sourceMethod.Parameters.Count; j++)
 			{
 				body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[j]));
