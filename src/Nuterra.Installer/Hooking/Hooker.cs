@@ -130,7 +130,9 @@ namespace Nuterra.Installer.Hooking
 		private static MethodDefUser CloneMethod(MethodDef sourceMethod)
 		{
 			MethodDefUser clonedSource = new MethodDefUser(sourceMethod.Name + "_Original", sourceMethod.MethodSig, sourceMethod.Attributes);
+			clonedSource.DeclaringType = sourceMethod.DeclaringType;
 			var clonedBody = new CilBody();
+			clonedSource.Body = clonedBody;
 
 			Dictionary<Local, Local> variableTable = new Dictionary<Local, Local>();
 			foreach (Local oldLocal in sourceMethod.Body.Variables)
@@ -203,7 +205,6 @@ namespace Nuterra.Installer.Hooking
 				clonedBody.ExceptionHandlers.Add(newHandler);
 			}
 
-			clonedSource.Body = clonedBody;
 			return clonedSource;
 		}
 

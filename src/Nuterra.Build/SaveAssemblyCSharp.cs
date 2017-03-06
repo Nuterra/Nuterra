@@ -10,7 +10,7 @@ namespace Nuterra.Build
 		{
 			string output = info.AssemblyCSharpOutputPath ?? Path.Combine(info.TerraTechManaged, "Assembly-CSharp.dll");
 			ModuleWriterOptions writerOptions = new ModuleWriterOptions();
-			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveAll;
+			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveFieldRids;
 			info.AssemblyCSharp.Write(output, writerOptions);
 		}
 	}
