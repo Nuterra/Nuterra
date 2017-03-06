@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
 
-namespace Maritaria.FirstPerson
+namespace Maritaria.Cockpit
 {
 	public class FirstPersonController : Singleton.Manager<FirstPersonController>
 	{
 		private FirstPersonCamera _camera;
 		public bool FirstPersonEnabled { get; set; } = false;
+
+		public CockpitMod Mod { get; set; }
 
 		private void Start()
 		{
@@ -16,7 +18,7 @@ namespace Maritaria.FirstPerson
 
 		private void Update()
 		{
-			if (Input.GetKeyDown(MaritariaMod.Instance.Config.FirstPersonKey))
+			if (Input.GetKeyDown(Mod.CockpitConfig.FirstPersonKey))
 			{
 				FirstPersonEnabled = !FirstPersonEnabled;
 				if (FirstPersonEnabled)

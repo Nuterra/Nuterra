@@ -59,11 +59,6 @@
     <Compile Include="Cursor\CursorType.cs" />
     <Compile Include="Cursor\CustomCursorMod.cs" />
     <Compile Include="Cursor\GameCursor.cs" />
-    <Compile Include="FirstPerson\CockpitBlock.cs" />
-    <Compile Include="FirstPerson\FirstPersonCamera.cs" />
-    <Compile Include="FirstPerson\FirstPersonController.cs" />
-    <Compile Include="FirstPerson\LargeCockpitBlock.cs" />
-    <Compile Include="FirstPerson\ModuleFirstPerson.cs" />
     <Compile Include="MagnetToggleKeyBehaviour.cs" />
     <Compile Include="MaritariaConfig.cs" />
     <Compile Include="MaritariaMod.cs" />

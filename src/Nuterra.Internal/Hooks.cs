@@ -394,13 +394,13 @@ namespace Nuterra.Internal
 
 	public sealed class StringLookupEvent
 	{
-		public LocalisationEnums.StringBanks EnumType { get; }
+		public LocalisationEnums.StringBanks StringBank { get; }
 		public int EnumValue { get; }
 		public string Result { get; set; }
 
 		public StringLookupEvent(LocalisationEnums.StringBanks type, int value)
 		{
-			EnumType = type;
+			StringBank = type;
 			EnumValue = value;
 		}
 	}

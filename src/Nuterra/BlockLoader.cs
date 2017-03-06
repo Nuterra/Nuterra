@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Nuterra.Internal;
 using UnityEngine;
 
 namespace Nuterra
@@ -8,21 +8,8 @@ namespace Nuterra
 	public static class BlockLoader
 	{
 		private static readonly Dictionary<int, CustomBlock> CustomBlocks = new Dictionary<int, CustomBlock>();
-		private static readonly List<CustomBlock> PreBootRegistrationQueue = new List<CustomBlock>();
 
 		public static void Register(CustomBlock block)
-		{
-			if (PreBootRegistrationQueue != null)
-			{
-				PreBootRegistrationQueue.Add(block);
-			}
-			else
-			{
-				RegisterImmediatly(block);
-			}
-		}
-
-		private static void RegisterImmediatly(CustomBlock block)
 		{
 			int blockID = block.BlockID;
 			CustomBlocks.Add(blockID, block);
@@ -34,131 +21,73 @@ namespace Nuterra
 			RecipeManager.inst.m_BlockPriceLookup.Add(blockID, block.Price);
 		}
 
-		public static class Hooks_ManSpawn
+		public static void PostModsLoaded()
 		{
-			//Hook to be called at the end of ManSpawn.Start
-			public static void Start()
+			Singleton.DoOnceAfterStart(FixBlockUnlockTable);
+			Hooks.Managers.Licenses.OnInitializing += SetupLicenses;
+			Hooks.ResourceLookup.OnStringLookup += ResourceLookup_OnStringLookup;
+			Hooks.ResourceLookup.OnSpriteLookup += ResourceLookup_OnSpriteLookup;
+		}
+
+		private static void FixBlockUnlockTable()
+		{
+			//For now, all custom blocks are level 1
+			BlockUnlockTable.CorpBlockData[] blockList = ManLicenses.inst.GetBlockUnlockTable().m_CorpBlockList;
+			foreach (CustomBlock block in CustomBlocks.Values)
 			{
-				foreach (CustomBlock queuedBlock in PreBootRegistrationQueue)
+				BlockUnlockTable.CorpBlockData corpData = blockList[(int)block.Faction];
+				BlockUnlockTable.UnlockData[] unlocked = corpData.m_GradeList[0].m_BlockList;
+				//TODO: Only resize once
+				Array.Resize(ref unlocked, unlocked.Length + 1);
+				unlocked[unlocked.Length - 1] = new BlockUnlockTable.UnlockData
 				{
-					RegisterImmediatly(queuedBlock);
+					m_BlockType = (BlockTypes)block.BlockID,
+					m_BasicBlock = true,
+					m_DontRewardOnLevelUp = true,
+				};
+				corpData.m_GradeList[0].m_BlockList = unlocked;
+			}
+		}
+
+		public static void SetupLicenses()
+		{
+			var licenses = ManLicenses.inst;
+			foreach (CustomBlock block in CustomBlocks.Values)
+			{
+				licenses.DiscoverBlock((BlockTypes)block.BlockID);
+			}
+		}
+
+		private static void ResourceLookup_OnSpriteLookup(SpriteLookupEvent eventInfo)
+		{
+			if (eventInfo.ObjectType == ObjectTypes.Block)
+			{
+				CustomBlock block;
+				if (CustomBlocks.TryGetValue(eventInfo.ItemType, out block))
+				{
+					eventInfo.Result = block.DisplaySprite;
 				}
 			}
 		}
 
-		public static class Hooks_BlockUnlockTable
+		private static void ResourceLookup_OnStringLookup(StringLookupEvent eventInfo)
 		{
-			//Hook to be called at the beginning of BlockUnlockTable.Init()
-			public static void Init(BlockUnlockTable unlockTable)
+			CustomBlock block;
+			switch (eventInfo.StringBank)
 			{
-				//For now, all custom blocks are level 1
-				BlockUnlockTable.CorpBlockData[] blockList = unlockTable.m_CorpBlockList;
-
-				foreach (CustomBlock block in CustomBlocks.Values)
-				{
-					BlockUnlockTable.CorpBlockData corpData = blockList[(int)block.Faction];
-					BlockUnlockTable.UnlockData[] unlocked = corpData.m_GradeList[0].m_BlockList;
-
-					Array.Resize(ref unlocked, unlocked.Length + 1);
-					unlocked[unlocked.Length - 1] = new BlockUnlockTable.UnlockData
+				case LocalisationEnums.StringBanks.BlockNames:
+					if (CustomBlocks.TryGetValue(eventInfo.EnumValue, out block))
 					{
-						m_BlockType = (BlockTypes)block.BlockID,
-						m_BasicBlock = true,
-						m_DontRewardOnLevelUp = true,
-					};
-					corpData.m_GradeList[0].m_BlockList = unlocked;
-				}
-			}
-		}
+						eventInfo.Result = block.Name;
+					}
+					break;
 
-		public static class Hooks_ManLicenses
-		{
-			//Hook to be called at beginning of SetupLicenses
-			//Discovers all the custom blocks (should change later)
-			public static void SetupLicenses(ManLicenses licenses)
-			{
-				foreach (CustomBlock block in CustomBlocks.Values)
-				{
-					licenses.DiscoverBlock((BlockTypes)block.BlockID);
-				}
-			}
-		}
-
-		public static class Hooks_IntStatList
-		{
-			//Hook by replacement ManStats.IntStatList.OnSerializing()
-			//Fixes blocks not loading because the name of the block is serialized into a number and can't be resolved by Enum.GetName()
-			public static void OnSerializing(ManStats.IntStatList list, StreamingContext context)
-			{
-				list.m_StatPerTypeSerialized = new Dictionary<string, int>(list.m_StatPerType.Count);
-				foreach (KeyValuePair<int, int> current in list.m_StatPerType)
-				{
-					string value = Enum.GetName(list.m_EnumType, current.Key) ?? current.Key.ToString();
-					list.m_StatPerTypeSerialized.Add(value, current.Value);
-				}
-			}
-		}
-
-		public static class Hooks_StringLookup
-		{
-			//Hook at start of method, override result if not null (http://prntscr.com/dqv0zy)
-			public static string GetString(int itemType, LocalisationEnums.StringBanks itemEnum)
-			{
-				switch (itemEnum)
-				{
-					case LocalisationEnums.StringBanks.BlockNames:
-						return GetString_BlockName(itemType);
-
-					case LocalisationEnums.StringBanks.BlockDescription:
-						return GetString_BlockDescription(itemType);
-
-					default:
-						return null;
-				}
-			}
-
-			private static string GetString_BlockName(int blockID)
-			{
-				CustomBlock block;
-				if (CustomBlocks.TryGetValue(blockID, out block))
-				{
-					return block.Name;
-				}
-				return null;
-			}
-
-			private static string GetString_BlockDescription(int blockID)
-			{
-				CustomBlock block;
-				if (CustomBlocks.TryGetValue(blockID, out block))
-				{
-					return block.Description;
-				}
-				return null;
-			}
-		}
-
-		public static class Hooks_SpriteFetcher
-		{
-			//Hook at start of method, override result if not null (http://prntscr.com/dqvhrh)
-			public static Sprite GetSprite(ObjectTypes objectType, int itemType)
-			{
-				switch (objectType)
-				{
-					case ObjectTypes.Block:
-						return GetSprite_Block(itemType);
-				}
-				return null;
-			}
-
-			private static Sprite GetSprite_Block(int itemType)
-			{
-				CustomBlock block;
-				if (CustomBlocks.TryGetValue(itemType, out block))
-				{
-					return block.DisplaySprite;
-				}
-				return null;
+				case LocalisationEnums.StringBanks.BlockDescription:
+					if (CustomBlocks.TryGetValue(eventInfo.EnumValue, out block))
+					{
+						eventInfo.Result = block.Description;
+					}
+					break;
 			}
 		}
 	}

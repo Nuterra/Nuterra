@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Maritaria.FirstPerson
+namespace Maritaria.Cockpit
 {
 	internal sealed class FirstPersonCamera : CameraManager.Camera
 	{

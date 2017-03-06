@@ -29,7 +29,9 @@ namespace Nuterra
 			Directory.CreateDirectory(ModsFolder);
 			Directory.CreateDirectory(ConfigFolder);
 
+			Console.WriteLine("Check: " + ManSpawn.inst.m_BlockPrefabs);
 			ModLoader.Instance.LoadAllMods(ModsFolder);
+			BlockLoader.PostModsLoaded();
 		}
 	}
 }

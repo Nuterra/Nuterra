@@ -1,7 +1,8 @@
 ﻿using System;
+using Nuterra;
 using UnityEngine;
 
-namespace Maritaria.FirstPerson
+namespace Maritaria.Cockpit
 {
 	internal sealed class ModuleFirstPerson : Module
 	{
