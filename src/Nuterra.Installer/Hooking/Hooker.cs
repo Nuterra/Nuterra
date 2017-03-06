@@ -38,7 +38,7 @@ namespace Nuterra.Installer.Hooking
 			Redirect(module, "ManStats+IntStatList", typeof(Hooks.Managers.Stats.IntStatList), new RedirectSettings(nameof(Hooks.Managers.Stats.IntStatList.OnSerializing)) { ReplaceBody = true });
 			Hook_StringLookup_GetString(module);
 			Hook_SpriteFetcher_GetSprite(module);
-			
+
 			//Custom camera support
 			Hook_TankControl_PlayerInput(module);
 		}
