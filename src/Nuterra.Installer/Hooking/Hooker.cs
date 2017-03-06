@@ -9,16 +9,10 @@ namespace Nuterra.Installer.Hooking
 {
 	internal static class Hooker
 	{
-		private static TypeDef HookDump;
-
 		public static void Apply(ModuleDefMD module)
 		{
 			//Booting Nuterra
 			Redirect(module, "ManUI", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Start)) { PassArguments = false });
-
-			HookDump = new TypeDefUser("Nuterra.Internal", "HookDump");
-			HookDump.Attributes = TypeAttributes.Public | TypeAttributes.Abstract | TypeAttributes.Sealed;
-			module.Types.Add(HookDump);
 
 			//Modded game flagging
 			Hook_BugReportFlagger(module);
@@ -44,7 +38,7 @@ namespace Nuterra.Installer.Hooking
 			Redirect(module, "ManStats+IntStatList", typeof(Hooks.Managers.Stats.IntStatList), new RedirectSettings(nameof(Hooks.Managers.Stats.IntStatList.OnSerializing)) { ReplaceBody = true });
 			Hook_StringLookup_GetString(module);
 			Hook_SpriteFetcher_GetSprite(module);
-
+			
 			//Custom camera support
 			Hook_TankControl_PlayerInput(module);
 		}
@@ -135,12 +129,8 @@ namespace Nuterra.Installer.Hooking
 
 		private static MethodDefUser CloneMethod(MethodDef sourceMethod)
 		{
-			var signature = MethodSig.CreateStatic(sourceMethod.ReturnType, sourceMethod.Parameters.Where(p => !p.IsReturnTypeParameter).Select(p => p.Type).ToArray());
-			MethodDefUser clonedMethod = new MethodDefUser(sourceMethod.Name + "_Original", signature, sourceMethod.ImplAttributes, sourceMethod.Attributes);
-			clonedMethod.DeclaringType = HookDump;
-
+			MethodDefUser clonedSource = new MethodDefUser(sourceMethod.Name + "_Original", sourceMethod.MethodSig, sourceMethod.Attributes);
 			var clonedBody = new CilBody();
-			clonedMethod.Body = clonedBody;
 
 			Dictionary<Local, Local> variableTable = new Dictionary<Local, Local>();
 			foreach (Local oldLocal in sourceMethod.Body.Variables)
@@ -153,14 +143,8 @@ namespace Nuterra.Installer.Hooking
 			Dictionary<Parameter, Parameter> parameterTable = new Dictionary<Parameter, Parameter>();
 			foreach (Parameter oldParam in sourceMethod.Parameters)
 			{
-				Parameter newParam = clonedMethod.Parameters[oldParam.Index];
+				Parameter newParam = clonedSource.Parameters[oldParam.Index];
 				parameterTable.Add(oldParam, newParam);
-			}
-
-			clonedMethod.ParamDefs.Add(new ParamDefUser("obj", 1));
-			foreach (ParamDef oldParamDef in sourceMethod.ParamDefs)
-			{
-				clonedMethod.ParamDefs.Add(new ParamDefUser(oldParamDef.Name, (ushort)(oldParamDef.Sequence + 1), oldParamDef.Attributes));
 			}
 
 			Dictionary<Instruction, Instruction> instructionTable = new Dictionary<Instruction, Instruction>();
@@ -219,7 +203,8 @@ namespace Nuterra.Installer.Hooking
 				clonedBody.ExceptionHandlers.Add(newHandler);
 			}
 
-			return clonedMethod;
+			clonedSource.Body = clonedBody;
+			return clonedSource;
 		}
 
 		private static Instruction GetLoadArgOpCode(int i)
