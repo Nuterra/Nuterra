@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 namespace Nuterra
 {
@@ -15,6 +16,7 @@ namespace Nuterra
 
 		public void LoadAllMods(string directory)
 		{
+			Console.WriteLine($"Loading debug symbols for mods is {(Debug.isDebugBuild ? "enabled" : "disabled")}");
 			foreach (string assemblyFileName in Directory.GetFiles(directory, "*.dll"))
 			{
 				Console.WriteLine($"Loading mod assembly: {assemblyFileName}");
@@ -22,9 +24,8 @@ namespace Nuterra
 				byte[] assemblyBytes = File.ReadAllBytes(path);
 				string symbolFile = path + ".mdb";
 				byte[] symbolStore = null;
-				if (File.Exists(symbolFile))
+				if (Debug.isDebugBuild && File.Exists(symbolFile))
 				{
-					Console.WriteLine("Also loading symbols");
 					symbolStore = File.ReadAllBytes(symbolFile);
 				}
 				Assembly asm = Assembly.Load(assemblyBytes, symbolStore);
