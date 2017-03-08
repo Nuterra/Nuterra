@@ -41,6 +41,7 @@ namespace Maritaria.ExtraKeys
 			_obj.AddComponent<SuicideKey>().Mod = this;
 			_obj.AddComponent<TimeOfDayKeys>().Mod = this;
 			_obj.AddComponent<ProductionToggleKey>().Mod = this;
+			_obj.AddComponent<MagnetToggleKey>().Mod = this;
 			UnityEngine.Object.DontDestroyOnLoad(_obj);
 		}
 

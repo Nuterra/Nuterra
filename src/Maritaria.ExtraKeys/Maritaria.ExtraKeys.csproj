@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtraKeysMod.cs" />
+    <Compile Include="MagnetToggleKey.cs" />
     <Compile Include="ProductionToggleKey.cs" />
     <Compile Include="KeyConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
