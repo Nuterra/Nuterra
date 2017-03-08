@@ -21,7 +21,7 @@ namespace Nuterra
 			RecipeManager.inst.m_BlockPriceLookup.Add(blockID, block.Price);
 		}
 
-		public static void PostModsLoaded()
+		internal static void PostModsLoaded()
 		{
 			Singleton.DoOnceAfterStart(FixBlockUnlockTable);
 			Hooks.Managers.Licenses.OnInitializing += SetupLicenses;
