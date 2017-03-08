@@ -31,7 +31,6 @@ method ModuleHeart DropAllItems
 field ModuleItemPickup m_Holder
 field ManSplashScreen m_MyCanvas
 field ManSplashScreen m_SplashScreenIndex
-field ManSaveGame/SaveData m_State
 field ManSpawn tankPresets
 field ManSpawn m_BlockPrefabs
 field MousePointer m_DefaultPointer
@@ -43,3 +42,4 @@ field ModuleFuelTank m_MaterialsToUpdate
 method+virtual ModuleFuelTank get_RefillRate
 method+virtual ModuleFuelTank get_Capacity
 field RecipeManager m_BlockPriceLookup
+field ModuleHeart m_ReadyAfterTime

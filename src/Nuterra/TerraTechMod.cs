@@ -9,16 +9,24 @@ namespace Nuterra
 		public abstract string Name { get; }//TODO: Create struct for valid string checking
 		public abstract string Description { get; }
 		public virtual Version Version => new Version(0, 0, 0);
-		public JObject Configuration { get; private set; }
+		public JObject Config { get; private set; }
+#warning TODO: Improve config model
 
 		public virtual void Load()
 		{
-			Configuration = ModConfig.Data[Name] as JObject;
+			string name = Name;
+			if (name == null) throw new InvalidOperationException("TerraTechMod.Name returned null");
+			Config = NuterraApi.Configuration.LoadModConfig(this);
 		}
 
 		public virtual void Unload()
 		{
 
+		}
+
+		public virtual JObject CreateDefaultConfiguration()
+		{
+			return new JObject();
 		}
 	}
 }

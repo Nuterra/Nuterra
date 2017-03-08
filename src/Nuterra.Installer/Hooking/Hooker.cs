@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
+using Nuterra.Internal;
 
 namespace Nuterra.Installer.Hooking
 {
@@ -10,40 +12,35 @@ namespace Nuterra.Installer.Hooking
 		public static void Apply(ModuleDefMD module)
 		{
 			//Booting Nuterra
-			Redirect(module, "ManUI", typeof(Nuterra), new RedirectSettings(nameof(Nuterra.Start)) { PassArguments = false });
+			Redirect(module, "ManUI", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Start)) { PassArguments = false });
 
-			//Module overrides
-			Redirect(module, "ModuleDrill", typeof(Maritaria.Modules.Drill), new RedirectSettings(nameof(Maritaria.Modules.Drill.ControlInput)) { ReplaceBody = true });
-			Redirect(module, "ModuleEnergy", typeof(Maritaria.Modules.Energy), new RedirectSettings(nameof(Maritaria.Modules.Energy.OnUpdateSupplyEnergy)) { ReplaceBody = true });
-			Redirect(module, "ModuleEnergy", typeof(Maritaria.Modules.Energy), new RedirectSettings(nameof(Maritaria.Modules.Energy.CheckOutputConditions)) { ReplaceBody = true });
-			Redirect(module, "ModuleHammer", typeof(Maritaria.Modules.Hammer), new RedirectSettings(nameof(Maritaria.Modules.Hammer.ControlInput)) { ReplaceBody = true });
-			Redirect(module, "ModuleItemHolderMagnet", typeof(Maritaria.Modules.Magnet), new RedirectSettings(nameof(Maritaria.Modules.Magnet.FixedUpdate)) { ReplaceBody = true });
-			Redirect(module, "ModuleScoop", typeof(Maritaria.Modules.Scoop), new RedirectSettings(nameof(Maritaria.Modules.Scoop.ControlInput)) { ReplaceBody = true });
-			Redirect(module, "ModuleWeapon", typeof(Maritaria.Modules.Weapon), new RedirectSettings(nameof(Maritaria.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
+			//Modded game flagging
+			Hook_BugReportFlagger(module);
+			Hook_ManSaveGame_SaveSaveData(module);
 
-			//Creating custom blocks
-			Redirect(module, "ManSpawn", typeof(Maritaria.BlockLoader.Hooks_ManSpawn), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_ManSpawn.Start)) { PassArguments = false, AppendToEnd = true });
-			Redirect(module, "BlockUnlockTable", typeof(Maritaria.BlockLoader.Hooks_BlockUnlockTable), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_BlockUnlockTable.Init)));
-			Redirect(module, "ManLicenses", typeof(Maritaria.BlockLoader.Hooks_ManLicenses), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_ManLicenses.SetupLicenses)));
+			//Manager events
+			Redirect(module, "ManLicenses", typeof(Hooks.Managers.Licenses), new RedirectSettings(nameof(Hooks.Managers.Licenses.Init)) { AppendToEnd = true });
+			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StartCameraSpin)) { AppendToEnd = true });
+			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StopCameraSpin)) { AppendToEnd = true });
 
-			Redirect(module, "ManStats+IntStatList", typeof(Maritaria.BlockLoader.Hooks_IntStatList), new RedirectSettings(nameof(Maritaria.BlockLoader.Hooks_IntStatList.OnSerializing)) { ReplaceBody = true });
+			//Module events
+			Redirect(module, "ModuleDrill", typeof(Hooks.Modules.Drill), new RedirectSettings(nameof(Hooks.Modules.Drill.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleEnergy", typeof(Hooks.Modules.Energy), new RedirectSettings(nameof(Hooks.Modules.Energy.OnUpdateSupplyEnergy)) { ReplaceBody = true });
+			Redirect(module, "ModuleHammer", typeof(Hooks.Modules.Hammer), new RedirectSettings(nameof(Hooks.Modules.Hammer.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleScoop", typeof(Hooks.Modules.Scoop), new RedirectSettings(nameof(Hooks.Modules.Scoop.ControlInput)) { ReplaceBody = true });
+			Redirect(module, "ModuleWeapon", typeof(Hooks.Modules.Weapon), new RedirectSettings(nameof(Hooks.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
+			Redirect(module, "ModuleHeart", typeof(Hooks.Modules.Heart), new RedirectSettings(nameof(Hooks.Modules.Heart.Update)));
 
+			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanAcceptItem));
+			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanReleaseItem));
+
+			//Custom block support
+			Redirect(module, "ManStats+IntStatList", typeof(Hooks.Managers.Stats.IntStatList), new RedirectSettings(nameof(Hooks.Managers.Stats.IntStatList.OnSerializing)) { ReplaceBody = true });
 			Hook_StringLookup_GetString(module);
 			Hook_SpriteFetcher_GetSprite(module);
-			Hook_BugReportFlagger(module);
 
-			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnSpawn)) { });
-			Redirect(module, "ModuleItemPickup", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleItemPickup.OnAttach)) { InsertionStart = 3 });//First 3 instructions are to set IsEnabled, which the hook overrides later
-			Redirect(module, "ModuleHeart", typeof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart), new RedirectSettings(nameof(Maritaria.ProductionToggleKeyBehaviour.Hooks_ModuleHeart.get_CanPowerUp)) { ReplaceBody = true });
-
-			Redirect(module, "ManSaveGame+State", typeof(Maritaria.SaveGameFlagger), new RedirectSettings(".ctor") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_State_ctor) });
-			Redirect(module, "ManSaveGame+SaveData", typeof(Maritaria.SaveGameFlagger), new RedirectSettings("OnDeserialized") { TargetMethod = nameof(Maritaria.SaveGameFlagger.ManSaveGame_SaveData_OnDeserialized) });
-
-			Redirect(module, "Mode", typeof(Sylver.SylverMod.Hooks_Mode), new RedirectSettings(nameof(Sylver.SylverMod.Hooks_Mode.EnterMode)));
-
+			//Custom camera support
 			Hook_TankControl_PlayerInput(module);
-			Redirect(module, "ManPointer", typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer), new RedirectSettings(nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer.StartCameraSpin)) { AppendToEnd = true });
-			Redirect(module, "ManPointer", typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer), new RedirectSettings(nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_ManPointer.StopCameraSpin)) { AppendToEnd = true });
 		}
 
 		private static void Redirect(ModuleDefMD module, string sourceType, Type targetType, RedirectSettings settings)
@@ -97,6 +94,120 @@ namespace Nuterra.Installer.Hooking
 			}
 		}
 
+		private static void CreateHook(ModuleDefMD module, string source, Type target, string methodName)
+		{
+			TypeDef sourceType = module.Find(source, isReflectionName: true);
+			MethodDef sourceMethod = sourceType.Methods.Single(m => m.Name == methodName);
+			TypeDef targetType = module.GetNuterraType(target);
+			MethodDef targetMethod = targetType.Methods.Single(m => m.Name == methodName);
+
+			MethodDefUser clonedSource = CloneMethod(sourceMethod);
+
+			sourceMethod.Body.Variables.Clear();
+			var defaultValueLocal = new Local(clonedSource.ReturnType, "defaultValue");
+			sourceMethod.Body.Variables.Add(defaultValueLocal);
+
+			var body = sourceMethod.Body.Instructions;
+			body.Clear();
+
+			int i = 0;
+			for (int j = 0; j < sourceMethod.Parameters.Count; j++)
+			{
+				body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[j]));
+			}
+			body.Insert(i++, OpCodes.Call.ToInstruction(clonedSource));
+			body.Insert(i++, OpCodes.Stloc.ToInstruction(defaultValueLocal));
+			body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[0]));
+			body.Insert(i++, OpCodes.Ldloc.ToInstruction(defaultValueLocal));
+			for (int j = 1; j < sourceMethod.Parameters.Count; j++)
+			{
+				body.Insert(i++, OpCodes.Ldarg_S.ToInstruction(sourceMethod.Parameters[j]));
+			}
+			body.Insert(i++, OpCodes.Call.ToInstruction(targetMethod));
+			body.Insert(i++, OpCodes.Ret.ToInstruction());
+		}
+
+		private static MethodDefUser CloneMethod(MethodDef sourceMethod)
+		{
+			MethodDefUser clonedSource = new MethodDefUser(sourceMethod.Name + "_Original", sourceMethod.MethodSig, sourceMethod.Attributes);
+			clonedSource.DeclaringType = sourceMethod.DeclaringType;
+			var clonedBody = new CilBody();
+			clonedSource.Body = clonedBody;
+
+			Dictionary<Local, Local> variableTable = new Dictionary<Local, Local>();
+			foreach (Local oldLocal in sourceMethod.Body.Variables)
+			{
+				var newLocal = new Local(oldLocal.Type, oldLocal.Name, oldLocal.Index);
+				variableTable.Add(oldLocal, newLocal);
+				clonedBody.Variables.Add(newLocal);
+			}
+
+			Dictionary<Parameter, Parameter> parameterTable = new Dictionary<Parameter, Parameter>();
+			foreach (Parameter oldParam in sourceMethod.Parameters)
+			{
+				Parameter newParam = clonedSource.Parameters[oldParam.Index];
+				parameterTable.Add(oldParam, newParam);
+			}
+
+			Dictionary<Instruction, Instruction> instructionTable = new Dictionary<Instruction, Instruction>();
+			foreach (Instruction oldInstr in sourceMethod.Body.Instructions)
+			{
+				var newInstr = new Instruction(oldInstr.OpCode, oldInstr.Operand);
+				instructionTable.Add(oldInstr, newInstr);
+				clonedBody.Instructions.Add(newInstr);
+			}
+
+			//Update instruction operands
+			foreach (Instruction newInstr in clonedBody.Instructions)
+			{
+				object operand = newInstr.Operand;
+				if (operand is Instruction)
+				{
+					operand = instructionTable[(Instruction)operand];
+				}
+				if (operand is Local)
+				{
+					operand = variableTable[(Local)operand];
+				}
+				if (operand is Parameter)
+				{
+					operand = parameterTable[(Parameter)operand];
+				}
+				newInstr.Operand = operand;
+			}
+
+			Dictionary<ExceptionHandler, ExceptionHandler> handlerTable = new Dictionary<ExceptionHandler, ExceptionHandler>();
+			foreach (ExceptionHandler oldHandler in sourceMethod.Body.ExceptionHandlers)
+			{
+				var newHandler = new ExceptionHandler(oldHandler.HandlerType);
+				newHandler.CatchType = oldHandler.CatchType;
+				if (oldHandler.FilterStart != null)
+				{
+					newHandler.FilterStart = instructionTable[oldHandler.FilterStart];
+				}
+				if (oldHandler.HandlerStart != null)
+				{
+					newHandler.HandlerStart = instructionTable[oldHandler.HandlerStart];
+				}
+				if (oldHandler.HandlerEnd != null)
+				{
+					newHandler.HandlerEnd = instructionTable[oldHandler.HandlerEnd];
+				}
+				newHandler.HandlerType = oldHandler.HandlerType;
+				if (oldHandler.TryStart != null)
+				{
+					newHandler.TryStart = instructionTable[oldHandler.TryStart];
+				}
+				if (oldHandler.TryEnd != null)
+				{
+					newHandler.TryEnd = instructionTable[oldHandler.TryEnd];
+				}
+				clonedBody.ExceptionHandlers.Add(newHandler);
+			}
+
+			return clonedSource;
+		}
+
 		private static Instruction GetLoadArgOpCode(int i)
 		{
 			switch (i)
@@ -113,8 +224,8 @@ namespace Nuterra.Installer.Hooking
 		{
 			TypeDef cecilSource = module.Find("StringLookup", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == "GetString");
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.BlockLoader.Hooks_StringLookup));
-			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Maritaria.BlockLoader.Hooks_StringLookup.GetString));
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Hooks.ResourceLookup));
+			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Hooks.ResourceLookup.GetString));
 
 			var body = sourceMethod.Body.Instructions;
 
@@ -146,8 +257,8 @@ namespace Nuterra.Installer.Hooking
 		{
 			TypeDef cecilSource = module.Find("SpriteFetcher", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.FullName == "UnityEngine.Sprite SpriteFetcher::GetSprite(ObjectTypes,System.Int32)");
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.BlockLoader.Hooks_SpriteFetcher));
-			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Maritaria.BlockLoader.Hooks_SpriteFetcher.GetSprite));
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Hooks.ResourceLookup));
+			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == nameof(Hooks.ResourceLookup.GetSprite));
 
 			AssemblyRef unityEngine = module.GetAssemblyRef(new UTF8String("UnityEngine"));
 			TypeRefUser unityEngine_Object = new TypeRefUser(module, new UTF8String("UnityEngine"), new UTF8String("Object"), unityEngine);
@@ -187,9 +298,9 @@ namespace Nuterra.Installer.Hooking
 
 		private static void Hook_BugReportFlagger(ModuleDefMD module)
 		{
-			TypeDef bugReportFlagger = module.GetNuterraType(typeof(Maritaria.BugReportFlagger));
-			MethodDef markReportForm = bugReportFlagger.Methods.Single(m => m.Name == nameof(Maritaria.BugReportFlagger.MarkReportForm));
-			MethodDef markUserMessage = bugReportFlagger.Methods.Single(m => m.Name == nameof(Maritaria.BugReportFlagger.MarkUserMessage));
+			TypeDef bugReportFlagger = module.GetNuterraType(typeof(Hooks.BugReports));
+			MethodDef markReportForm = bugReportFlagger.Methods.Single(m => m.Name == nameof(Hooks.BugReports.MarkReportForm));
+			MethodDef markUserMessage = bugReportFlagger.Methods.Single(m => m.Name == nameof(Hooks.BugReports.MarkUserMessage));
 
 			TypeDef bugReporter = module.Find("UIScreenBugReport", isReflectionName: true);
 			TypeDef postIterator = bugReporter.NestedTypes.Single(t => t.FullName == "UIScreenBugReport/<PostIt>c__Iterator78");
@@ -216,10 +327,10 @@ namespace Nuterra.Installer.Hooking
 
 		public static void Hook_TankControl_PlayerInput(ModuleDefMD module)
 		{
-			const string methodName = nameof(Maritaria.FirstPerson.FirstPersonController.Hooks_TankControl.PlayerInput);
+			const string methodName = nameof(Hooks.Modules.TankControl.PlayerInput);
 			TypeDef cecilSource = module.Find("TankControl", isReflectionName: true);
 			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
-			TypeDef cecilTarget = module.GetNuterraType(typeof(Maritaria.FirstPerson.FirstPersonController.Hooks_TankControl));
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Hooks.Modules.TankControl));
 			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
 
 			var body = sourceMethod.Body.Instructions;
@@ -251,8 +362,30 @@ namespace Nuterra.Installer.Hooking
 
 			So it becomes:
 			call hook
-			if hook returns false then jump to 50
+			if hook returns false then jump to ret instruction
 
+			 */
+		}
+
+		public static void Hook_ManSaveGame_SaveSaveData(ModuleDefMD module)
+		{
+			const string methodName = nameof(Hooks.Managers.SaveGame.SaveSaveData);
+			TypeDef cecilSource = module.Find("ManSaveGame", isReflectionName: true);
+			MethodDef sourceMethod = cecilSource.Methods.Single(m => m.Name == methodName);
+			TypeDef cecilTarget = module.GetNuterraType(typeof(Hooks.Managers.SaveGame));
+			MethodDef targetMethod = cecilTarget.Methods.Single(m => m.Name == methodName);
+
+			var body = sourceMethod.Body.Instructions;
+
+			body.Insert(0, new Instruction(OpCodes.Ldarg_0));
+			body.Insert(1, new Instruction(OpCodes.Ldarg_1));
+			body.Insert(2, new Instruction(OpCodes.Call, targetMethod));
+			body.Insert(3, OpCodes.Brtrue_S.ToInstruction(body.Last()));
+
+			/*
+				Load arguments
+				Call hook
+				If hook returns true, jump to last instruction (ret)
 			 */
 		}
 	}
