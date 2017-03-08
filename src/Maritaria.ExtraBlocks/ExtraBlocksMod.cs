@@ -10,6 +10,7 @@ namespace Maritaria.ExtraBlocks
 		public override void Load()
 		{
 			base.Load();
+			BlockLoader.Register(new BaconBlock());
 		}
 	}
 }

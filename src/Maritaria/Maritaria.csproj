@@ -49,12 +49,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaconBlock.cs" />
-    <Compile Include="CheatBlocks\CheatBlockMod.cs" />
-    <Compile Include="CheatBlocks\GodModeBlock.cs" />
-    <Compile Include="CheatBlocks\InfiniteFuelBlock.cs" />
-    <Compile Include="CheatBlocks\ModuleGodMode.cs" />
-    <Compile Include="CheatBlocks\ModuleInfiniteFuel.cs" />
     <Compile Include="Cursor\CursorManager.cs" />
     <Compile Include="Cursor\CursorType.cs" />
     <Compile Include="Cursor\CustomCursorMod.cs" />
