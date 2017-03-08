@@ -24,41 +24,16 @@ namespace Maritaria.CheatBlocks
 
 		public InfiniteFuelBlock()
 		{
-			Prefab = new GameObject();
-			GameObject.DontDestroyOnLoad(Prefab);
-			Prefab.name = Name;
-			Prefab.tag = "TankBlock";
-			Prefab.layer = Globals.inst.layerTank;
+			Prefab = new BlockPrefabBuilder()
+				.SetBlockID(BlockID)
+				.SetName(Name)
+				.SetCategory(Category)
+				.SetModel(ModelPrefab)
+				.SetSize(new Vector3I(1, 2, 1))
+				.SetMass(0.01f)
+				.Build();
 
-			Visible vis = Prefab.EnsureComponent<Visible>();
-			vis.m_ItemType = new ItemTypeInfo(ObjectTypes.Block, BlockID);
-
-			Damageable dmg = Prefab.EnsureComponent<Damageable>();
-			ModuleDamage modDamage = Prefab.EnsureComponent<ModuleDamage>();
-			AutoSpriteRenderer spriteRenderer = Prefab.EnsureComponent<AutoSpriteRenderer>();
 			ModuleInfiniteFuel fuelModule = Prefab.EnsureComponent<ModuleInfiniteFuel>();
-
-			TankBlock tankBlock = Prefab.EnsureComponent<TankBlock>();
-			tankBlock.m_BlockCategory = Category;
-
-			tankBlock.attachPoints = new Vector3[]{
-				Vector3.down / 2,
-			};
-			tankBlock.filledCells = new Vector3[]{
-				new Vector3(0, 0, 0),
-			};
-			tankBlock.partialCells = new Vector3[] { };
-			tankBlock.m_DefaultMass = 0.01f;
-
-			GameObject renderObject = GameObject.Instantiate(AssetBundleImport.Load<GameObject>(ModelPrefab));
-			renderObject.transform.parent = Prefab.transform;
-			renderObject.name = $"{Name}.Model";
-			renderObject.layer = Globals.inst.layerTank;
-			renderObject.transform.localPosition = Vector2.down / 2;
-
-			BoxCollider collider = renderObject.EnsureComponent<BoxCollider>();
-			collider.size = new Vector3(1, 1, 1);
-			collider.center = collider.size / 2;
 		}
 	}
 }

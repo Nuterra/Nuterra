@@ -100,6 +100,13 @@ namespace Nuterra
 			return this;
 		}
 
+		public BlockPrefabBuilder SetMass(float mass)
+		{
+			if (mass <= 0f) throw new ArgumentOutOfRangeException(nameof(mass), "Cannot be lower or equal to zero");
+			_block.m_DefaultMass = mass;
+			return this;
+		}
+
 		private void ThrowIfFinished()
 		{
 			if (_finished)

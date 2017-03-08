@@ -11,6 +11,8 @@ namespace Maritaria.ExtraBlocks
 		{
 			base.Load();
 			BlockLoader.Register(new BaconBlock());
+			BlockLoader.Register(new CheatBlocks.GodModeBlock());
+			BlockLoader.Register(new CheatBlocks.InfiniteFuelBlock());
 		}
 	}
 }
