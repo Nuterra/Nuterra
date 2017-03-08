@@ -242,7 +242,7 @@ namespace Nuterra.Internal
 				{
 					//Hook by replacing method body of ManStats.IntStatList.OnSerializing()
 					//Fixes blocks not loading because the name of the block is serialized into a number and can't be resolved by Enum.GetName()
-					public static void OnSerializing(ManStats.IntStatList list, StreamingContext context)
+					internal static void OnSerializing(ManStats.IntStatList list, StreamingContext context)
 					{
 						list.m_StatPerTypeSerialized = new Dictionary<string, int>(list.m_StatPerType.Count);
 						foreach (KeyValuePair<int, int> current in list.m_StatPerType)
