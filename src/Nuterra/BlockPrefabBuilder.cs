@@ -60,6 +60,8 @@ namespace Nuterra
 					}
 				}
 			}
+			_block.filledCells = cells.ToArray();
+			_block.attachPoints = aps.ToArray();
 			return this;
 		}
 
@@ -94,8 +96,6 @@ namespace Nuterra
 				child.layer = _renderObject.layer;
 			}
 
-			var collider = _renderObject.EnsureComponent<BoxCollider>();
-			collider.size = Vector3.one;
 
 			return this;
 		}
