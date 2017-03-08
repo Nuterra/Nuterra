@@ -41,10 +41,14 @@ namespace Maritaria.ExtraKeys
 			}
 			if (!MagnetsEnabled && Singleton.playerTank)
 			{
+#warning Use of reflection
 				var method = typeof(ModuleItemHolderMagnet).GetMethod("UnglueAllObjects", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+				var holderField = typeof(ModuleItemHolderMagnet).GetField("m_Holder", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 				foreach (ModuleItemHolderMagnet magnet in Singleton.playerTank.blockman.IterateBlockComponents<ModuleItemHolderMagnet>())
 				{
 					method.Invoke(magnet, new object[] { false });
+					var holder = (ModuleItemHolder)holderField.GetValue(magnet);
+					holder.DropAll();
 				}
 			}
 		}
