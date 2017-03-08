@@ -29,11 +29,6 @@ namespace Maritaria.Cockpit
 				.SetSize(new Vector3I(1, 1, 1))
 				.Build();
 
-			var block = Prefab.GetComponent<TankBlock>();
-			Console.WriteLine("block: " + (block != null));
-			var moduleDamage = Prefab.GetComponent<ModuleDamage>();
-			Console.WriteLine("ModuleDamage: " + (moduleDamage != null));
-			Console.WriteLine("ModuleDamage.Block: " + (moduleDamage?.block));
 			ModuleFirstPerson firstPerson = Prefab.EnsureComponent<ModuleFirstPerson>();
 		}
 	}

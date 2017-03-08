@@ -31,10 +31,6 @@ namespace Maritaria.Cockpit
 				.Build();
 
 			ModuleFirstPerson firstPerson = Prefab.EnsureComponent<ModuleFirstPerson>();
-
-			//var collider = renderObject.EnsureComponent<BoxCollider>();
-			//collider.size = new Vector3(2, 2, 2);
-			//collider.center = Vector3.one / 2;
 		}
 	}
 }
