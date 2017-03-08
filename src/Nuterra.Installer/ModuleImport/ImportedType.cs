@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
 namespace Nuterra.Installer.ModuleImport
 {
-	abstract class ImportedType
+	internal abstract class ImportedType
 	{
 		/// <summary>
 		/// New or existing type in target module
@@ -19,7 +15,7 @@ namespace Nuterra.Installer.ModuleImport
 	/// <summary>
 	/// This is a new type that got imported into the target module
 	/// </summary>
-	sealed class NewImportedType : ImportedType
+	internal sealed class NewImportedType : ImportedType
 	{
 		public NewImportedType(TypeDef targetType)
 		{
@@ -27,10 +23,11 @@ namespace Nuterra.Installer.ModuleImport
 		}
 	}
 
-	struct EditedProperty
+	internal struct EditedProperty
 	{
 		public PropertyDef OriginalProperty { get; }
 		public PropertyDefOptions PropertyDefOptions { get; }
+
 		public EditedProperty(PropertyDef originalProperty, PropertyDefOptions propertyDefOptions)
 		{
 			OriginalProperty = originalProperty;
@@ -38,10 +35,11 @@ namespace Nuterra.Installer.ModuleImport
 		}
 	}
 
-	struct EditedEvent
+	internal struct EditedEvent
 	{
 		public EventDef OriginalEvent { get; }
 		public EventDefOptions EventDefOptions { get; }
+
 		public EditedEvent(EventDef originalEvent, EventDefOptions eventDefOptions)
 		{
 			OriginalEvent = originalEvent;
@@ -49,7 +47,7 @@ namespace Nuterra.Installer.ModuleImport
 		}
 	}
 
-	struct EditedMethod
+	internal struct EditedMethod
 	{
 		public MethodDef OriginalMethod { get; }
 		public MethodBody NewBody { get; }
@@ -63,10 +61,11 @@ namespace Nuterra.Installer.ModuleImport
 		}
 	}
 
-	struct EditedField
+	internal struct EditedField
 	{
 		public FieldDef OriginalField { get; }
 		public FieldDefOptions FieldDefOptions { get; }
+
 		public EditedField(FieldDef originalField, FieldDefOptions fieldDefOptions)
 		{
 			OriginalField = originalField;
@@ -74,7 +73,7 @@ namespace Nuterra.Installer.ModuleImport
 		}
 	}
 
-	enum MergeKind
+	internal enum MergeKind
 	{
 		Rename,
 		Merge,

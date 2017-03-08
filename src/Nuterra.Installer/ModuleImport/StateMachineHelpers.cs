@@ -2,7 +2,7 @@
 
 namespace Nuterra.Installer.ModuleImport
 {
-	static class StateMachineHelpers
+	internal static class StateMachineHelpers
 	{
 		public static TypeDef GetStateMachineType(MethodDef method)
 		{
@@ -23,7 +23,7 @@ namespace Nuterra.Installer.ModuleImport
 			return null;
 		}
 
-		static TypeDef GetStateMachineTypeCore(MethodDef method)
+		private static TypeDef GetStateMachineTypeCore(MethodDef method)
 		{
 			foreach (var ca in method.CustomAttributes)
 			{
@@ -47,7 +47,7 @@ namespace Nuterra.Installer.ModuleImport
 			return null;
 		}
 
-		static bool IsStateMachineTypeAttribute(ITypeDefOrRef tdr)
+		private static bool IsStateMachineTypeAttribute(ITypeDefOrRef tdr)
 		{
 			var s = tdr.ReflectionFullName;
 			return s == "System.Runtime.CompilerServices.AsyncStateMachineAttribute" ||

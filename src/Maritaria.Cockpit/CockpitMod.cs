@@ -27,6 +27,5 @@ namespace Maritaria.Cockpit
 		{
 			return JObject.FromObject(CockpitConfig);
 		}
-
 	}
 }

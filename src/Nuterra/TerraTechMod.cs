@@ -1,6 +1,5 @@
-using Newtonsoft.Json.Linq;
 using System;
-using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 namespace Nuterra
 {
@@ -21,7 +20,6 @@ namespace Nuterra
 
 		public virtual void Unload()
 		{
-
 		}
 
 		public virtual JObject CreateDefaultConfiguration()

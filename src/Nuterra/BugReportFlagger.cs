@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using Nuterra.Internal;
+using UnityEngine;
 
 namespace Nuterra
 {

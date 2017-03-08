@@ -96,7 +96,6 @@ namespace Nuterra
 				child.layer = _renderObject.layer;
 			}
 
-
 			return this;
 		}
 

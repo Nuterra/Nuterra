@@ -1,24 +1,17 @@
 using Nuterra;
-using Maritaria;
 using System;
 
 using UnityEngine;
 
-
-
 namespace Sylver
 
 {
-
 	public sealed class GyroRotor : CustomBlock
 
 	{
-
 		public static readonly string SpriteFile = @"Assets/Blocks/Bacon/bacon_icon.png";
 
 		public static readonly int BlockID = 8000;
-
-
 
 		int CustomBlock.BlockID => BlockID;
 
@@ -36,8 +29,6 @@ namespace Sylver
 
 		public Sprite DisplaySprite { get; } = AssetBundleImport.Load<Sprite>(SpriteFile);
 
-
-
 		public GyroRotor()
 
 		{
@@ -53,15 +44,11 @@ namespace Sylver
 
 			Prefab.layer = Globals.inst.layerTank;
 
-
-
 			Visible vis = Prefab.EnsureComponent<Visible>();
 
 			SylverGyro gyro = Prefab.EnsureComponent<SylverGyro>();
 
 			vis.m_ItemType = new ItemTypeInfo(ObjectTypes.Block, BlockID);
 		}
-
 	}
-
 }

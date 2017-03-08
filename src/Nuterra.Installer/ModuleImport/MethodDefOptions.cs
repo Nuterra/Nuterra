@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.PE;
 
 namespace Nuterra.Installer.ModuleImport
 {
-	sealed class MethodDefOptions
+	internal sealed class MethodDefOptions
 	{
 		public MethodImplAttributes ImplAttributes;
 		public MethodAttributes Attributes;

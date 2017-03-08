@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using dnlib.DotNet;
 
 namespace Nuterra.Installer.ModuleImport
 {
-	sealed class PropertyDefOptions
+	internal sealed class PropertyDefOptions
 	{
 		public PropertyAttributes Attributes;
 		public UTF8String Name;

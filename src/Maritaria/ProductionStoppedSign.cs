@@ -1,6 +1,5 @@
 using Nuterra;
 using System;
-using System.IO;
 using UnityEngine;
 
 namespace Maritaria
@@ -39,7 +38,6 @@ namespace Maritaria
 				screenPos.x -= _signDrawSize.width / 2;
 				screenPos.y = Screen.height - screenPos.y - (_signDrawSize.height / 2);
 				GUI.DrawTexture(new Rect(screenPos, _signDrawSize.size), _stopSign);
-
 			}
 		}
 	}

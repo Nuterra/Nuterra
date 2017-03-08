@@ -36,7 +36,6 @@ namespace Maritaria
 			MobileSolarPanels = false;
 			MobileSolarVelocityThreshold = 0.1f;
 			MobileSolarMultiplier = 0.2f;
-
 		}
 
 		public void Load(JObject json)
@@ -63,7 +62,6 @@ namespace Maritaria
 			MobileSolarVelocityThreshold = ParseFloat(json, nameof(MobileSolarVelocityThreshold), 0.1f);
 			MobileSolarMultiplier = ParseFloat(json, nameof(MobileSolarMultiplier), 0.2f);
 		}
-
 
 		private static KeyCode ParseKey(JObject json, string keyName, KeyCode fallback)
 		{
@@ -107,6 +105,7 @@ namespace Maritaria
 				return fallback;
 			}
 		}
+
 		private bool ParseBoolean(JObject json, string keyName, bool fallback)
 		{
 			if (json == null)
@@ -127,6 +126,5 @@ namespace Maritaria
 				return fallback;
 			}
 		}
-
 	}
 }

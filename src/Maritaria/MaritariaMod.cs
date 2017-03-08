@@ -2,7 +2,6 @@
 
 using System;
 
-using Maritaria.FirstPerson;
 using Newtonsoft.Json.Linq;
 using Nuterra;
 using UnityEngine;

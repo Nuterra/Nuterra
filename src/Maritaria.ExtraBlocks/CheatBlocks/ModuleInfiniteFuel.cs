@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using UnityEngine;
+
 namespace Maritaria.CheatBlocks
 {
 	public sealed class ModuleInfiniteFuel : ModuleFuelTank

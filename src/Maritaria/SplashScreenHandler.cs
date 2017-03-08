@@ -5,7 +5,6 @@ namespace Maritaria
 {
 	public class SplashScreenHandler : MonoBehaviour
 	{
-
 		public ManSplashScreen _splashScreen = Singleton.Manager<ManSplashScreen>.inst;
 
 		public GUIContent _content = new GUIContent();

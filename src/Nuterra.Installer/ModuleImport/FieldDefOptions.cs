@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.PE;
 
 namespace Nuterra.Installer.ModuleImport
 {
-	sealed class FieldDefOptions
+	internal sealed class FieldDefOptions
 	{
 		public FieldAttributes Attributes;
 		public UTF8String Name;

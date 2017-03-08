@@ -9,17 +9,17 @@ namespace Nuterra
 		{
 			Console.WriteLine(format, args);
 		}
-		
+
 		public void LogException(Exception ex, UnityEngine.Object context)
 		{
 			Console.WriteLine("An exception occurred: ");
-			while(ex != null)
+			while (ex != null)
 			{
 				Console.WriteLine(ex.ToString());
 				ex = ex.InnerException;
 			}
 		}
-		
+
 		public static void Install()
 		{
 			Debug.logger.logHandler = new CleanLogger();

@@ -7,6 +7,7 @@ namespace Maritaria.ExtraBlocks
 	{
 		public override string Name => nameof(ExtraBlocksMod);
 		public override string Description => "Adds more blocks to the game";
+
 		public override void Load()
 		{
 			base.Load();

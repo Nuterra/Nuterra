@@ -53,7 +53,6 @@
     <Compile Include="Cursor\CursorType.cs" />
     <Compile Include="Cursor\CustomCursorMod.cs" />
     <Compile Include="Cursor\GameCursor.cs" />
-    <Compile Include="MagnetToggleKeyBehaviour.cs" />
     <Compile Include="MaritariaConfig.cs" />
     <Compile Include="MaritariaMod.cs" />
     <Compile Include="Modules.cs" />

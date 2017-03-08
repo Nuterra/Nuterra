@@ -8,12 +8,13 @@ namespace Maritaria
 	public class SpriteFactory
 	{
 		private Dictionary<string, Texture2D> _loadedImages = new Dictionary<string, Texture2D>();
-		
+
 		public Sprite CreateSprite(string imageName)
 		{
 			Texture2D texture = CreateTexture(imageName);
 			return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
 		}
+
 		public Texture2D CreateTexture(string imageName)
 		{
 			Texture2D texture;
@@ -24,7 +25,7 @@ namespace Maritaria
 			}
 			return texture;
 		}
-		
+
 		private Texture2D LoadTexture(string imageName)
 		{
 			byte[] imageData = File.ReadAllBytes(imageName);
@@ -32,6 +33,5 @@ namespace Maritaria
 			texture.LoadImage(imageData);
 			return texture;
 		}
-		
 	}
 }
