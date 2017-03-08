@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Nuterra;
 using UnityEngine;
 
 namespace Maritaria.Cursor
@@ -28,10 +30,17 @@ namespace Maritaria.Cursor
 		public void RestoreFromOriginalMousePointer()
 		{
 			Cursors = new Dictionary<CursorType, GameCursor>();
-			Cursors.Add(CursorType.Default, new GameCursor(_original.m_DefaultPointer, new Vector2(16f, 16f)));
-			Cursors.Add(CursorType.Hover, new GameCursor(_original.m_OverGrabbableCursor, new Vector2(16f, 16f)));
-			Cursors.Add(CursorType.Pressed, new GameCursor(_original.m_HoldingGrabbableCursor, new Vector2(16f, 16f)));
-			Cursors.Add(CursorType.Painting, new GameCursor(_original.m_PaintingCursor, new Vector2(16f, 16f)));
+
+
+			Cursors.Add(CursorType.Default, new GameCursor(GetOriginalCursor(_original, "m_DefaultPointer"), new Vector2(16f, 16f)));
+			Cursors.Add(CursorType.Hover, new GameCursor(GetOriginalCursor(_original, "m_OverGrabbableCursor"), new Vector2(16f, 16f)));
+			Cursors.Add(CursorType.Pressed, new GameCursor(GetOriginalCursor(_original, "m_HoldingGrabbableCursor"), new Vector2(16f, 16f)));
+			Cursors.Add(CursorType.Painting, new GameCursor(GetOriginalCursor(_original, "m_PaintingCursor"), new Vector2(16f, 16f)));
+		}
+
+		private static Texture2D GetOriginalCursor(MousePointer pointer, string name)
+		{
+			return (Texture2D)typeof(MousePointer).GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(pointer);
 		}
 
 		private void Update()

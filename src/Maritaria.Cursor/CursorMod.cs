@@ -9,14 +9,14 @@ using UnityEngine;
 namespace Maritaria.Cursor
 {
 	[Mod]
-	public sealed class CustomCursorMod : TerraTechMod
+	public sealed class CursorMod : TerraTechMod
 	{
 		public static readonly string HotspotFileName = "hotspots.json";
 
 		private CursorManager _manager;
 		private Dictionary<CursorType, Texture2D> _originalCursors;
 
-		public override string Name => nameof(CustomCursorMod);
+		public override string Name => nameof(CursorMod);
 		public override string Description => "Allows the cursor to be changed using a png image";
 
 		public override void Load()
@@ -52,6 +52,7 @@ namespace Maritaria.Cursor
 			string cursorFolder = Config.GetValue("Folder", StringComparison.OrdinalIgnoreCase)?.ToObject<string>();
 			if (cursorFolder == null)
 			{
+				LogWarning($"No folder specified, mod is disabled");
 				return;
 			}
 			if (!Directory.Exists(cursorFolder))

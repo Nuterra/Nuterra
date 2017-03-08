@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maritaria.Cockpit", "Marita
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maritaria.ExtraBlocks", "Maritaria.ExtraBlocks\Maritaria.ExtraBlocks.csproj", "{8B872991-E17A-4DE7-9BFF-470355E7500B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maritaria.Cursor", "Maritaria.Cursor\Maritaria.Cursor.csproj", "{D8BA316F-2357-472A-8460-37C744DAC248}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{8B872991-E17A-4DE7-9BFF-470355E7500B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B872991-E17A-4DE7-9BFF-470355E7500B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B872991-E17A-4DE7-9BFF-470355E7500B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8BA316F-2357-472A-8460-37C744DAC248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8BA316F-2357-472A-8460-37C744DAC248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8BA316F-2357-472A-8460-37C744DAC248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8BA316F-2357-472A-8460-37C744DAC248}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,5 +94,6 @@ Global
 		{01EBDA4D-78B0-498A-8FE7-B5E95BB718C7} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 		{4CA3F8EE-6795-4EAA-B4F0-8F3719FD5AA4} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 		{8B872991-E17A-4DE7-9BFF-470355E7500B} = {3BA7DE14-6278-440A-95B1-026F30C10140}
+		{D8BA316F-2357-472A-8460-37C744DAC248} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 	EndGlobalSection
 EndGlobal
