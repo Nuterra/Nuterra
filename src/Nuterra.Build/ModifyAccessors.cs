@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace Nuterra.Build
 {
@@ -51,7 +52,7 @@ namespace Nuterra.Build
 				return;
 			}
 
-			string[] parts = line.Split(new char[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
+			string[] parts = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
 			string subject = parts[0];
 			var targetType = module.Find(parts[1], isReflectionName: false);
@@ -72,7 +73,47 @@ namespace Nuterra.Build
 				case "method+virtual":
 					MakeMethodVirtual(targetType, parts[2]);
 					break;
+
+				//wrap_field ManSplashScreen m_SplashScreens SplashScreens read+write
+				case "wrap_field":
+					WrapField(targetType, parts[2], parts[3], parts[4]);
+					break;
 			}
+		}
+
+		private static void WrapField(TypeDef type, string fieldName, string propertyName, string access)
+		{
+			FieldDef field = type.Fields.First(f => f.Name == fieldName);
+			var propertySignature = PropertySig.CreateInstance(field.FieldType);
+			var property = new PropertyDefUser(propertyName, propertySignature);
+			type.Properties.Add(property);
+			bool propertyValid = false;
+			if (access.Contains("read"))
+			{
+				var getterSignature = MethodSig.CreateInstance(field.FieldType);
+				MethodDefUser getter = new MethodDefUser("nuterra_get_" + propertyName, getterSignature, MethodAttributes.Public | MethodAttributes.HideBySig);
+				getter.DeclaringType = type;
+				getter.Body = new CilBody();
+				getter.Body.Instructions.Add(OpCodes.Ldarg_0.ToInstruction());
+				getter.Body.Instructions.Add(OpCodes.Ldfld.ToInstruction(field));
+				getter.Body.Instructions.Add(OpCodes.Ret.ToInstruction());
+				property.GetMethod = getter;
+				propertyValid = true;
+			}
+			if (access.Contains("write"))
+			{
+				var setterSignature = MethodSig.CreateInstance(type.Module.CorLibTypes.Void, field.FieldType);
+				MethodDefUser setter = new MethodDefUser("nuterra_set_" + propertyName, setterSignature, MethodAttributes.Public | MethodAttributes.HideBySig);
+				setter.DeclaringType = type;
+				setter.Body = new CilBody();
+				setter.Body.Instructions.Add(OpCodes.Ldarg_0.ToInstruction());
+				setter.Body.Instructions.Add(OpCodes.Ldarg_1.ToInstruction());
+				setter.Body.Instructions.Add(OpCodes.Stfld.ToInstruction(field));
+				setter.Body.Instructions.Add(OpCodes.Ret.ToInstruction());
+				property.SetMethod = setter;
+				propertyValid = true;
+			}
+			if (!propertyValid) throw new ArgumentException("wrap_field must define read and/or write accessor", nameof(access));
 		}
 
 		private static void MakeFieldVisible(TypeDef type, string fieldName)
