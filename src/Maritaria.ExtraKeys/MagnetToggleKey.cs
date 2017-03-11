@@ -51,6 +51,53 @@ namespace Maritaria.ExtraKeys
 					holder.DropAll();
 				}
 			}
+			if (Input.GetKeyDown(KeyCode.H))
+			{
+				Tank tank = Singleton.playerTank;
+				if (!tank) return;
+
+				float closestDistance = float.MaxValue;
+				Tank closestTank = null;
+				foreach (Tank other in ManTechs.inst.IterateTechs())
+				{
+					if (other.IsAnchored) continue;
+					if (other == tank) continue;
+					float distance = Vector3.Distance(tank.gameObject.transform.position, other.gameObject.transform.position);
+					if (distance < closestDistance)
+					{
+						distance = closestDistance;
+						closestTank = other;
+					}
+				}
+				if (closestTank)
+				{
+					Console.WriteLine("Found a close one");
+					Vector3 offset = Vector3.up * ((tank.blockBounds.extents.z + closestTank.blockBounds.extents.z + 2) / 2);
+					var joint = tank.gameObject.AddComponent<FixedJoint>();
+					closestTank.gameObject.transform.position = tank.gameObject.transform.position + offset;
+					closestTank.gameObject.transform.rotation = tank.gameObject.transform.rotation;
+					joint.connectedAnchor = closestTank.boundsCentreWorld;
+					joint.anchor = offset;
+					joint.axis = Vector3.up;
+					joint.connectedBody = closestTank.rbody;
+				}
+				else
+				{
+					Console.WriteLine("noone near");
+				}
+			}
+			if (Input.GetKeyDown(KeyCode.J))
+			{
+				Tank tank = Singleton.playerTank;
+				if (!tank) return;
+				tank.gameObject.transform.position += Vector3.up * 5;
+				var existingJoint = tank.gameObject.GetComponent<FixedJoint>();
+				if (existingJoint != null)
+				{
+					GameObject.Destroy(existingJoint);
+					return;
+				}
+			}
 		}
 	}
 }
