@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnlib.PE;
@@ -12,7 +10,7 @@ using dnlib.Threading;
 namespace Nuterra.Installer.ModuleImport
 {
 	[Serializable]
-	sealed class ModuleImporterAbortedException : Exception
+	internal sealed class ModuleImporterAbortedException : Exception
 	{
 	}
 
@@ -34,16 +32,16 @@ namespace Nuterra.Installer.ModuleImport
 			ReplaceAssemblyDeclSecurities = 0x00000002,
 		}
 
-		const string IM0001 = nameof(IM0001);
-		const string IM0002 = nameof(IM0002);
-		const string IM0003 = nameof(IM0003);
-		const string IM0004 = nameof(IM0004);
-		const string IM0005 = nameof(IM0005);
-		const string IM0006 = nameof(IM0006);
-		const string IM0007 = nameof(IM0007);
-		const string IM0008 = nameof(IM0008);
-		const string IM0009 = nameof(IM0009);
-		const string IM0010 = nameof(IM0010);
+		private const string IM0001 = nameof(IM0001);
+		private const string IM0002 = nameof(IM0002);
+		private const string IM0003 = nameof(IM0003);
+		private const string IM0004 = nameof(IM0004);
+		private const string IM0005 = nameof(IM0005);
+		private const string IM0006 = nameof(IM0006);
+		private const string IM0007 = nameof(IM0007);
+		private const string IM0008 = nameof(IM0008);
+		private const string IM0009 = nameof(IM0009);
+		private const string IM0010 = nameof(IM0010);
 
 		public CompilerDiagnostic[] Diagnostics => diagnostics.ToArray();
 		public NewImportedType[] NewNonNestedTypes => newNonNestedImportedTypes.ToArray();
@@ -52,26 +50,26 @@ namespace Nuterra.Installer.ModuleImport
 		public CustomAttribute[] NewModuleCustomAttributes { get; private set; }
 		public Resource[] NewResources { get; private set; }
 
-		readonly ModuleDef targetModule;
-		readonly bool makeEverythingPublic;
-		readonly List<CompilerDiagnostic> diagnostics;
-		readonly List<NewImportedType> newNonNestedImportedTypes;
-		readonly HashSet<TypeDef> newStateMachineTypes;
+		private readonly ModuleDef targetModule;
+		private readonly bool makeEverythingPublic;
+		private readonly List<CompilerDiagnostic> diagnostics;
+		private readonly List<NewImportedType> newNonNestedImportedTypes;
+		private readonly HashSet<TypeDef> newStateMachineTypes;
 
-		ModuleDef sourceModule;
-		readonly Dictionary<TypeDef, ImportedType> oldTypeToNewType;
-		readonly Dictionary<ITypeDefOrRef, ImportedType> oldTypeRefToNewType;
-		readonly Dictionary<MethodDef, MemberInfo<MethodDef>> oldMethodToNewMethod;
-		readonly Dictionary<FieldDef, MemberInfo<FieldDef>> oldFieldToNewField;
-		readonly Dictionary<PropertyDef, MemberInfo<PropertyDef>> oldPropertyToNewProperty;
-		readonly Dictionary<EventDef, MemberInfo<EventDef>> oldEventToNewEvent;
-		readonly Dictionary<object, object> bodyDict;
-		readonly Dictionary<ImportedType, ExtraImportedTypeData> toExtraData;
-		readonly HashSet<MethodDef> usedMethods;
-		readonly HashSet<object> isStub;
-		ImportSigComparerOptions importSigComparerOptions;
+		private ModuleDef sourceModule;
+		private readonly Dictionary<TypeDef, ImportedType> oldTypeToNewType;
+		private readonly Dictionary<ITypeDefOrRef, ImportedType> oldTypeRefToNewType;
+		private readonly Dictionary<MethodDef, MemberInfo<MethodDef>> oldMethodToNewMethod;
+		private readonly Dictionary<FieldDef, MemberInfo<FieldDef>> oldFieldToNewField;
+		private readonly Dictionary<PropertyDef, MemberInfo<PropertyDef>> oldPropertyToNewProperty;
+		private readonly Dictionary<EventDef, MemberInfo<EventDef>> oldEventToNewEvent;
+		private readonly Dictionary<object, object> bodyDict;
+		private readonly Dictionary<ImportedType, ExtraImportedTypeData> toExtraData;
+		private readonly HashSet<MethodDef> usedMethods;
+		private readonly HashSet<object> isStub;
+		private ImportSigComparerOptions importSigComparerOptions;
 
-		const SigComparerOptions SIG_COMPARER_OPTIONS = SigComparerOptions.TypeRefCanReferenceGlobalType | SigComparerOptions.PrivateScopeIsComparable;
+		private const SigComparerOptions SIG_COMPARER_OPTIONS = SigComparerOptions.TypeRefCanReferenceGlobalType | SigComparerOptions.PrivateScopeIsComparable;
 
 		public ModuleImporter(ModuleDef targetModule, bool makeEverythingPublic)
 		{
@@ -92,15 +90,15 @@ namespace Nuterra.Installer.ModuleImport
 			isStub = new HashSet<object>();
 		}
 
-		void AddError(string id, string msg) => diagnostics.Add(new CompilerDiagnostic(CompilerDiagnosticSeverity.Error, msg, id, null, null));
+		private void AddError(string id, string msg) => diagnostics.Add(new CompilerDiagnostic(CompilerDiagnosticSeverity.Error, msg, id, null, null));
 
-		void AddErrorThrow(string id, string msg)
+		private void AddErrorThrow(string id, string msg)
 		{
 			AddError(id, msg);
 			throw new ModuleImporterAbortedException();
 		}
 
-		ModuleDefMD LoadModule(byte[] rawGeneratedModule, DebugFileResult debugFile)
+		private ModuleDefMD LoadModule(byte[] rawGeneratedModule, DebugFileResult debugFile)
 		{
 			var opts = new ModuleCreationOptions();
 
@@ -129,7 +127,7 @@ namespace Nuterra.Installer.ModuleImport
 			return ModuleDefMD.Load(rawGeneratedModule, opts);
 		}
 
-		static void RemoveDuplicates(List<CustomAttribute> attributes, string fullName)
+		private static void RemoveDuplicates(List<CustomAttribute> attributes, string fullName)
 		{
 			bool found = false;
 			for (int i = 0; i < attributes.Count; i++)
@@ -147,7 +145,7 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		static void RemoveDuplicateSecurityPermissionAttributes(List<DeclSecurity> secAttrs)
+		private static void RemoveDuplicateSecurityPermissionAttributes(List<DeclSecurity> secAttrs)
 		{
 			foreach (var declSec in secAttrs)
 			{
@@ -171,7 +169,7 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		void InitializeTypesAndMethods()
+		private void InitializeTypesAndMethods()
 		{
 			// Step 1: Initialize all definitions
 			InitializeTypesStep1(oldTypeToNewType.Values.OfType<NewImportedType>());
@@ -181,10 +179,9 @@ namespace Nuterra.Installer.ModuleImport
 			InitializeTypesStep2(oldTypeToNewType.Values.OfType<NewImportedType>());
 
 			InitializeTypesMethods(oldTypeToNewType.Values.OfType<NewImportedType>());
-
 		}
 
-		void ImportResources()
+		private void ImportResources()
 		{
 			var newResources = new List<Resource>(sourceModule.Resources.Count);
 			foreach (var resource in sourceModule.Resources)
@@ -201,7 +198,7 @@ namespace Nuterra.Installer.ModuleImport
 			NewResources = newResources.ToArray();
 		}
 
-		Resource Import(Resource resource)
+		private Resource Import(Resource resource)
 		{
 			var er = resource as EmbeddedResource;
 			if (er != null)
@@ -219,16 +216,16 @@ namespace Nuterra.Installer.ModuleImport
 			return null;
 		}
 
-		EmbeddedResource Import(EmbeddedResource resource) =>
+		private EmbeddedResource Import(EmbeddedResource resource) =>
 			new EmbeddedResource(resource.Name, resource.GetResourceData(), resource.Attributes);
 
-		AssemblyLinkedResource Import(AssemblyLinkedResource resource) =>
+		private AssemblyLinkedResource Import(AssemblyLinkedResource resource) =>
 			new AssemblyLinkedResource(resource.Name, resource.Assembly?.ToAssemblyRef(), resource.Attributes);
 
-		LinkedResource Import(LinkedResource resource) =>
+		private LinkedResource Import(LinkedResource resource) =>
 			new LinkedResource(resource.Name, Import(resource.File), resource.Attributes) { Hash = resource.Hash };
 
-		FileDef Import(FileDef file)
+		private FileDef Import(FileDef file)
 		{
 			var createdFile = targetModule.UpdateRowId(new FileDefUser(file.Name, file.Flags, file.HashValue));
 			ImportCustomAttributes(createdFile, file);
@@ -290,7 +287,7 @@ namespace Nuterra.Installer.ModuleImport
 			SetSourceModule(null);
 		}
 
-		TypeDef FindSourceType(TypeDef targetType)
+		private TypeDef FindSourceType(TypeDef targetType)
 		{
 			var newType = sourceModule.Find(targetType.Module.Import(targetType));
 			if (newType != null)
@@ -300,12 +297,14 @@ namespace Nuterra.Installer.ModuleImport
 			throw new InvalidOperationException();
 		}
 
-		struct ExistingMember<T> where T : IMemberDef
+		private struct ExistingMember<T> where T : IMemberDef
 		{
 			/// <summary>Compiled member</summary>
 			public T CompiledMember { get; }
+
 			/// <summary>Original member that exists in the target module</summary>
 			public T TargetMember { get; }
+
 			public ExistingMember(T compiledMember, T targetMember)
 			{
 				CompiledMember = compiledMember;
@@ -313,7 +312,7 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		void InitializeNewStateMachineTypes(TypeDef compiledType)
+		private void InitializeNewStateMachineTypes(TypeDef compiledType)
 		{
 			foreach (var method in compiledType.Methods)
 			{
@@ -326,7 +325,7 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		MethodDef FindSourceMethod(MethodDef targetMethod)
+		private MethodDef FindSourceMethod(MethodDef targetMethod)
 		{
 			var newType = sourceModule.Find(targetMethod.Module.Import(targetMethod.DeclaringType));
 			if (newType == null)
@@ -360,13 +359,13 @@ namespace Nuterra.Installer.ModuleImport
 			throw new InvalidOperationException();
 		}
 
-		void SetSourceModule(ModuleDef newSourceModule)
+		private void SetSourceModule(ModuleDef newSourceModule)
 		{
 			sourceModule = newSourceModule;
 			importSigComparerOptions = newSourceModule == null ? null : new ImportSigComparerOptions(newSourceModule, targetModule);
 		}
 
-		FieldDefOptions CreateFieldDefOptions(FieldDef newField, FieldDef targetField)
+		private FieldDefOptions CreateFieldDefOptions(FieldDef newField, FieldDef targetField)
 		{
 			var options = new FieldDefOptions(newField);
 			// All fields are made public, so do not copy the access bits
@@ -375,13 +374,13 @@ namespace Nuterra.Installer.ModuleImport
 			return options;
 		}
 
-		PropertyDefOptions CreatePropertyDefOptions(PropertyDef newProperty) =>
+		private PropertyDefOptions CreatePropertyDefOptions(PropertyDef newProperty) =>
 			new PropertyDefOptions(newProperty);
 
-		EventDefOptions CreateEventDefOptions(EventDef newEvent) =>
+		private EventDefOptions CreateEventDefOptions(EventDef newEvent) =>
 			new EventDefOptions(newEvent);
 
-		MethodDefOptions CreateMethodDefOptions(MethodDef newMethod, MethodDef targetMethod)
+		private MethodDefOptions CreateMethodDefOptions(MethodDef newMethod, MethodDef targetMethod)
 		{
 			var options = new MethodDefOptions(newMethod);
 			options.ParamDefs.Clear();
@@ -394,7 +393,7 @@ namespace Nuterra.Installer.ModuleImport
 			return options;
 		}
 
-		ParamDef Clone(ParamDef paramDef)
+		private ParamDef Clone(ParamDef paramDef)
 		{
 			if (paramDef == null)
 				return null;
@@ -406,7 +405,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedParamDef;
 		}
 
-		GenericParam Clone(GenericParam gp)
+		private GenericParam Clone(GenericParam gp)
 		{
 			if (gp == null)
 				return null;
@@ -419,7 +418,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedGenericParam;
 		}
 
-		GenericParamConstraint Clone(GenericParamConstraint gpc)
+		private GenericParamConstraint Clone(GenericParamConstraint gpc)
 		{
 			if (gpc == null)
 				return null;
@@ -431,13 +430,14 @@ namespace Nuterra.Installer.ModuleImport
 
 		//void AddGlobalTypeMembers(TypeDef newGlobalType) => nonNestedMergedImportedTypes.Add(MergeTypesRename(newGlobalType, targetModule.GlobalType));
 
-		static bool IsVirtual(PropertyDef property) => property.GetMethod?.IsVirtual == true || property.SetMethod?.IsVirtual == true;
-		static bool IsVirtual(EventDef @event) => @event.AddMethod?.IsVirtual == true || @event.RemoveMethod?.IsVirtual == true || @event.InvokeMethod?.IsVirtual == true;
+		private static bool IsVirtual(PropertyDef property) => property.GetMethod?.IsVirtual == true || property.SetMethod?.IsVirtual == true;
 
-		struct TypeName : IEquatable<TypeName>
+		private static bool IsVirtual(EventDef @event) => @event.AddMethod?.IsVirtual == true || @event.RemoveMethod?.IsVirtual == true || @event.InvokeMethod?.IsVirtual == true;
+
+		private struct TypeName : IEquatable<TypeName>
 		{
-			readonly UTF8String ns;
-			readonly UTF8String name;
+			private readonly UTF8String ns;
+			private readonly UTF8String name;
 
 			public TypeName(TypeDef type)
 				: this(type.Namespace, type.Name)
@@ -468,9 +468,9 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		sealed class TypeNames
+		private sealed class TypeNames
 		{
-			readonly HashSet<TypeName> names;
+			private readonly HashSet<TypeName> names;
 
 			public TypeNames()
 			{
@@ -497,9 +497,9 @@ namespace Nuterra.Installer.ModuleImport
 				names.Add(new TypeName(type.Namespace, type.Name));
 		}
 
-		sealed class UsedTypeNames
+		private sealed class UsedTypeNames
 		{
-			readonly TypeNames typeNames;
+			private readonly TypeNames typeNames;
 
 			public UsedTypeNames()
 			{
@@ -531,10 +531,10 @@ namespace Nuterra.Installer.ModuleImport
 				typeNames.Add(type);
 		}
 
-		NewImportedType CreateNewImportedType(TypeDef newType, IList<TypeDef> existingTypes) =>
+		private NewImportedType CreateNewImportedType(TypeDef newType, IList<TypeDef> existingTypes) =>
 			CreateNewImportedType(newType, new UsedTypeNames(existingTypes));
 
-		NewImportedType CreateNewImportedType(TypeDef newType, UsedTypeNames usedTypeNames)
+		private NewImportedType CreateNewImportedType(TypeDef newType, UsedTypeNames usedTypeNames)
 		{
 			var name = usedTypeNames.GetNewName(newType);
 			var importedType = AddNewImportedType(newType, name);
@@ -542,7 +542,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedType;
 		}
 
-		void AddNewNestedTypes(TypeDef newType)
+		private void AddNewNestedTypes(TypeDef newType)
 		{
 			if (newType.NestedTypes.Count == 0)
 				return;
@@ -558,7 +558,7 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		NewImportedType AddNewImportedType(TypeDef type, UTF8String name)
+		private NewImportedType AddNewImportedType(TypeDef type, UTF8String name)
 		{
 			var createdType = targetModule.UpdateRowId(new TypeDefUser(type.Namespace, name) { Attributes = type.Attributes });
 			var importedType = new NewImportedType(createdType);
@@ -568,7 +568,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedType;
 		}
 
-		void InitializeTypesStep1(IEnumerable<NewImportedType> importedTypes)
+		private void InitializeTypesStep1(IEnumerable<NewImportedType> importedTypes)
 		{
 			foreach (var importedType in importedTypes)
 			{
@@ -584,7 +584,7 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		void InitializeTypesStep2(IEnumerable<NewImportedType> importedTypes)
+		private void InitializeTypesStep2(IEnumerable<NewImportedType> importedTypes)
 		{
 			foreach (var importedType in importedTypes)
 			{
@@ -616,7 +616,7 @@ namespace Nuterra.Installer.ModuleImport
 		// doesn't set the PropertyDef.Type's HasThis flag even if it's an instance property.
 		// Roslyn will set this flag, so our comparison would fail to match the two (now different)
 		// properties. This comparison has since been fixed.
-		void AddUsedMethods(ImportedType importedType)
+		private void AddUsedMethods(ImportedType importedType)
 		{
 			foreach (var p in importedType.TargetType.Properties)
 			{
@@ -640,7 +640,7 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		void Initialize(TypeDef compiledType, TypeDef targetType, TypeDefOptions options)
+		private void Initialize(TypeDef compiledType, TypeDef targetType, TypeDefOptions options)
 		{
 			options.Attributes = compiledType.Attributes;
 
@@ -666,7 +666,7 @@ namespace Nuterra.Installer.ModuleImport
 				options.Interfaces.Add(Import(ifaceImpl));
 		}
 
-		void InitializeTypesMethods(IEnumerable<NewImportedType> importedTypes)
+		private void InitializeTypesMethods(IEnumerable<NewImportedType> importedTypes)
 		{
 			foreach (var importedType in importedTypes)
 			{
@@ -678,10 +678,11 @@ namespace Nuterra.Installer.ModuleImport
 			}
 		}
 
-		MethodOverride Import(MethodOverride o) => new MethodOverride(Import(o.MethodBody), Import(o.MethodDeclaration));
-		IMethodDefOrRef Import(IMethodDefOrRef method) => (IMethodDefOrRef)Import((IMethod)method);
+		private MethodOverride Import(MethodOverride o) => new MethodOverride(Import(o.MethodBody), Import(o.MethodDeclaration));
 
-		ITypeDefOrRef Import(ITypeDefOrRef type)
+		private IMethodDefOrRef Import(IMethodDefOrRef method) => (IMethodDefOrRef)Import((IMethod)method);
+
+		private ITypeDefOrRef Import(ITypeDefOrRef type)
 		{
 			if (type == null)
 				return null;
@@ -703,7 +704,7 @@ namespace Nuterra.Installer.ModuleImport
 			throw new InvalidOperationException();
 		}
 
-		TypeRef ImportTypeRefNoModuleChecks(TypeRef tr, int recurseCount)
+		private TypeRef ImportTypeRefNoModuleChecks(TypeRef tr, int recurseCount)
 		{
 			const int MAX_RECURSE_COUNT = 500;
 			if (recurseCount >= MAX_RECURSE_COUNT)
@@ -734,7 +735,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedTypeRef;
 		}
 
-		AssemblyRef Import(AssemblyRef asmRef)
+		private AssemblyRef Import(AssemblyRef asmRef)
 		{
 			if (asmRef == null)
 				return null;
@@ -745,7 +746,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedAssemblyRef;
 		}
 
-		TypeSpec ImportTypeSpec(TypeSpec ts)
+		private TypeSpec ImportTypeSpec(TypeSpec ts)
 		{
 			if (ts == null)
 				return null;
@@ -755,7 +756,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedTypeSpec;
 		}
 
-		TypeDef TryGetTypeInTargetModule(ITypeDefOrRef tdr, out ImportedType importedType)
+		private TypeDef TryGetTypeInTargetModule(ITypeDefOrRef tdr, out ImportedType importedType)
 		{
 			if (tdr == null)
 			{
@@ -796,9 +797,9 @@ namespace Nuterra.Installer.ModuleImport
 			return null;
 		}
 
-		bool IsSourceOrTarget(IResolutionScope scope) => IsSource(scope) || IsTarget(scope);
+		private bool IsSourceOrTarget(IResolutionScope scope) => IsSource(scope) || IsTarget(scope);
 
-		bool IsSource(IResolutionScope scope)
+		private bool IsSource(IResolutionScope scope)
 		{
 			var asmRef = scope as AssemblyRef;
 			if (asmRef != null)
@@ -811,7 +812,7 @@ namespace Nuterra.Installer.ModuleImport
 			return scope == sourceModule;
 		}
 
-		bool IsTarget(IResolutionScope scope)
+		private bool IsTarget(IResolutionScope scope)
 		{
 			var asmRef = scope as AssemblyRef;
 			if (asmRef != null)
@@ -824,18 +825,23 @@ namespace Nuterra.Installer.ModuleImport
 			return scope == targetModule;
 		}
 
-		bool IsSourceOrTarget(AssemblyRef asmRef) => IsSource(asmRef) || IsTarget(asmRef);
-		bool IsSource(AssemblyRef asmRef) => AssemblyNameComparer.CompareAll.Equals(asmRef, sourceModule.Assembly);
-		bool IsTarget(AssemblyRef asmRef) => AssemblyNameComparer.CompareAll.Equals(asmRef, targetModule.Assembly);
+		private bool IsSourceOrTarget(AssemblyRef asmRef) => IsSource(asmRef) || IsTarget(asmRef);
 
-		bool IsSourceOrTarget(ModuleRef modRef) => IsSource(modRef) || IsTarget(modRef);
-		bool IsSource(ModuleRef modRef) => StringComparer.OrdinalIgnoreCase.Equals(modRef?.Name, sourceModule.Name);
-		bool IsTarget(ModuleRef modRef) => StringComparer.OrdinalIgnoreCase.Equals(modRef?.Name, targetModule.Name);
+		private bool IsSource(AssemblyRef asmRef) => AssemblyNameComparer.CompareAll.Equals(asmRef, sourceModule.Assembly);
 
-		TypeDef ImportTypeDef(TypeDef type) => type == null ? null : oldTypeToNewType[type].TargetType;
-		MethodDef ImportMethodDef(MethodDef method) => method == null ? null : oldMethodToNewMethod[method].TargetMember;
+		private bool IsTarget(AssemblyRef asmRef) => AssemblyNameComparer.CompareAll.Equals(asmRef, targetModule.Assembly);
 
-		TypeSig Import(TypeSig type)
+		private bool IsSourceOrTarget(ModuleRef modRef) => IsSource(modRef) || IsTarget(modRef);
+
+		private bool IsSource(ModuleRef modRef) => StringComparer.OrdinalIgnoreCase.Equals(modRef?.Name, sourceModule.Name);
+
+		private bool IsTarget(ModuleRef modRef) => StringComparer.OrdinalIgnoreCase.Equals(modRef?.Name, targetModule.Name);
+
+		private TypeDef ImportTypeDef(TypeDef type) => type == null ? null : oldTypeToNewType[type].TargetType;
+
+		private MethodDef ImportMethodDef(MethodDef method) => method == null ? null : oldMethodToNewMethod[method].TargetMember;
+
+		private TypeSig Import(TypeSig type)
 		{
 			if (type == null)
 				return null;
@@ -902,7 +908,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		TypeSig CreateClassOrValueType(ITypeDefOrRef type, bool isValueType)
+		private TypeSig CreateClassOrValueType(ITypeDefOrRef type, bool isValueType)
 		{
 			var corLibType = targetModule.CorLibTypes.GetCorLibTypeSig(type);
 			if (corLibType != null)
@@ -913,16 +919,16 @@ namespace Nuterra.Installer.ModuleImport
 			return new ClassSig(Import(type));
 		}
 
-		void ImportCustomAttributes(IHasCustomAttribute target, IHasCustomAttribute source) =>
+		private void ImportCustomAttributes(IHasCustomAttribute target, IHasCustomAttribute source) =>
 			ImportCustomAttributes(target.CustomAttributes, source);
 
-		void ImportCustomAttributes(IList<CustomAttribute> targetList, IHasCustomAttribute source)
+		private void ImportCustomAttributes(IList<CustomAttribute> targetList, IHasCustomAttribute source)
 		{
 			foreach (var ca in source.CustomAttributes)
 				targetList.Add(Import(ca));
 		}
 
-		ICustomAttributeType Import(ICustomAttributeType caType)
+		private ICustomAttributeType Import(ICustomAttributeType caType)
 		{
 			var mr = caType as MemberRef;
 			if (mr != null)
@@ -938,7 +944,7 @@ namespace Nuterra.Installer.ModuleImport
 			return null;
 		}
 
-		CustomAttribute Import(CustomAttribute ca)
+		private CustomAttribute Import(CustomAttribute ca)
 		{
 			if (ca == null)
 				return null;
@@ -954,9 +960,9 @@ namespace Nuterra.Installer.ModuleImport
 			return importedCustomAttribute;
 		}
 
-		CAArgument Import(CAArgument arg) => new CAArgument(Import(arg.Type), ImportCAValue(arg.Value));
+		private CAArgument Import(CAArgument arg) => new CAArgument(Import(arg.Type), ImportCAValue(arg.Value));
 
-		object ImportCAValue(object value)
+		private object ImportCAValue(object value)
 		{
 			if (value is CAArgument)
 				return Import((CAArgument)value);
@@ -973,19 +979,19 @@ namespace Nuterra.Installer.ModuleImport
 			return value;
 		}
 
-		CANamedArgument Import(CANamedArgument namedArg) =>
+		private CANamedArgument Import(CANamedArgument namedArg) =>
 			new CANamedArgument(namedArg.IsField, Import(namedArg.Type), namedArg.Name, Import(namedArg.Argument));
 
-		void ImportDeclSecurities(IHasDeclSecurity target, IHasDeclSecurity source) =>
+		private void ImportDeclSecurities(IHasDeclSecurity target, IHasDeclSecurity source) =>
 			ImportDeclSecurities(target.DeclSecurities, source);
 
-		void ImportDeclSecurities(IList<DeclSecurity> targetList, IHasDeclSecurity source)
+		private void ImportDeclSecurities(IList<DeclSecurity> targetList, IHasDeclSecurity source)
 		{
 			foreach (var ds in source.DeclSecurities)
 				targetList.Add(Import(ds));
 		}
 
-		DeclSecurity Import(DeclSecurity ds)
+		private DeclSecurity Import(DeclSecurity ds)
 		{
 			if (ds == null)
 				return null;
@@ -999,7 +1005,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedDeclSecurity;
 		}
 
-		SecurityAttribute Import(SecurityAttribute sa)
+		private SecurityAttribute Import(SecurityAttribute sa)
 		{
 			if (sa == null)
 				return null;
@@ -1011,14 +1017,14 @@ namespace Nuterra.Installer.ModuleImport
 			return importedSecurityAttribute;
 		}
 
-		Constant Import(Constant constant)
+		private Constant Import(Constant constant)
 		{
 			if (constant == null)
 				return null;
 			return targetModule.UpdateRowId(new ConstantUser(constant.Value, constant.Type));
 		}
 
-		MarshalType Import(MarshalType marshalType)
+		private MarshalType Import(MarshalType marshalType)
 		{
 			if (marshalType == null)
 				return null;
@@ -1069,14 +1075,14 @@ namespace Nuterra.Installer.ModuleImport
 			return new MarshalType(marshalType.NativeType);
 		}
 
-		ImplMap Import(ImplMap implMap)
+		private ImplMap Import(ImplMap implMap)
 		{
 			if (implMap == null)
 				return null;
 			return targetModule.UpdateRowId(new ImplMapUser(Import(implMap.Module, false), implMap.Name, implMap.Attributes));
 		}
 
-		ModuleRef Import(ModuleRef module, bool canConvertToTargetModule)
+		private ModuleRef Import(ModuleRef module, bool canConvertToTargetModule)
 		{
 			var name = canConvertToTargetModule && IsSourceOrTarget(module) ? targetModule.Name : module.Name;
 			var importedModuleRef = targetModule.UpdateRowId(new ModuleRefUser(targetModule, name));
@@ -1084,14 +1090,14 @@ namespace Nuterra.Installer.ModuleImport
 			return importedModuleRef;
 		}
 
-		ClassLayout Import(ClassLayout classLayout)
+		private ClassLayout Import(ClassLayout classLayout)
 		{
 			if (classLayout == null)
 				return null;
 			return targetModule.UpdateRowId(new ClassLayoutUser(classLayout.PackingSize, classLayout.ClassSize));
 		}
 
-		CallingConventionSig Import(CallingConventionSig signature)
+		private CallingConventionSig Import(CallingConventionSig signature)
 		{
 			if (signature == null)
 				return null;
@@ -1109,21 +1115,21 @@ namespace Nuterra.Installer.ModuleImport
 			return null;
 		}
 
-		MethodSig Import(MethodSig sig)
+		private MethodSig Import(MethodSig sig)
 		{
 			if (sig == null)
 				return null;
 			return Import(new MethodSig(sig.GetCallingConvention()), sig);
 		}
 
-		PropertySig Import(PropertySig sig)
+		private PropertySig Import(PropertySig sig)
 		{
 			if (sig == null)
 				return null;
 			return Import(new PropertySig(sig.HasThis), sig);
 		}
 
-		T Import<T>(T sig, T old) where T : MethodBaseSig
+		private T Import<T>(T sig, T old) where T : MethodBaseSig
 		{
 			sig.RetType = Import(old.RetType);
 			foreach (var p in old.Params)
@@ -1138,14 +1144,14 @@ namespace Nuterra.Installer.ModuleImport
 			return sig;
 		}
 
-		FieldSig Import(FieldSig sig)
+		private FieldSig Import(FieldSig sig)
 		{
 			if (sig == null)
 				return null;
 			return new FieldSig(Import(sig.Type));
 		}
 
-		GenericInstMethodSig Import(GenericInstMethodSig sig)
+		private GenericInstMethodSig Import(GenericInstMethodSig sig)
 		{
 			if (sig == null)
 				return null;
@@ -1157,7 +1163,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		LocalSig Import(LocalSig sig)
+		private LocalSig Import(LocalSig sig)
 		{
 			if (sig == null)
 				return null;
@@ -1169,34 +1175,35 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		static readonly bool keepImportedRva = false;
-		RVA GetRVA(RVA rva) => keepImportedRva ? rva : 0;
+		private static readonly bool keepImportedRva = false;
 
-		void Create(FieldDef field)
+		private RVA GetRVA(RVA rva) => keepImportedRva ? rva : 0;
+
+		private void Create(FieldDef field)
 		{
 			var importedField = targetModule.UpdateRowId(new FieldDefUser(field.Name));
 			oldFieldToNewField.Add(field, new MemberInfo<FieldDef>(importedField, importedField));
 		}
 
-		void Create(MethodDef method)
+		private void Create(MethodDef method)
 		{
 			var importedMethodDef = targetModule.UpdateRowId(new MethodDefUser(method.Name));
 			oldMethodToNewMethod.Add(method, new MemberInfo<MethodDef>(importedMethodDef, importedMethodDef));
 		}
 
-		void Create(PropertyDef propDef)
+		private void Create(PropertyDef propDef)
 		{
 			var importedPropertyDef = targetModule.UpdateRowId(new PropertyDefUser(propDef.Name));
 			oldPropertyToNewProperty.Add(propDef, new MemberInfo<PropertyDef>(importedPropertyDef, importedPropertyDef));
 		}
 
-		void Create(EventDef eventDef)
+		private void Create(EventDef eventDef)
 		{
 			var importedEventDef = targetModule.UpdateRowId(new EventDefUser(eventDef.Name));
 			oldEventToNewEvent.Add(eventDef, new MemberInfo<EventDef>(importedEventDef, importedEventDef));
 		}
 
-		FieldDef Initialize(FieldDef field)
+		private FieldDef Initialize(FieldDef field)
 		{
 			if (field == null)
 				return null;
@@ -1213,7 +1220,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedField;
 		}
 
-		MethodDef Initialize(MethodDef method)
+		private MethodDef Initialize(MethodDef method)
 		{
 			if (method == null)
 				return null;
@@ -1236,7 +1243,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedMethodDef;
 		}
 
-		GenericParam Import(GenericParam gp)
+		private GenericParam Import(GenericParam gp)
 		{
 			if (gp == null)
 				return null;
@@ -1248,7 +1255,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedGenericParam;
 		}
 
-		GenericParamConstraint Import(GenericParamConstraint gpc)
+		private GenericParamConstraint Import(GenericParamConstraint gpc)
 		{
 			if (gpc == null)
 				return null;
@@ -1257,7 +1264,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedGenericParamConstraint;
 		}
 
-		InterfaceImpl Import(InterfaceImpl ifaceImpl)
+		private InterfaceImpl Import(InterfaceImpl ifaceImpl)
 		{
 			if (ifaceImpl == null)
 				return null;
@@ -1266,7 +1273,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedInterfaceImpl;
 		}
 
-		ParamDef Import(ParamDef paramDef)
+		private ParamDef Import(ParamDef paramDef)
 		{
 			if (paramDef == null)
 				return null;
@@ -1277,7 +1284,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedParamDef;
 		}
 
-		PropertyDef Initialize(PropertyDef propDef)
+		private PropertyDef Initialize(PropertyDef propDef)
 		{
 			if (propDef == null)
 				return null;
@@ -1307,7 +1314,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedPropertyDef;
 		}
 
-		MethodDef TryGetMethod(MethodDef method)
+		private MethodDef TryGetMethod(MethodDef method)
 		{
 			if (method == null)
 				return null;
@@ -1318,7 +1325,7 @@ namespace Nuterra.Installer.ModuleImport
 			return m;
 		}
 
-		EventDef Initialize(EventDef eventDef)
+		private EventDef Initialize(EventDef eventDef)
 		{
 			if (eventDef == null)
 				return null;
@@ -1353,7 +1360,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedEventDef;
 		}
 
-		CilBody CreateBody(MethodDef paramsSourceMethod, MethodDef sourceMethod)
+		private CilBody CreateBody(MethodDef paramsSourceMethod, MethodDef sourceMethod)
 		{
 			// NOTE: Both methods can be identical: targetMethod == sourceMethod
 
@@ -1462,7 +1469,7 @@ namespace Nuterra.Installer.ModuleImport
 			return targetBody;
 		}
 
-		static Instruction GetInstruction(Dictionary<object, object> dict, Instruction instr)
+		private static Instruction GetInstruction(Dictionary<object, object> dict, Instruction instr)
 		{
 			object obj;
 			if (instr == null || !dict.TryGetValue(instr, out obj))
@@ -1470,7 +1477,7 @@ namespace Nuterra.Installer.ModuleImport
 			return (Instruction)obj;
 		}
 
-		IMethod Import(IMethod method)
+		private IMethod Import(IMethod method)
 		{
 			if (method == null)
 				return null;
@@ -1509,7 +1516,7 @@ namespace Nuterra.Installer.ModuleImport
 			return ImportNoCheckForDefs(mr);
 		}
 
-		MethodDef FindMethod(TypeDef targetType, MemberRef mr)
+		private MethodDef FindMethod(TypeDef targetType, MemberRef mr)
 		{
 			var comparer = new ImportSigComparer(importSigComparerOptions, SIG_COMPARER_OPTIONS, targetModule);
 			foreach (var method in targetType.Methods)
@@ -1522,7 +1529,7 @@ namespace Nuterra.Installer.ModuleImport
 			return null;
 		}
 
-		IField Import(IField field)
+		private IField Import(IField field)
 		{
 			if (field == null)
 				return null;
@@ -1553,7 +1560,7 @@ namespace Nuterra.Installer.ModuleImport
 			return ImportNoCheckForDefs(mr);
 		}
 
-		FieldDef FindField(TypeDef targetType, MemberRef mr)
+		private FieldDef FindField(TypeDef targetType, MemberRef mr)
 		{
 			var comparer = new ImportSigComparer(importSigComparerOptions, SIG_COMPARER_OPTIONS, targetModule);
 			foreach (var field in targetType.Fields)
@@ -1566,7 +1573,7 @@ namespace Nuterra.Installer.ModuleImport
 			return null;
 		}
 
-		MemberRef ImportNoCheckForDefs(MemberRef mr)
+		private MemberRef ImportNoCheckForDefs(MemberRef mr)
 		{
 			var importedMemberRef = targetModule.UpdateRowId(new MemberRefUser(targetModule, mr.Name));
 			ImportCustomAttributes(importedMemberRef, mr);
@@ -1575,7 +1582,7 @@ namespace Nuterra.Installer.ModuleImport
 			return importedMemberRef;
 		}
 
-		IMemberRefParent Import(IMemberRefParent cls)
+		private IMemberRefParent Import(IMemberRefParent cls)
 		{
 			if (cls == null)
 				return null;

@@ -1,10 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json.Linq;
 
 namespace Nuterra
 {
@@ -14,6 +13,25 @@ namespace Nuterra
 
 		private Dictionary<Type, TerraTechMod> _modInstances = new Dictionary<Type, TerraTechMod>();
 		private Dictionary<string, Type> _modNames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+
+		public void LoadAllMods(string directory)
+		{
+			Console.WriteLine($"Loading debug symbols for mods is {(Debug.isDebugBuild ? "enabled" : "disabled")}");
+			foreach (string assemblyFileName in Directory.GetFiles(directory, "*.dll"))
+			{
+				Console.WriteLine($"Loading mod assembly: {assemblyFileName}");
+				string path = Path.Combine(directory, assemblyFileName);
+				byte[] assemblyBytes = File.ReadAllBytes(path);
+				string symbolFile = path + ".mdb";
+				byte[] symbolStore = null;
+				if (Debug.isDebugBuild && File.Exists(symbolFile))
+				{
+					symbolStore = File.ReadAllBytes(symbolFile);
+				}
+				Assembly asm = Assembly.Load(assemblyBytes, symbolStore);
+				LoadAllMods(asm);
+			}
+		}
 
 		public void LoadAllMods(Assembly asm)
 		{

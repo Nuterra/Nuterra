@@ -13,7 +13,7 @@ namespace Nuterra
 
 		static AssetBundleImport()
 		{
-			NuterraAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Nuterra.DataFolder, AssetFilename));
+			NuterraAssetBundle = AssetBundle.LoadFromFile(Path.Combine(NuterraApi.DataFolder, AssetFilename));
 			if (NuterraAssetBundle == null)
 			{
 				Debug.Log($"Failed to load {AssetFilename} AssetBundle, errors are coming");

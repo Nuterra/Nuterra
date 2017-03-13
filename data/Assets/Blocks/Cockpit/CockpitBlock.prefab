@@ -55,6 +55,7 @@ GameObject:
   - 4: {fileID: 4000010920148178}
   - 33: {fileID: 33000011600589284}
   - 23: {fileID: 23000012951290868}
+  - 65: {fileID: 65000013521029750}
   m_Layer: 0
   m_Name: Cube_008
   m_TagString: Untagged
@@ -87,6 +88,7 @@ GameObject:
   - 4: {fileID: 4000011194373870}
   - 33: {fileID: 33000011619750424}
   - 23: {fileID: 23000010606928524}
+  - 135: {fileID: 135000013476920606}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -366,6 +368,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010813422596}
   m_Mesh: {fileID: 4300004, guid: 72e1a5a33717b504592af6416a10e199, type: 3}
+--- !u!65 &65000013521029750
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012358925208}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 1.000037}
+  m_Center: {x: 0, y: -0.0000009834766, z: -0.4999815}
 --- !u!95 &95000010294695994
 Animator:
   serializedVersion: 3
@@ -383,3 +397,15 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!135 &135000013476920606
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012725492292}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}

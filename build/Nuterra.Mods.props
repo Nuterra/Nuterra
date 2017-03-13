@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Force mods to compile against 3.5. This is the runtime unity supports -->
+  <PropertyGroup>
+    <Nuterra_ProjectRoot>$(MSBuildThisFileDirectory)..\</Nuterra_ProjectRoot>
+    <Nuterra_Packages>$(Nuterra_ProjectRoot)src\packages</Nuterra_Packages>
+  </PropertyGroup>
+</Project>

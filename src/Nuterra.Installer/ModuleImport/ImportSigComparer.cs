@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using dnlib.DotNet;
 
 namespace Nuterra.Installer.ModuleImport
 {
-	sealed class ImportSigComparerOptions
+	internal sealed class ImportSigComparerOptions
 	{
 		public ModuleDef SourceModule { get; }
 		public ModuleDef TargetModule { get; }
+
 		public ImportSigComparerOptions(ModuleDef sourceModule, ModuleDef targetModule)
 		{
 			SourceModule = sourceModule;
@@ -18,101 +16,130 @@ namespace Nuterra.Installer.ModuleImport
 		}
 	}
 
-	sealed class ImportTypeEqualityComparer : IEqualityComparer<TypeDef>, IEqualityComparer<ITypeDefOrRef>, IEqualityComparer<IType>, IEqualityComparer<TypeSig>
+	internal sealed class ImportTypeEqualityComparer : IEqualityComparer<TypeDef>, IEqualityComparer<ITypeDefOrRef>, IEqualityComparer<IType>, IEqualityComparer<TypeSig>
 	{
 		/*readonly*/
-		ImportSigComparer comparer;
+		private ImportSigComparer comparer;
+
 		public ImportTypeEqualityComparer(ImportSigComparer comparer)
 		{
 			this.comparer = comparer;
 		}
+
 		public bool Equals(TypeDef x, TypeDef y) => comparer.Equals(x, y);
+
 		public int GetHashCode(TypeDef obj) => comparer.GetHashCode(obj);
+
 		public bool Equals(ITypeDefOrRef x, ITypeDefOrRef y) => comparer.Equals(x, y);
+
 		public int GetHashCode(ITypeDefOrRef obj) => comparer.GetHashCode(obj);
+
 		public bool Equals(IType x, IType y) => comparer.Equals(x, y);
+
 		public int GetHashCode(IType obj) => comparer.GetHashCode(obj);
+
 		public bool Equals(TypeSig x, TypeSig y) => comparer.Equals(x, y);
+
 		public int GetHashCode(TypeSig obj) => comparer.GetHashCode(obj);
 	}
 
-	sealed class ImportPropertyEqualityComparer : IEqualityComparer<PropertyDef>
+	internal sealed class ImportPropertyEqualityComparer : IEqualityComparer<PropertyDef>
 	{
 		/*readonly*/
-		ImportSigComparer comparer;
+		private ImportSigComparer comparer;
+
 		public ImportPropertyEqualityComparer(ImportSigComparer comparer)
 		{
 			this.comparer = comparer;
 		}
+
 		public bool Equals(PropertyDef x, PropertyDef y) => comparer.Equals(x, y);
+
 		public int GetHashCode(PropertyDef obj) => comparer.GetHashCode(obj);
 	}
 
-	sealed class ImportEventEqualityComparer : IEqualityComparer<EventDef>
+	internal sealed class ImportEventEqualityComparer : IEqualityComparer<EventDef>
 	{
 		/*readonly*/
-		ImportSigComparer comparer;
+		private ImportSigComparer comparer;
+
 		public ImportEventEqualityComparer(ImportSigComparer comparer)
 		{
 			this.comparer = comparer;
 		}
+
 		public bool Equals(EventDef x, EventDef y) => comparer.Equals(x, y);
+
 		public int GetHashCode(EventDef obj) => comparer.GetHashCode(obj);
 	}
 
-	sealed class ImportMethodEqualityComparer : IEqualityComparer<MethodDef>, IEqualityComparer<MemberRef>, IEqualityComparer<IMethod>
+	internal sealed class ImportMethodEqualityComparer : IEqualityComparer<MethodDef>, IEqualityComparer<MemberRef>, IEqualityComparer<IMethod>
 	{
 		/*readonly*/
-		ImportSigComparer comparer;
+		private ImportSigComparer comparer;
+
 		public ImportMethodEqualityComparer(ImportSigComparer comparer)
 		{
 			this.comparer = comparer;
 		}
+
 		public bool Equals(MethodDef x, MethodDef y) => comparer.Equals(x, y);
+
 		public int GetHashCode(MethodDef obj) => comparer.GetHashCode(obj);
+
 		public bool Equals(MemberRef x, MemberRef y) => comparer.Equals(x, y);
+
 		public int GetHashCode(MemberRef obj) => comparer.GetHashCode(obj);
+
 		public bool Equals(IMethod x, IMethod y) => comparer.Equals(x, y);
+
 		public int GetHashCode(IMethod obj) => comparer.GetHashCode(obj);
 	}
 
-	sealed class ImportFieldEqualityComparer : IEqualityComparer<FieldDef>, IEqualityComparer<MemberRef>, IEqualityComparer<IField>
+	internal sealed class ImportFieldEqualityComparer : IEqualityComparer<FieldDef>, IEqualityComparer<MemberRef>, IEqualityComparer<IField>
 	{
 		/*readonly*/
-		ImportSigComparer comparer;
+		private ImportSigComparer comparer;
+
 		public ImportFieldEqualityComparer(ImportSigComparer comparer)
 		{
 			this.comparer = comparer;
 		}
+
 		public bool Equals(FieldDef x, FieldDef y) => comparer.Equals(x, y);
+
 		public int GetHashCode(FieldDef obj) => comparer.GetHashCode(obj);
+
 		public bool Equals(MemberRef x, MemberRef y) => comparer.Equals(x, y);
+
 		public int GetHashCode(MemberRef obj) => comparer.GetHashCode(obj);
+
 		public bool Equals(IField x, IField y) => comparer.Equals(x, y);
+
 		public int GetHashCode(IField obj) => comparer.GetHashCode(obj);
 	}
 
 	// Most code is from dnlib.DotNet.SigComparer
-	struct ImportSigComparer
+	internal struct ImportSigComparer
 	{
-		const int HASHCODE_MAGIC_GLOBAL_TYPE = 1654396648;
-		const int HASHCODE_MAGIC_NESTED_TYPE = -1049070942;
-		const int HASHCODE_MAGIC_ET_MODULE = -299744851;
-		const int HASHCODE_MAGIC_ET_VALUEARRAY = -674970533;
-		const int HASHCODE_MAGIC_ET_GENERICINST = -2050514639;
-		const int HASHCODE_MAGIC_ET_VAR = 1288450097;
-		const int HASHCODE_MAGIC_ET_MVAR = -990598495;
-		const int HASHCODE_MAGIC_ET_ARRAY = -96331531;
-		const int HASHCODE_MAGIC_ET_SZARRAY = 871833535;
-		const int HASHCODE_MAGIC_ET_BYREF = -634749586;
-		const int HASHCODE_MAGIC_ET_PTR = 1976400808;
-		const int HASHCODE_MAGIC_ET_SENTINEL = 68439620;
+		private const int HASHCODE_MAGIC_GLOBAL_TYPE = 1654396648;
+		private const int HASHCODE_MAGIC_NESTED_TYPE = -1049070942;
+		private const int HASHCODE_MAGIC_ET_MODULE = -299744851;
+		private const int HASHCODE_MAGIC_ET_VALUEARRAY = -674970533;
+		private const int HASHCODE_MAGIC_ET_GENERICINST = -2050514639;
+		private const int HASHCODE_MAGIC_ET_VAR = 1288450097;
+		private const int HASHCODE_MAGIC_ET_MVAR = -990598495;
+		private const int HASHCODE_MAGIC_ET_ARRAY = -96331531;
+		private const int HASHCODE_MAGIC_ET_SZARRAY = 871833535;
+		private const int HASHCODE_MAGIC_ET_BYREF = -634749586;
+		private const int HASHCODE_MAGIC_ET_PTR = 1976400808;
+		private const int HASHCODE_MAGIC_ET_SENTINEL = 68439620;
 
-		RecursionCounter recursionCounter;
-		SigComparerOptions options;
-		readonly ImportSigComparerOptions importOptions;
-		GenericArguments genericArguments;
-		readonly ModuleDef sourceModule;
+		private RecursionCounter recursionCounter;
+		private SigComparerOptions options;
+		private readonly ImportSigComparerOptions importOptions;
+		private GenericArguments genericArguments;
+		private readonly ModuleDef sourceModule;
 
 		bool DontCompareTypeScope => (options & SigComparerOptions.DontCompareTypeScope) != 0;
 		bool CompareMethodFieldDeclaringType => (options & SigComparerOptions.CompareMethodFieldDeclaringType) != 0;
@@ -152,159 +179,159 @@ namespace Nuterra.Installer.ModuleImport
 			this.sourceModule = sourceModule;
 		}
 
-		int GetHashCode_FnPtr_SystemIntPtr()
+		private int GetHashCode_FnPtr_SystemIntPtr()
 		{
 			return GetHashCode_TypeNamespace("System") +
 					GetHashCode_TypeName("IntPtr");
 		}
 
-		bool Equals_Names(bool caseInsensitive, UTF8String a, UTF8String b)
+		private bool Equals_Names(bool caseInsensitive, UTF8String a, UTF8String b)
 		{
 			if (caseInsensitive)
 				return UTF8String.ToSystemStringOrEmpty(a).Equals(UTF8String.ToSystemStringOrEmpty(b), StringComparison.OrdinalIgnoreCase);
 			return UTF8String.Equals(a, b);
 		}
 
-		bool Equals_Names(bool caseInsensitive, string a, string b)
+		private bool Equals_Names(bool caseInsensitive, string a, string b)
 		{
 			if (caseInsensitive)
 				return (a ?? string.Empty).Equals(b ?? string.Empty, StringComparison.OrdinalIgnoreCase);
 			return (a ?? string.Empty) == (b ?? string.Empty);
 		}
 
-		int GetHashCode_Name(bool caseInsensitive, string a)
+		private int GetHashCode_Name(bool caseInsensitive, string a)
 		{
 			if (caseInsensitive)
 				return (a ?? string.Empty).ToUpperInvariant().GetHashCode();
 			return (a ?? string.Empty).GetHashCode();
 		}
 
-		bool Equals_TypeNamespaces(UTF8String a, UTF8String b)
+		private bool Equals_TypeNamespaces(UTF8String a, UTF8String b)
 		{
 			return Equals_Names(CaseInsensitiveTypeNamespaces, a, b);
 		}
 
-		bool Equals_TypeNamespaces(UTF8String a, string b)
+		private bool Equals_TypeNamespaces(UTF8String a, string b)
 		{
 			return Equals_Names(CaseInsensitiveTypeNamespaces, UTF8String.ToSystemStringOrEmpty(a), b);
 		}
 
-		int GetHashCode_TypeNamespace(UTF8String a)
+		private int GetHashCode_TypeNamespace(UTF8String a)
 		{
 			return GetHashCode_Name(CaseInsensitiveTypeNamespaces, UTF8String.ToSystemStringOrEmpty(a));
 		}
 
-		int GetHashCode_TypeNamespace(string a)
+		private int GetHashCode_TypeNamespace(string a)
 		{
 			return GetHashCode_Name(CaseInsensitiveTypeNamespaces, a);
 		}
 
-		bool Equals_TypeNames(UTF8String a, UTF8String b)
+		private bool Equals_TypeNames(UTF8String a, UTF8String b)
 		{
 			return Equals_Names(CaseInsensitiveTypeNames, a, b);
 		}
 
-		bool Equals_TypeNames(UTF8String a, string b)
+		private bool Equals_TypeNames(UTF8String a, string b)
 		{
 			return Equals_Names(CaseInsensitiveTypeNames, UTF8String.ToSystemStringOrEmpty(a), b);
 		}
 
-		int GetHashCode_TypeName(UTF8String a)
+		private int GetHashCode_TypeName(UTF8String a)
 		{
 			return GetHashCode_Name(CaseInsensitiveTypeNames, UTF8String.ToSystemStringOrEmpty(a));
 		}
 
-		int GetHashCode_TypeName(string a)
+		private int GetHashCode_TypeName(string a)
 		{
 			return GetHashCode_Name(CaseInsensitiveTypeNames, a);
 		}
 
-		bool Equals_MethodFieldNames(UTF8String a, UTF8String b)
+		private bool Equals_MethodFieldNames(UTF8String a, UTF8String b)
 		{
 			return Equals_Names(CaseInsensitiveMethodFieldNames, a, b);
 		}
 
-		bool Equals_MethodFieldNames(UTF8String a, string b)
+		private bool Equals_MethodFieldNames(UTF8String a, string b)
 		{
 			return Equals_Names(CaseInsensitiveMethodFieldNames, UTF8String.ToSystemStringOrEmpty(a), b);
 		}
 
-		int GetHashCode_MethodFieldName(UTF8String a)
+		private int GetHashCode_MethodFieldName(UTF8String a)
 		{
 			return GetHashCode_Name(CaseInsensitiveMethodFieldNames, UTF8String.ToSystemStringOrEmpty(a));
 		}
 
-		int GetHashCode_MethodFieldName(string a)
+		private int GetHashCode_MethodFieldName(string a)
 		{
 			return GetHashCode_Name(CaseInsensitiveMethodFieldNames, a);
 		}
 
-		bool Equals_PropertyNames(UTF8String a, UTF8String b)
+		private bool Equals_PropertyNames(UTF8String a, UTF8String b)
 		{
 			return Equals_Names(CaseInsensitivePropertyNames, a, b);
 		}
 
-		bool Equals_PropertyNames(UTF8String a, string b)
+		private bool Equals_PropertyNames(UTF8String a, string b)
 		{
 			return Equals_Names(CaseInsensitivePropertyNames, UTF8String.ToSystemStringOrEmpty(a), b);
 		}
 
-		int GetHashCode_PropertyName(UTF8String a)
+		private int GetHashCode_PropertyName(UTF8String a)
 		{
 			return GetHashCode_Name(CaseInsensitivePropertyNames, UTF8String.ToSystemStringOrEmpty(a));
 		}
 
-		int GetHashCode_PropertyName(string a)
+		private int GetHashCode_PropertyName(string a)
 		{
 			return GetHashCode_Name(CaseInsensitivePropertyNames, a);
 		}
 
-		bool Equals_EventNames(UTF8String a, UTF8String b)
+		private bool Equals_EventNames(UTF8String a, UTF8String b)
 		{
 			return Equals_Names(CaseInsensitiveEventNames, a, b);
 		}
 
-		bool Equals_EventNames(UTF8String a, string b)
+		private bool Equals_EventNames(UTF8String a, string b)
 		{
 			return Equals_Names(CaseInsensitiveEventNames, UTF8String.ToSystemStringOrEmpty(a), b);
 		}
 
-		int GetHashCode_EventName(UTF8String a)
+		private int GetHashCode_EventName(UTF8String a)
 		{
 			return GetHashCode_Name(CaseInsensitiveEventNames, UTF8String.ToSystemStringOrEmpty(a));
 		}
 
-		int GetHashCode_EventName(string a)
+		private int GetHashCode_EventName(string a)
 		{
 			return GetHashCode_Name(CaseInsensitiveEventNames, a);
 		}
 
-		SigComparerOptions ClearOptions(SigComparerOptions flags)
+		private SigComparerOptions ClearOptions(SigComparerOptions flags)
 		{
 			var old = options;
 			options &= ~flags;
 			return old;
 		}
 
-		SigComparerOptions SetOptions(SigComparerOptions flags)
+		private SigComparerOptions SetOptions(SigComparerOptions flags)
 		{
 			var old = options;
 			options |= flags;
 			return old;
 		}
 
-		void RestoreOptions(SigComparerOptions oldFlags)
+		private void RestoreOptions(SigComparerOptions oldFlags)
 		{
 			options = oldFlags;
 		}
 
-		void InitializeGenericArguments()
+		private void InitializeGenericArguments()
 		{
 			if (genericArguments == null)
 				genericArguments = new GenericArguments();
 		}
 
-		static GenericInstSig GetGenericInstanceType(IMemberRefParent parent)
+		private static GenericInstSig GetGenericInstanceType(IMemberRefParent parent)
 		{
 			var ts = parent as TypeSpec;
 			if (ts == null)
@@ -312,7 +339,7 @@ namespace Nuterra.Installer.ModuleImport
 			return ts.TypeSig.RemoveModifiers() as GenericInstSig;
 		}
 
-		bool Equals(IAssembly aAsm, IAssembly bAsm, TypeRef b)
+		private bool Equals(IAssembly aAsm, IAssembly bAsm, TypeRef b)
 		{
 			if (Equals(aAsm, bAsm))
 				return true;
@@ -323,7 +350,7 @@ namespace Nuterra.Installer.ModuleImport
 			return td != null && Equals(aAsm, td.Module.Assembly);
 		}
 
-		bool Equals(IAssembly aAsm, IAssembly bAsm, ExportedType b)
+		private bool Equals(IAssembly aAsm, IAssembly bAsm, ExportedType b)
 		{
 			if (Equals(aAsm, bAsm))
 				return true;
@@ -332,7 +359,7 @@ namespace Nuterra.Installer.ModuleImport
 			return td != null && Equals(aAsm, td.Module.Assembly);
 		}
 
-		bool Equals(IAssembly aAsm, TypeRef a, IAssembly bAsm, TypeRef b)
+		private bool Equals(IAssembly aAsm, TypeRef a, IAssembly bAsm, TypeRef b)
 		{
 			if (Equals(aAsm, bAsm))
 				return true;
@@ -344,7 +371,7 @@ namespace Nuterra.Installer.ModuleImport
 			return tda != null && tdb != null && Equals(tda.Module.Assembly, tdb.Module.Assembly);
 		}
 
-		bool Equals(IAssembly aAsm, ExportedType a, IAssembly bAsm, ExportedType b)
+		private bool Equals(IAssembly aAsm, ExportedType a, IAssembly bAsm, ExportedType b)
 		{
 			if (Equals(aAsm, bAsm))
 				return true;
@@ -354,7 +381,7 @@ namespace Nuterra.Installer.ModuleImport
 			return tda != null && tdb != null && Equals(tda.Module.Assembly, tdb.Module.Assembly);
 		}
 
-		bool Equals(IAssembly aAsm, TypeRef a, IAssembly bAsm, ExportedType b)
+		private bool Equals(IAssembly aAsm, TypeRef a, IAssembly bAsm, ExportedType b)
 		{
 			if (Equals(aAsm, bAsm))
 				return true;
@@ -366,7 +393,7 @@ namespace Nuterra.Installer.ModuleImport
 			return tda != null && tdb != null && Equals(tda.Module.Assembly, tdb.Module.Assembly);
 		}
 
-		bool Equals(TypeDef a, IModule bMod, TypeRef b)
+		private bool Equals(TypeDef a, IModule bMod, TypeRef b)
 		{
 			if (Equals(a.Module, bMod) && Equals(a.DefinitionAssembly, b.DefinitionAssembly))
 				return true;
@@ -379,7 +406,7 @@ namespace Nuterra.Installer.ModuleImport
 			return Equals(a.Module, td.Module) && Equals(a.DefinitionAssembly, td.DefinitionAssembly);
 		}
 
-		bool Equals(TypeDef a, FileDef bFile, ExportedType b)
+		private bool Equals(TypeDef a, FileDef bFile, ExportedType b)
 		{
 			if (Equals(a.Module, bFile) && Equals(a.DefinitionAssembly, b.DefinitionAssembly))
 				return true;
@@ -388,14 +415,14 @@ namespace Nuterra.Installer.ModuleImport
 			return td != null && Equals(a.Module, td.Module) && Equals(a.DefinitionAssembly, td.DefinitionAssembly);
 		}
 
-		bool TypeDefScopeEquals(TypeDef a, TypeDef b)
+		private bool TypeDefScopeEquals(TypeDef a, TypeDef b)
 		{
 			if (a == null || b == null)
 				return false;
 			return Equals(a.Module, b.Module);
 		}
 
-		bool Equals(TypeRef a, IModule ma, TypeRef b, IModule mb)
+		private bool Equals(TypeRef a, IModule ma, TypeRef b, IModule mb)
 		{
 			if (Equals(ma, mb) && Equals(a.DefinitionAssembly, b.DefinitionAssembly))
 				return true;
@@ -408,7 +435,7 @@ namespace Nuterra.Installer.ModuleImport
 				Equals(tda.Module, tdb.Module) && Equals(tda.DefinitionAssembly, tdb.DefinitionAssembly);
 		}
 
-		bool Equals(TypeRef a, IModule ma, ExportedType b, FileDef fb)
+		private bool Equals(TypeRef a, IModule ma, ExportedType b, FileDef fb)
 		{
 			if (Equals(ma, fb) && Equals(a.DefinitionAssembly, b.DefinitionAssembly))
 				return true;
@@ -861,7 +888,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		int GetHashCodeGlobalType()
+		private int GetHashCodeGlobalType()
 		{
 			// We don't always know the name+namespace of the global type, eg. when it's
 			// referenced by a ModuleRef. Use the same hash for all global types.
@@ -985,7 +1012,7 @@ namespace Nuterra.Installer.ModuleImport
 			return GetHashCode(a.TypeSig);
 		}
 
-		bool EqualsResolutionScope(TypeRef a, TypeRef b)
+		private bool EqualsResolutionScope(TypeRef a, TypeRef b)
 		{
 			if (a == b)
 				return true;
@@ -1038,7 +1065,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		bool EqualsImplementation(ExportedType a, ExportedType b)
+		private bool EqualsImplementation(ExportedType a, ExportedType b)
 		{
 			if (a == b)
 				return true;
@@ -1080,7 +1107,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		bool EqualsScope(TypeRef a, ExportedType b)
+		private bool EqualsScope(TypeRef a, ExportedType b)
 		{
 			if ((object)a == (object)b)
 				return true;    // both are null
@@ -1122,7 +1149,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		bool Equals(FileDef a, FileDef b)
+		private bool Equals(FileDef a, FileDef b)
 		{
 			if (a == b)
 				return true;
@@ -1132,7 +1159,7 @@ namespace Nuterra.Installer.ModuleImport
 			return UTF8String.CaseInsensitiveEquals(a.Name, b.Name);
 		}
 
-		bool Equals(IModule a, FileDef b)
+		private bool Equals(IModule a, FileDef b)
 		{
 			if ((object)a == (object)b)
 				return true;    // both are null
@@ -1155,23 +1182,23 @@ namespace Nuterra.Installer.ModuleImport
 			return UTF8String.CaseInsensitiveEquals(a.Name, b.Name) || (IsTargetOrSourceModule(a) && IsTargetOrSourceModule(b));
 		}
 
-		static bool IsCorLib(ModuleDef a)
+		private static bool IsCorLib(ModuleDef a)
 		{
 			return a != null && a.IsManifestModule && a.Assembly.IsCorLib();
 		}
 
-		static bool IsCorLib(IModule a)
+		private static bool IsCorLib(IModule a)
 		{
 			var mod = a as ModuleDef;
 			return mod != null && mod.IsManifestModule && mod.Assembly.IsCorLib();
 		}
 
-		static bool IsCorLib(IAssembly a)
+		private static bool IsCorLib(IAssembly a)
 		{
 			return a.IsCorLib();
 		}
 
-		bool Equals(ModuleDef a, ModuleDef b)
+		private bool Equals(ModuleDef a, ModuleDef b)
 		{
 			if (a == b)
 				return true;
@@ -1188,7 +1215,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		bool Equals(IAssembly a, IAssembly b)
+		private bool Equals(IAssembly a, IAssembly b)
 		{
 			if (a == b)
 				return true;
@@ -1210,13 +1237,19 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		bool IsTargetOrSourceAssembly(IAssembly a) => IsTargetAssembly(a) || IsSourceAssembly(a);
-		bool IsTargetAssembly(IAssembly a) => a != null && __AssemblyEquals(a, importOptions.TargetModule.Assembly);
-		bool IsSourceAssembly(IAssembly a) => a != null && __AssemblyEquals(a, importOptions.SourceModule.Assembly);
-		bool IsTargetOrSourceModule(IModule a) => IsTargetModule(a) || IsSourceModule(a);
-		bool IsTargetModule(IModule a) => a != null && __ModuleEquals(a, importOptions.TargetModule);
-		bool IsSourceModule(IModule a) => a != null && __ModuleEquals(a, importOptions.SourceModule);
-		bool __AssemblyEquals(IAssembly a, AssemblyDef b)
+		private bool IsTargetOrSourceAssembly(IAssembly a) => IsTargetAssembly(a) || IsSourceAssembly(a);
+
+		private bool IsTargetAssembly(IAssembly a) => a != null && __AssemblyEquals(a, importOptions.TargetModule.Assembly);
+
+		private bool IsSourceAssembly(IAssembly a) => a != null && __AssemblyEquals(a, importOptions.SourceModule.Assembly);
+
+		private bool IsTargetOrSourceModule(IModule a) => IsTargetModule(a) || IsSourceModule(a);
+
+		private bool IsTargetModule(IModule a) => a != null && __ModuleEquals(a, importOptions.TargetModule);
+
+		private bool IsSourceModule(IModule a) => a != null && __ModuleEquals(a, importOptions.SourceModule);
+
+		private bool __AssemblyEquals(IAssembly a, AssemblyDef b)
 		{
 			if ((object)a == b)
 				return true;
@@ -1227,7 +1260,8 @@ namespace Nuterra.Installer.ModuleImport
 				return a2 == b;
 			return AssemblyNameComparer.CompareAll.Equals(a, b);
 		}
-		bool __ModuleEquals(IModule a, ModuleDef b)
+
+		private bool __ModuleEquals(IModule a, ModuleDef b)
 		{
 			if ((object)a == b)
 				return true;
@@ -1367,7 +1401,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		static bool TokenEquals(ITypeDefOrRef a, ITypeDefOrRef b)
+		private static bool TokenEquals(ITypeDefOrRef a, ITypeDefOrRef b)
 		{
 			if (a == b)
 				return true;
@@ -1534,7 +1568,7 @@ namespace Nuterra.Installer.ModuleImport
 			return (int)hash;
 		}
 
-		bool Equals(IList<uint> a, IList<uint> b)
+		private bool Equals(IList<uint> a, IList<uint> b)
 		{
 			if (a == b)
 				return true;
@@ -1550,7 +1584,7 @@ namespace Nuterra.Installer.ModuleImport
 			return true;
 		}
 
-		bool Equals(IList<int> a, IList<int> b)
+		private bool Equals(IList<int> a, IList<int> b)
 		{
 			if (a == b)
 				return true;
@@ -1568,7 +1602,7 @@ namespace Nuterra.Installer.ModuleImport
 
 		public bool Equals(CallingConventionSig a, CallingConventionSig b) => Equals(a, b, true);
 
-		bool Equals(CallingConventionSig a, CallingConventionSig b, bool compareHasThisFlag)
+		private bool Equals(CallingConventionSig a, CallingConventionSig b, bool compareHasThisFlag)
 		{
 			if (a == b)
 				return true;
@@ -1672,7 +1706,7 @@ namespace Nuterra.Installer.ModuleImport
 
 		public bool Equals(MethodBaseSig a, MethodBaseSig b) => Equals(a, b, true);
 
-		bool Equals(MethodBaseSig a, MethodBaseSig b, bool compareHasThisFlag)
+		private bool Equals(MethodBaseSig a, MethodBaseSig b, bool compareHasThisFlag)
 		{
 			if (a == b)
 				return true;
@@ -1713,12 +1747,12 @@ namespace Nuterra.Installer.ModuleImport
 			return hash;
 		}
 
-		int GetHashCode_CallingConvention(CallingConventionSig a)
+		private int GetHashCode_CallingConvention(CallingConventionSig a)
 		{
 			return GetHashCode(a.GetCallingConvention());
 		}
 
-		int GetHashCode(CallingConvention a)
+		private int GetHashCode(CallingConvention a)
 		{
 			switch (a & CallingConvention.Mask)
 			{
@@ -2024,7 +2058,7 @@ namespace Nuterra.Installer.ModuleImport
 			return hash;
 		}
 
-		bool Equals(IMemberRefParent a, IMemberRefParent b)
+		private bool Equals(IMemberRefParent a, IMemberRefParent b)
 		{
 			if (a == b)
 				return true;
@@ -2060,7 +2094,7 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		int GetHashCode(IMemberRefParent a)
+		private int GetHashCode(IMemberRefParent a)
 		{
 			if (a == null)
 				return 0;
@@ -2263,7 +2297,7 @@ namespace Nuterra.Installer.ModuleImport
 		}
 
 		// Compares a with b, and a must be the global type
-		bool EqualsGlobal(TypeDef a, ModuleRef b)
+		private bool EqualsGlobal(TypeDef a, ModuleRef b)
 		{
 			if ((object)a == (object)b)
 				return true;    // both are null
@@ -2280,17 +2314,17 @@ namespace Nuterra.Installer.ModuleImport
 			return result;
 		}
 
-		static AssemblyDef GetAssembly(ModuleDef module)
+		private static AssemblyDef GetAssembly(ModuleDef module)
 		{
 			return module == null ? null : module.Assembly;
 		}
 
-		static int GetHashCode_ElementType_MVar(int numGenericParams)
+		private static int GetHashCode_ElementType_MVar(int numGenericParams)
 		{
 			return GetHashCode(numGenericParams, HASHCODE_MAGIC_ET_MVAR);
 		}
 
-		static int GetHashCode(int numGenericParams, int etypeHashCode)
+		private static int GetHashCode(int numGenericParams, int etypeHashCode)
 		{
 			uint hash = 0;
 			for (int i = 0; i < numGenericParams; i++)
@@ -2308,9 +2342,9 @@ namespace Nuterra.Installer.ModuleImport
 	}
 
 	// From dnlib.DotNet.dnlib_Utils
-	static class dnlib_Utils
+	internal static class dnlib_Utils
 	{
-		static int CompareTo(Version a, Version b)
+		private static int CompareTo(Version a, Version b)
 		{
 			if (a == null)
 				a = new Version();
@@ -2326,12 +2360,16 @@ namespace Nuterra.Installer.ModuleImport
 		}
 
 		internal static bool Equals(Version a, Version b) => CompareTo(a, b) == 0;
-		static int GetDefaultVersionValue(int val) => val == -1 ? 0 : val;
-		static int LocaleCompareTo(UTF8String a, UTF8String b) => GetCanonicalLocale(a).CompareTo(GetCanonicalLocale(b));
-		internal static bool LocaleEquals(UTF8String a, UTF8String b) => LocaleCompareTo(a, b) == 0;
-		static string GetCanonicalLocale(UTF8String locale) => GetCanonicalLocale(UTF8String.ToSystemStringOrEmpty(locale));
 
-		static string GetCanonicalLocale(string locale)
+		private static int GetDefaultVersionValue(int val) => val == -1 ? 0 : val;
+
+		private static int LocaleCompareTo(UTF8String a, UTF8String b) => GetCanonicalLocale(a).CompareTo(GetCanonicalLocale(b));
+
+		internal static bool LocaleEquals(UTF8String a, UTF8String b) => LocaleCompareTo(a, b) == 0;
+
+		private static string GetCanonicalLocale(UTF8String locale) => GetCanonicalLocale(UTF8String.ToSystemStringOrEmpty(locale));
+
+		private static string GetCanonicalLocale(string locale)
 		{
 			var s = locale.ToUpperInvariant();
 			if (s == "NEUTRAL")

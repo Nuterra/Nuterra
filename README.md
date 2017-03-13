@@ -23,19 +23,25 @@ For more detailed information on installing Nuterra and troubleshooting, see thi
 The main tool used to develop the mod is [dnSpy], a tool to decompile and edit managed assemblies. All modifications to the game are collected in the Maritaria namespace, merged into the original assembly and finally the original code is redirected to pass through the mod code. The documentation includes instructions about usage of [dnSpy].
 
 # Roadmap
-## Mod API Approach
-- [ ] Create event/hook system such that hooking will only be used for nuterra code
-- [ ] Restructure project and refactor into per-feature mods
-- [ ] Separate mods into individual projects/dlls
-- [ ] Add loading external dll support to modloader
+## 0.4.0 - Mod API, initial release
+- [x] Create event/hook system such that hooking will only be used for nuterra code
+- [x] Restructure project and refactor into per-feature mods
+- [x] Separate mods into individual projects/dlls
+- [x] Add loading external dll support to modloader
+- [ ] Update wiki with aquired knowledge and tutorials
 
-## v1.0
-- [ ] Create modding API without references to original Assembly-CSharp.dll
-- [ ] Hotswappable mod loading
-- [x] API for registering new blocktypes
-- [ ] API for registering configuration UI
-- [ ] Modular UI creation
-- [ ] Robust save system to allow loading worlds with missing mods
+## 0.4.1 - Mod API, improvements
+- [ ] Configuration API
+- [ ] Improving build tool to add properties for hidden fields
+- [ ] Improving build scripts to copy over mods to local TT install
+- [ ] In-game console
+- [ ] Console commands API
+- [ ] Adding new HUD elements API
+- [ ] Mod reloading
 
-## v2.0
-Support for multiplayer will be planned as soon as Terra Tech has build-in multiplayer.
+## Future works
+- [ ] UI/HUD elements
+- [ ] World generation
+- [ ] Recipies
+- [ ] Custom factions
+- [ ] Robuust saves

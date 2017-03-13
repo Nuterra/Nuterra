@@ -1,17 +1,18 @@
-﻿using Mono.Cecil;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Mono.Cecil;
+using System;
 
 namespace Nuterra.Hooking
 {
 	/// <summary>
 	/// This class is used by the installer to hook up the code, this is done after merging nuterra into Assembly-CSharp.dll
 	/// At this point the installer should open the current file with Mono.Cecil and apply changes.
-	/// 
+	///
 	/// The installer should load the image into the appdomain and call FinalizeInstall()
 	/// TODO: Make this a seperate project so it can be loaded by the installer cleanly
 	/// </summary>
@@ -44,7 +45,6 @@ namespace Nuterra.Hooking
 
 		private static void SelfDestruct(AssemblyDefinition assembly)
 		{
-
 		}
 
 		private static AssemblyDefinition GetAssemblyCSharp(string searchDir, string assemblyPath)
@@ -53,8 +53,5 @@ namespace Nuterra.Hooking
 			resolver.AddSearchDirectory(searchDir);
 			return AssemblyDefinition.ReadAssembly(assemblyPath, new ReaderParameters { AssemblyResolver = resolver });
 		}
-
-
-
 	}
 }

@@ -4,7 +4,6 @@ namespace Nuterra.Build
 {
 	public static class Error
 	{
-
 		public static void InvalidRootDirectory()
 		{
 			DoError("Please start the game from the TerraTech root directory (TerraTech*_Data could not be found).");
