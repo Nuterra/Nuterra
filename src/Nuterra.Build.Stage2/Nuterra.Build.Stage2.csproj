@@ -7,7 +7,7 @@
     <ProjectGuid>{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nuterra.Build.Stage2</RootNamespace>
+    <RootNamespace>Nuterra.Build</RootNamespace>
     <AssemblyName>Nuterra.Build.Stage2</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

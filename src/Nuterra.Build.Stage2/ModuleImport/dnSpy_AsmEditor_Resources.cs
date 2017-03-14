@@ -1,4 +1,4 @@
-﻿namespace Nuterra.Installer.ModuleImport
+﻿namespace Nuterra.Build.ModuleImport
 {
 	internal class dnSpy_AsmEditor_Resources
 	{

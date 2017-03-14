@@ -1,6 +1,6 @@
 ﻿using dnlib.DotNet;
 
-namespace Nuterra.Installer.ModuleImport
+namespace Nuterra.Build.ModuleImport
 {
 	internal static class StateMachineHelpers
 	{

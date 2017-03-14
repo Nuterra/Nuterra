@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using dnlib.DotNet;
 using dnlib.PE;
 
-namespace Nuterra.Installer.ModuleImport
+namespace Nuterra.Build.ModuleImport
 {
 	internal sealed class FieldDefOptions
 	{

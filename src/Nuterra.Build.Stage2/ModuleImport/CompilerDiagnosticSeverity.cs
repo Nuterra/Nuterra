@@ -1,4 +1,4 @@
-﻿namespace Nuterra.Installer.ModuleImport
+﻿namespace Nuterra.Build.ModuleImport
 {
 	/// <summary>
 	/// Severity

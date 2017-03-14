@@ -2,7 +2,7 @@
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
-namespace Nuterra.Installer.ModuleImport
+namespace Nuterra.Build.ModuleImport
 {
 	internal abstract class ImportedType
 	{

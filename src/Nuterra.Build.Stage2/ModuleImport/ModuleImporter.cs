@@ -7,7 +7,7 @@ using dnlib.DotNet.Emit;
 using dnlib.PE;
 using dnlib.Threading;
 
-namespace Nuterra.Installer.ModuleImport
+namespace Nuterra.Build.ModuleImport
 {
 	[Serializable]
 	internal sealed class ModuleImporterAbortedException : Exception

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace Nuterra.Installer.ModuleImport
+namespace Nuterra.Build.ModuleImport
 {
 	/// <summary>
 	/// Compiler diagnostic

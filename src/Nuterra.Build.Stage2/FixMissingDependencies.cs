@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using Nuterra.Build;
 
-namespace Nuterra.Installer
+namespace Nuterra.Build
 {
 	public sealed class FixMissingDependencies : ModificationStep
 	{

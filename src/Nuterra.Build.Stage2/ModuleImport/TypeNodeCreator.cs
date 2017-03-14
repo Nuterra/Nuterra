@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using dnlib.DotNet;
 
-namespace Nuterra.Installer.ModuleImport
+namespace Nuterra.Build.ModuleImport
 {
 	internal class TypeNodeCreator
 	{

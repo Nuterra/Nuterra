@@ -1,7 +1,6 @@
 ﻿using System;
-using Nuterra.Build;
 
-namespace Nuterra.Installer
+namespace Nuterra.Build
 {
 	internal static class InstallProgram
 	{

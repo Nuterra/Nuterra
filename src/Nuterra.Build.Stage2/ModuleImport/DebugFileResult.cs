@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nuterra.Installer.ModuleImport
+namespace Nuterra.Build.ModuleImport
 {
 	/// <summary>
 	/// PDB file

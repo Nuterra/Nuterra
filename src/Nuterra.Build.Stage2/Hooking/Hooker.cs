@@ -5,7 +5,7 @@ using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using Nuterra.Internal;
 
-namespace Nuterra.Installer.Hooking
+namespace Nuterra.Build.Hooking
 {
 	internal static class Hooker
 	{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
-namespace Nuterra.Installer.Hooking
+namespace Nuterra.Build.Hooking
 {
 	internal static class ReflectionExtensions
 	{

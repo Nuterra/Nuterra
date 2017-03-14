@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using Nuterra.Build;
-using Nuterra.Installer.ModuleImport;
+using Nuterra.Build.ModuleImport;
 
-namespace Nuterra.Installer
+namespace Nuterra.Build
 {
 	public sealed class AbsorbNuterra : ModificationStep
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using dnlib.DotNet;
 
-namespace Nuterra.Installer.ModuleImport
+namespace Nuterra.Build.ModuleImport
 {
 	partial class ModuleImporter
 	{

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nuterra.Installer.Hooking
+namespace Nuterra.Build.Hooking
 {
 	public struct RedirectSettings
 	{
