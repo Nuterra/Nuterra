@@ -7,10 +7,12 @@ namespace Nuterra.Internal
 {
 	internal sealed class Bootstrapper
 	{
+		public static string TerraTechRootDir { get; } = Directory.GetCurrentDirectory();
+		public static string NuterraDataDir { get; } = Path.Combine(TerraTechRootDir, "Nuterra_Data");
+
 		public static void Start()
 		{
-			string managedDir = Path.Combine(Application.dataPath, "Managed");
-			string assemblyFile = Path.Combine(managedDir, "Nuterra.dll");
+			string assemblyFile = Path.Combine(FolderStructure.ModsFolder, "Nuterra.dll");
 			if (!File.Exists(assemblyFile))
 			{
 				Console.WriteLine($"Nuterra bootstrapper: Missing Nuterra assembly at {assemblyFile}");
