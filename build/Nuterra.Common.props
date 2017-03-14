@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Nuterra_ProjectRoot>$(MSBuildThisFileDirectory)\..</Nuterra_ProjectRoot>
+    <Nuterra_BuildScripts>$(MSBuildThisFileDirectory)</Nuterra_BuildScripts>
+    <Nuterra_Packages>$(Nuterra_ProjectRoot)\src\packages</Nuterra_Packages>
+    <Nuterra_ModsOutput>$(Nuterra_ProjectRoot)\bin\$(Configuration)</Nuterra_ModsOutput>
+    
+    <Nuterra_Libs>$(Nuterra_ProjectRoot)\lib</Nuterra_Libs>
+    <Nuterra_OutputBuildStage1>$(Nuterra_Libs)\Assembly-CSharp-stage1.dll</Nuterra_OutputBuildStage1>
+    <Nuterra_OutputBuildStage2>$(Nuterra_Libs)\Assembly-CSharp.dll</Nuterra_OutputBuildStage2>
+    
+    <Nuterra_UserBuildConfig>$(Nuterra_BuildScripts)\Nuterra.User.xml</Nuterra_UserBuildConfig>
+    
+  </PropertyGroup>
+  
+  <!-- Read an XML file that is filtered using .gitignore so each dev can setup some local configuration for the build tools -->
+  <Target Name="Nuterra_ReadUserConfig">
+    <Error Condition="!Exists('$(Nuterra_UserBuildConfig)')" Text="You are missing your UserBuildConfig ($(Nuterra_UserBuildConfig))! Check the wiki for an example how to set it up." />
+    <XmlPeek XmlInputPath="$(Nuterra_UserBuildConfig)" Query="//TerraTech/Executable/text()">
+      <Output TaskParameter="Result" ItemName="TerraTechExe" />
+    </XmlPeek>
+    
+    <Error Condition="!Exists('@(TerraTechExe)')" Text="UserBuildConfig: The Terra Tech executable specified does not exist! (@(TerraTechExe))" />
+    <Error Condition="%(TerraTechExe.Extension) != '.exe'" Text="UserBuildConfig: The Terra Tech executable does not have the .exe extension! (%(TerraTechExe.Extension))" />
+    
+    <PropertyGroup>
+      <TerraTech_Name>%(TerraTechExe.Filename)</TerraTech_Name>
+      <TerraTech_Exe>@(TerraTechExe)</TerraTech_Exe>
+      <TerraTech_Root>%(TerraTechExe.RootDir)%(TerraTechExe.Directory)</TerraTech_Root>
+      <TerraTech_Root>$(TerraTech_Root.TrimEnd('\'))</TerraTech_Root>
+      <TerraTech_Data>$(TerraTech_Root)\$(TerraTech_Name)_Data</TerraTech_Data>
+      <TerraTech_Managed>$(TerraTech_Data)\Managed</TerraTech_Managed>
+      <TerraTech_AssemblyCSharp>$(TerraTech_Managed)\Assembly-CSharp.dll</TerraTech_AssemblyCSharp>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(TerraTech_Data)')" Text="UserBuildConfig: Terra Tech is missing the Data folder! ($(TerraTech_Data))" />
+    <Error Condition="!Exists('$(TerraTech_Managed)')" Text="UserBuildConfig: Terra Tech is missing the Managed folder! ($(TerraTech_Managed))" />
+  </Target>
+</Project>
