@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra", "Nuterra\Nuterra.csproj", "{129AE68B-6968-44C4-A386-68C0E1E9A63E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3} = {CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CC96E61F-75DD-4644-AC51-D9B783C00680}"
 EndProject
