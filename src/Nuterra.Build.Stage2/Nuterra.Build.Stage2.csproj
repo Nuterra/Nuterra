@@ -148,7 +148,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\build\Nuterra.BuildTools.targets" />
   
-  <Target Name="AfterBuild" DependsOnTargets="Nuterra_ModStage2" />
+  <Target Name="AfterBuild" DependsOnTargets="Nuterra_ModStage2;Nuterra_InstallMod" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

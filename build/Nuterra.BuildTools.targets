@@ -19,9 +19,11 @@
       <CommandLineParams>--dir "$(TerraTech_Root)" --data "Nuterra_Data" --nuterra "Nuterra.Internal.dll" --out "$(Nuterra_OutputBuildStage2)"</CommandLineParams>
     </PropertyGroup>
     <Exec Command="&quot;$(TargetPath)&quot; $(CommandLineParams)" WorkingDirectory="$(OutDir)"/>
-    <!-- Copy over the modded assembly to the TerraTech install -->
-    
-    <Copy SourceFiles="$(Nuterra_OutputBuildStage2)" DestinationFiles="$(TerraTech_Managed)\Assembly-CSharp.dll" />
-    
+  </Target>
+  
+  <Target Name="Nuterra_InstallMod" DependsOnTargets="Nuterra_ReadUserConfig;Nuterra_ModStage2"
+          Inputs="$(Nuterra_OutputBuildStage2)"
+          Outputs="$(TerraTech_AssemblyCSharp)">
+    <Copy SourceFiles="$(Nuterra_OutputBuildStage2)" DestinationFiles="$(TerraTech_AssemblyCSharp)" />
   </Target>
 </Project>
