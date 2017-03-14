@@ -16,7 +16,7 @@
     <!-- Todo: Figure out a way to copy the symbol file to referencing projects -->
   </Target>
   
-  <Target Name="AfterBuild" DependsOnTargets="Nuterra_InstallMod"/>
+  <Target Name="AfterBuild" DependsOnTargets="Nuterra_InstallMod" Condition=" '$(Configuration)' == 'Debug'"/>
   <Target Name="Nuterra_InstallMod" DependsOnTargets="Nuterra_InstallModBinary;Nuterra_InstallModResources"/>
   
   <Target Name="Nuterra_InstallModBinary" DependsOnTargets="Nuterra_PrepareModInstall"

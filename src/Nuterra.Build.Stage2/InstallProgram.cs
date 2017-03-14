@@ -2,13 +2,14 @@
 
 namespace Nuterra.Build
 {
-	internal static class InstallProgram
+	public static class InstallProgram
 	{
 		internal static void Main(string[] args)
 		{
 			try
 			{
-				MainInternal(args);
+				var info = ModificationInfo.Parse(args);
+				PerformInstall(info);
 				Console.WriteLine("Install successfull");
 			}
 			catch (ModificationException ex)
@@ -18,9 +19,9 @@ namespace Nuterra.Build
 			}
 		}
 
-		private static void MainInternal(string[] args)
+		public static void PerformInstall(ModificationInfo info)
 		{
-			var info = ModificationInfo.Parse(args);
+			if (info == null) throw new ArgumentNullException(nameof(info));
 			var modificationChain = new VerifyRootDirectory();
 			modificationChain
 				.SetNext(new FindCleanAssembly())
