@@ -29,8 +29,6 @@ field ManStats/IntStatList m_StatPerType
 field ManStats/IntStatList m_EnumType
 method ModuleHeart DropAllItems
 field ModuleItemPickup m_Holder
-field ManSplashScreen m_MyCanvas
-field ManSplashScreen m_SplashScreenIndex
 field ManSpawn tankPresets
 field ManSpawn m_BlockPrefabs
 field MousePointer m_DefaultPointer
