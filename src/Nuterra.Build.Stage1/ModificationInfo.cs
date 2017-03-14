@@ -68,51 +68,55 @@ namespace Nuterra.Build
 					i++;
 				}
 			}
+			info.InitDefaults();
 
-			if (info.TerraTechRoot == null)
+			return info;
+		}
+
+		public void InitDefaults()
+		{
+			if (TerraTechRoot == null)
 			{
-				info.TerraTechRoot = Directory.GetCurrentDirectory();
+				TerraTechRoot = Directory.GetCurrentDirectory();
 			}
 
-			if (info.NuterraData == null)
+			if (NuterraData == null)
 			{
-				info.NuterraData = Path.Combine(info.TerraTechRoot, "Nuterra_Data");
+				NuterraData = Path.Combine(TerraTechRoot, "Nuterra_Data");
 			}
 
-			if (info.ExpectedHash == null)
+			if (ExpectedHash == null)
 			{
-				info.ExpectedHash = Path.Combine(info.NuterraData, "build.hash.txt");
+				ExpectedHash = Path.Combine(NuterraData, "build.hash.txt");
 			}
 
-			if (info.AccessFilePath == null)
+			if (AccessFilePath == null)
 			{
-				info.AccessFilePath = Path.Combine(info.NuterraData, "build.access.txt");
+				AccessFilePath = Path.Combine(NuterraData, "build.access.txt");
 			}
 
-			if (info.ExpectedHash != null && info.ExpectedHash.Contains('.'))
+			if (ExpectedHash != null && ExpectedHash.Contains('.'))
 			{
 				//*.* treated as file
-				if (File.Exists(info.ExpectedHash))
+				if (File.Exists(ExpectedHash))
 				{
-					info.ExpectedHash = File.ReadAllText(info.ExpectedHash);
+					ExpectedHash = File.ReadAllText(ExpectedHash);
 				}
 				else
 				{
-					Error.MissingFile(info.ExpectedHash);
+					Error.MissingFile(ExpectedHash);
 				}
 			}
 
-			if (info.ExpectedHash == null)
+			if (ExpectedHash == null)
 			{
 				Error.NoHashSpecified();
 			}
 
-			if (info.NuterraAssembly == null)
+			if (NuterraAssembly == null)
 			{
-				info.NuterraAssembly = "Nuterra.Internal.dll";
+				NuterraAssembly = "Nuterra.Internal.dll";
 			}
-
-			return info;
 		}
 	}
 }
