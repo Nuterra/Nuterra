@@ -58,10 +58,6 @@
     <Compile Include="SylverSpawn.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Maritaria\Maritaria.csproj">
-      <Project>{8831864e-3aee-4b9b-b82c-0dc0172d5626}</Project>
-      <Name>Maritaria</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Nuterra\Nuterra.csproj">
       <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
       <Name>Nuterra</Name>

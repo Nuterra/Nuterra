@@ -2,13 +2,14 @@
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Nuterra.Internal;
 
 namespace Nuterra
 {
 	internal sealed class ConfigManager
 	{
 		private string _folder;
-		public string Folder => Path.Combine(NuterraApi.DataFolder, _folder);
+		public string Folder => Path.Combine(FolderStructure.DataFolder, _folder);
 		public string FileExtension => ".json";
 
 		internal ConfigManager(string folder)
