@@ -32,6 +32,8 @@
       <TerraTech_Data>$(TerraTech_Root)\$(TerraTech_Name)_Data</TerraTech_Data>
       <TerraTech_Managed>$(TerraTech_Data)\Managed</TerraTech_Managed>
       <TerraTech_AssemblyCSharp>$(TerraTech_Managed)\Assembly-CSharp.dll</TerraTech_AssemblyCSharp>
+      
+      <TerraTech_Nuterra>$(TerraTech_Root)\Nuterra_Data</TerraTech_Nuterra>
     </PropertyGroup>
     <Error Condition="!Exists('$(TerraTech_Data)')" Text="UserBuildConfig: Terra Tech is missing the Data folder! ($(TerraTech_Data))" />
     <Error Condition="!Exists('$(TerraTech_Managed)')" Text="UserBuildConfig: Terra Tech is missing the Managed folder! ($(TerraTech_Managed))" />
