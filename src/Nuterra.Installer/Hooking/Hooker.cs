@@ -22,6 +22,7 @@ namespace Nuterra.Installer.Hooking
 			Redirect(module, "ManLicenses", typeof(Hooks.Managers.Licenses), new RedirectSettings(nameof(Hooks.Managers.Licenses.Init)) { AppendToEnd = true });
 			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StartCameraSpin)) { AppendToEnd = true });
 			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StopCameraSpin)) { AppendToEnd = true });
+			Redirect(module, "ManSplashScreen", typeof(Hooks.Managers.SplashScreen), new RedirectSettings(nameof(Hooks.Managers.SplashScreen.Awake)) { AppendToEnd = true });
 
 			//Module events
 			Redirect(module, "ModuleDrill", typeof(Hooks.Modules.Drill), new RedirectSettings(nameof(Hooks.Modules.Drill.ControlInput)) { ReplaceBody = true });

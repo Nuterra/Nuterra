@@ -286,6 +286,17 @@ namespace Nuterra.Internal
 
 				public static event Action<SaveGameEvent> OnSave;
 			}
+			public static class SplashScreen
+			{
+				public static bool Initialized { get; set; }
+				public static event Action<ManSplashScreen> Initializing;
+
+				internal static void Awake(ManSplashScreen manager)
+				{
+					Initialized = true;
+					Initializing?.Invoke(manager);
+				}
+			}
 		}
 
 		public static class BugReports
