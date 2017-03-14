@@ -5,10 +5,21 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <!-- After building the dll, create mono debug symbols -->
-  <Target Name="Nuterra_GenerateMonoSymbols" AfterTargets="AfterBuild">
-    <Exec Command="&quot;$(Nuterra_Packages)\Mono.Unofficial.pdb2mdb.4.2.3.4\tools\pdb2mdb.exe&quot; &quot;$(TargetPath)&quot;"/>
+  <Target Name="Nuterra_GenerateMonoSymbols" DependsOnTargets="CopyFilesToOutputDirectory">
+    <Message Text="MonoSymbols source ==> $(ImmediateAssembly)" />
+    <Exec Command="&quot;$(Nuterra_Packages)\Mono.Unofficial.pdb2mdb.4.2.3.4\tools\pdb2mdb.exe&quot; &quot;$(ImmediateAssembly)&quot;"/>
     <ItemGroup>
-      <FileWrites Include="$(TargetPath).mdb" />
+      <FileWrites Include="$(ImmediateAssembly).mdb" />
+      <OutputFiles Include="$(ImmediateAssembly).mdb" />
+    </ItemGroup>
+    <!-- Todo: Figure out a way to copy the symbol file to referencing projects -->
+  </Target>
+  <Target Name="Nuterra_GenerateMonoSymbols" DependsOnTargets="CopyFilesToOutputDirectory" AfterTargets="Nuterra_GenerateMonoSymbols">
+    <Message Text="MonoSymbols source ==> $(ImmediateAssembly)" />
+    <Exec Command="&quot;$(Nuterra_Packages)\Mono.Unofficial.pdb2mdb.4.2.3.4\tools\pdb2mdb.exe&quot; &quot;$(ImmediateAssembly)&quot;"/>
+    <ItemGroup>
+      <FileWrites Include="$(ImmediateAssembly).mdb" />
+      <OutputFiles Include="$(ImmediateAssembly).mdb" />
     </ItemGroup>
     <!-- Todo: Figure out a way to copy the symbol file to referencing projects -->
   </Target>
