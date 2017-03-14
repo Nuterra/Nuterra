@@ -66,7 +66,7 @@
 			this.installConsole.Size = new System.Drawing.Size(591, 203);
 			this.installConsole.TabIndex = 1;
 			// 
-			// Form1
+			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -75,7 +75,7 @@
 			this.Controls.Add(this.installSettings);
 			this.Controls.Add(this.installConsole);
 			this.MinimumSize = new System.Drawing.Size(400, 250);
-			this.Name = "Form1";
+			this.Name = "MainForm";
 			this.Text = "Nuterra Installer";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
 			this.Load += new System.EventHandler(this.Form1_Load);
