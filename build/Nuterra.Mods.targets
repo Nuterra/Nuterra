@@ -4,12 +4,38 @@
   <PropertyGroup>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
+  
   <!-- After building the dll, create mono debug symbols -->
-  <Target Name="Nuterra_GenerateMonoSymbols" AfterTargets="AfterBuild">
-    <Exec Command="&quot;$(Nuterra_Packages)\Mono.Unofficial.pdb2mdb.4.2.3.4\tools\pdb2mdb.exe&quot; &quot;$(TargetPath)&quot;"/>
+  <Target Name="Nuterra_GenerateMonoSymbols" DependsOnTargets="CopyFilesToOutputDirectory">
+    <Message Text="MonoSymbols source ==> $(ImmediateAssembly)" />
+    <Exec Command="&quot;$(Nuterra_Packages)\Mono.Unofficial.pdb2mdb.4.2.3.4\tools\pdb2mdb.exe&quot; &quot;$(ImmediateAssembly)&quot;"/>
     <ItemGroup>
-      <FileWrites Include="$(TargetPath).mdb" />
+      <FileWrites Include="$(ImmediateAssembly).mdb" />
+      <OutputFiles Include="$(ImmediateAssembly).mdb" />
     </ItemGroup>
     <!-- Todo: Figure out a way to copy the symbol file to referencing projects -->
+  </Target>
+  
+  <Target Name="AfterBuild" DependsOnTargets="Nuterra_InstallMod" Condition=" '$(Configuration)' == 'Debug'"/>
+  <Target Name="Nuterra_InstallMod" DependsOnTargets="Nuterra_InstallModBinary;Nuterra_InstallModResources"/>
+  
+  <Target Name="Nuterra_InstallModBinary" DependsOnTargets="Nuterra_PrepareModInstall"
+          Inputs="@(Nuterra_ModBinaries)"
+          Outputs="@(Nuterra_ModBinaries->'$(TerraTech_Nuterra)\Mods\%(RelativeDir)%(Filename)%(Extension)'">
+    <Copy SourceFiles="@(Nuterra_ModBinaries)" DestinationFolder="$(TerraTech_Nuterra)\Mods\" />
+  </Target>
+  
+  <Target Name="Nuterra_InstallModResources" DependsOnTargets="Nuterra_PrepareModInstall"
+          Inputs="@(Nuterra_ModResources)"
+          Outputs="@(Nuterra_ModResources->'$(TerraTech_Nuterra)\%(RelativeDir)%(Filename)%(Extension)'">
+    <Copy SourceFiles="@(Nuterra_ModResources)" DestinationFolder="$(TerraTech_Nuterra)" />
+  </Target>
+  
+  <Target Name="Nuterra_PrepareModInstall" DependsOnTargets="Compile;Nuterra_ReadUserConfig">
+    <ItemGroup>
+      <Nuterra_ModBinaries Include="$(TargetPath)" />
+      <Nuterra_ModBinaries Include="$(TargetPath).mdb" />
+      <Nuterra_ModResources Include="@(Content)"/>
+    </ItemGroup>
   </Target>
 </Project>
