@@ -7,8 +7,8 @@
     <ProjectGuid>{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nuterra.Installer</RootNamespace>
-    <AssemblyName>Nuterra.Installer</AssemblyName>
+    <RootNamespace>Nuterra.Build.Stage2</RootNamespace>
+    <AssemblyName>Nuterra.Build.Stage2</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -102,9 +102,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nuterra.Build\Nuterra.Build.csproj">
+    <ProjectReference Include="..\Nuterra.Build.Stage1\Nuterra.Build.Stage1.csproj">
       <Project>{F953D402-AAE3-4335-90A6-13BDBDF6D4FA}</Project>
-      <Name>Nuterra.Build</Name>
+      <Name>Nuterra.Build.Stage1</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nuterra.Internal\Nuterra.Internal.csproj">
       <Project>{306b93ed-dc73-4899-bb32-d9571152c554}</Project>
