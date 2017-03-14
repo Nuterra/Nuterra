@@ -42,3 +42,5 @@ method+virtual ModuleFuelTank get_Capacity
 field RecipeManager m_BlockPriceLookup
 field ModuleHeart m_ReadyAfterTime
 wrap_field ManSplashScreen m_SplashScreens SplashScreens read+write
+wrap_field ManSpawn tankPresets TankPresets read
+wrap_field ManSpawn m_BlockPrefabs BlockPrefabs read

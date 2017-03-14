@@ -22,7 +22,7 @@ namespace Sylver
 		private TankPreset GetPresetFromName(string presetName)
 		{
 			TankPreset result = null;
-			Singleton.Manager<ManSpawn>.inst.tankPresets.TryGetValue(presetName.ToLower(), out result);
+			Singleton.Manager<ManSpawn>.inst.TankPresets.TryGetValue(presetName.ToLower(), out result);
 			return result;
 		}
 	}
