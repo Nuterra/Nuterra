@@ -4,8 +4,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{AB772A38-6138-4687-BF63-FFCBE25500AE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nuterra.Installer</RootNamespace>
     <AssemblyName>Nuterra.Installer</AssemblyName>
@@ -32,115 +32,91 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>Nuterra.Installer.InstallProgram</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="dnlib">
-      <HintPath>..\..\lib\dnlib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra">
-      <Link>Nuterra_Data\mod-nuterra</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra.manifest">
-      <Link>Nuterra_Data\mod-nuterra.manifest</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Hooking\AfterMerge.cs" />
-    <Compile Include="AbsorbNuterra.cs" />
-    <Compile Include="HookNuterra.cs" />
-    <Compile Include="FixMissingDependencies.cs" />
-    <Compile Include="InstallProgram.cs" />
-    <Compile Include="Hooking\ReflectionExtensions.cs" />
-    <Compile Include="Hooking\RedirectSettings.cs" />
-    <Compile Include="Hooking\Hooker.cs" />
-    <Compile Include="ModuleImport\AddUpdatedNodesHelper.cs" />
-    <Compile Include="ModuleImport\CompilerDiagnostic.cs" />
-    <Compile Include="ModuleImport\CompilerDiagnosticSeverity.cs" />
-    <Compile Include="ModuleImport\DebugFileFormat.cs" />
-    <Compile Include="ModuleImport\DebugFileResult.cs" />
-    <Compile Include="ModuleImport\dnSpy_AsmEditor_Resources.cs" />
-    <Compile Include="ModuleImport\EventDefOptions.cs" />
-    <Compile Include="ModuleImport\ExtensionMethods.cs" />
-    <Compile Include="ModuleImport\FieldDefOptions.cs" />
-    <Compile Include="ModuleImport\ImportedType.cs" />
-    <Compile Include="ModuleImport\ImportSigComparer.cs" />
-    <Compile Include="ModuleImport\LineLocation.cs" />
-    <Compile Include="ModuleImport\LineLocationSpan.cs" />
-    <Compile Include="ModuleImport\MethodDefOptions.cs" />
-    <Compile Include="ModuleImport\ModuleImporter.cs" />
-    <Compile Include="ModuleImport\ModuleImporter.ExtraImportedTypeData.cs" />
-    <Compile Include="ModuleImport\ModuleImporter.MemberInfo.cs" />
-    <Compile Include="ModuleImport\PropertyDefOptions.cs" />
-    <Compile Include="ModuleImport\StateMachineHelpers.cs" />
-    <Compile Include="ModuleImport\TypeDefOptions.cs" />
-    <Compile Include="ModuleImport\TypeNodeCreator.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstallConsole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InstallConsole.Designer.cs">
+      <DependentUpon>InstallConsole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstallSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InstallSettings.Designer.cs">
+      <DependentUpon>InstallSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\hotspots.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\hotspots.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\nuterra.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InstallConsole.resx">
+      <DependentUpon>InstallConsole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InstallSettings.resx">
+      <DependentUpon>InstallSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nuterra.Build\Nuterra.Build.csproj">
-      <Project>{F953D402-AAE3-4335-90A6-13BDBDF6D4FA}</Project>
-      <Name>Nuterra.Build</Name>
+    <ProjectReference Include="..\Nuterra.Build.Stage1\Nuterra.Build.Stage1.csproj">
+      <Project>{f953d402-aae3-4335-90a6-13bdbdf6d4fa}</Project>
+      <Name>Nuterra.Build.Stage1</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Nuterra\Nuterra.csproj">
-      <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
-      <Name>Nuterra</Name>
+    <ProjectReference Include="..\Nuterra.Build.Stage2\Nuterra.Build.Stage2.csproj">
+      <Project>{cfb5cd3a-47a1-4e71-ba81-c93d4bb657b3}</Project>
+      <Name>Nuterra.Build.Stage2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nuterra.Internal\Nuterra.Internal.csproj">
+      <Project>{306b93ed-dc73-4899-bb32-d9571152c554}</Project>
+      <Name>Nuterra.Internal</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\lib\GalaxyCSharp.dll">
-      <Link>Nuterra_Data\GalaxyCSharp.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\default.png">
+    <None Include="Nuterra_Data\Mods\Maritaria.Cockpit.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\hover.png">
+    <None Include="Nuterra_Data\Mods\Maritaria.Cursor.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\painting.png">
+    <None Include="Nuterra_Data\Mods\Maritaria.ExtraBlocks.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\pressed.png">
+    <None Include="Nuterra_Data\Mods\Maritaria.ExtraKeys.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\default.png">
+    <None Include="Nuterra_Data\Mods\Nuterra.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\hover.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\painting.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\pressed.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\license.txt">
+    <None Include="Nuterra_Data\Mods\Nuterra.HelloWorld.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Nuterra.Internal;
 using UnityEngine;
 
 namespace Nuterra
@@ -13,7 +14,7 @@ namespace Nuterra
 
 		static AssetBundleImport()
 		{
-			NuterraAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Nuterra.DataFolder, AssetFilename));
+			NuterraAssetBundle = AssetBundle.LoadFromFile(Path.Combine(FolderStructure.DataFolder, AssetFilename));
 			if (NuterraAssetBundle == null)
 			{
 				Debug.Log($"Failed to load {AssetFilename} AssetBundle, errors are coming");
