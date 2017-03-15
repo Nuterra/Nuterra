@@ -4,10 +4,12 @@
 [Releases]: https://github.com/maritaria/nuterra/releases/latest/
 [Terra Tech]: https://terratechgame.com/
 [dnSpy]: https://github.com/0xd4d/dnSpy/
+[Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JUGWYYUSLSK9N
 
 # Nuterra Mod for [Terra Tech]
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)][License]
 [![Downloads for All Releases](https://img.shields.io/github/downloads/maritaria/nuterra/total.svg)][Releases]
+[![Donate](https://img.shields.io/badge/donate-paypal-brightgreen.svg?style=flat)][Donate]
 
 # Installation
 Check the [Releases] page for the latest version of the mod.
