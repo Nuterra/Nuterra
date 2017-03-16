@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-
 namespace Sylver
 {
 	public class SylverMod : MonoBehaviour
@@ -28,31 +27,15 @@ namespace Sylver
 			if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
 			{
 				this.num++;
-				if (this.num >= 5)
+				if (this.num >= techNames.Lenght)
 				{
 					this.num = 0;
+				
 				}
+				SylverMod.m_FriendlyAIName = techNames[num];
 			}
-			if (this.num == 0)
-			{
-				SylverMod.m_FriendlyAIName = "Gauntlet_01";
-			}
-			if (this.num == 1)
-			{
-				SylverMod.m_FriendlyAIName = "Cannon";
-			}
-			if (this.num == 2)
-			{
-				SylverMod.m_FriendlyAIName = "FTUE";
-			}
-			if (this.num == 3)
-			{
-				SylverMod.m_FriendlyAIName = "LiftOffCab";
-			}
-			if (this.num == 4)
-			{
-				SylverMod.m_FriendlyAIName = "VENLiftOffCab";
-			}
+
+
 			if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Q))
 			{
 				Singleton.Manager<ManSpawn>.inst.TestSpawnFriendlyTech(SylverMod.m_FriendlyAIName);
@@ -67,16 +50,30 @@ namespace Sylver
 		{
 			d.isShuttingDown = true;
 		}
-
+		
 		public SylverMod()
 		{
+			int num = 0;
+			this.techNames = this.GetTankNames();
+			string[] array = this.techNames;
+			for (int i = 0; i < array.Length; i++)
+			{
+				string text = array[i];
+				this.techNames[num] = text.Split(new char[]
+				{
+					'/'
+				}).Last<string>();
+				num++;
+			}
 		}
 
-		static SylverMod()
+		public string[] GetTankNames()
 		{
+			return Singleton.Manager<ManSpawn>.inst.tankPresetList.files.ToArray();
 		}
+		public string[] techNames;
 
-		private static string m_FriendlyAIName = "FTUE";
+		private static string m_FriendlyAIName;
 
 		private int num;
 
