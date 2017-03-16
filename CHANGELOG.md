@@ -1,4 +1,5 @@
-[Unreleased]: https://github.com/maritaria/nuterra/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/maritaria/nuterra/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/maritaria/nuterra/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/maritaria/nuterra/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/maritaria/nuterra/compare/v0.2.4...v0.3.0
 [0.2.4]: https://github.com/maritaria/nuterra/compare/v0.2.3...v0.2.4
@@ -9,8 +10,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.4.0]
 ### Added
+- Installer program
+- Modloader
+- Modding API
 - Large cockpit block
 - Lookaround support in first person mode
 - Firstperson mode no longer exits on activating build beam
@@ -18,6 +22,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Fixed firstperson mode dragging behind on large craft speeds
 - Improved customizability of firstperson blocks
+- Improved buildscripts for automating modding process through VS
+- Split mods into seperate projects
 
 ## [0.3.1]
 ### Added
