@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using dnlib.DotNet;
@@ -8,7 +9,7 @@ namespace Nuterra.Build
 	public class ModificationInfo
 	{
 		public string TerraTechRoot { get; set; }
-		public string ExpectedHash { get; set; }
+		public HashSet<string> AcceptedHashes { get; } = new HashSet<string>();
 		public string AssemblyCSharpOutputPath { get; set; }
 		public string AccessFilePath { get; set; }
 		public string TerraTechData { get; set; }
@@ -35,7 +36,7 @@ namespace Nuterra.Build
 
 				if (param.Equals(CommonSwitches.AssemblyHash, StringComparison.OrdinalIgnoreCase))
 				{
-					info.ExpectedHash = next;
+					info.AcceptedHashes.Add(next);
 					skipNext = true;
 				}
 
@@ -85,9 +86,9 @@ namespace Nuterra.Build
 				NuterraData = Path.Combine(TerraTechRoot, "Nuterra_Data");
 			}
 
-			if (ExpectedHash == null)
+			if (AcceptedHashes.Count == 0)
 			{
-				ExpectedHash = Path.Combine(NuterraData, "build.hash.txt");
+				AcceptedHashes.Add(Path.Combine(NuterraData, "build.hash.txt"));
 			}
 
 			if (AccessFilePath == null)
@@ -95,20 +96,32 @@ namespace Nuterra.Build
 				AccessFilePath = Path.Combine(NuterraData, "build.access.txt");
 			}
 
-			if (ExpectedHash != null && ExpectedHash.Contains('.'))
+			foreach (string hashSpec in AcceptedHashes.ToArray())
 			{
-				//*.* treated as file
-				if (File.Exists(ExpectedHash))
+				if (string.IsNullOrWhiteSpace(hashSpec) || hashSpec.StartsWith("#"))
 				{
-					ExpectedHash = File.ReadAllText(ExpectedHash);
+					AcceptedHashes.Remove(hashSpec);
 				}
-				else
+				else if (hashSpec.Contains('.'))
 				{
-					Error.MissingFile(ExpectedHash);
+					AcceptedHashes.Remove(hashSpec);
+					//*.* treated as file
+					if (File.Exists(hashSpec))
+					{
+						foreach (string hash in File.ReadAllLines(hashSpec))
+						{
+							string[] parts = hash.Split(new char[] { ' ' }, count: 2);
+							AcceptedHashes.Add(parts[0]);
+						}
+					}
+					else
+					{
+						Error.MissingFile(hashSpec);
+					}
 				}
 			}
 
-			if (ExpectedHash == null)
+			if (AcceptedHashes.Count == 0)
 			{
 				Error.NoHashSpecified();
 			}
