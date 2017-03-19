@@ -4,18 +4,20 @@
 [Releases]: https://github.com/maritaria/nuterra/releases/latest/
 [Terra Tech]: https://terratechgame.com/
 [dnSpy]: https://github.com/0xd4d/dnSpy/
+[Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JUGWYYUSLSK9N
 
 # Nuterra Mod for [Terra Tech]
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)][License]
 [![Downloads for All Releases](https://img.shields.io/github/downloads/maritaria/nuterra/total.svg)][Releases]
+[![Donate](https://img.shields.io/badge/donate-paypal-brightgreen.svg?style=flat)][Donate]
 
 # Installation
 Check the [Releases] page for the latest version of the mod.
 
-1. Download Nuterra release package (.zip)
-2. Unpack into Terra Tech install directory (the one where the executable is located)
-3. Run `Nuterra.Installer.exe`
-4. Start the game
+1. Download and extract Nuterra release package (.zip)
+2. Close the game (if running)
+2. Run `Nuterra.Installer.exe`
+3. Start the game
 
 For more detailed information on installing Nuterra and troubleshooting, see this [wiki page](https://github.com/Nuterra/nuterra/wiki/How-to-install-Nuterra).
 
