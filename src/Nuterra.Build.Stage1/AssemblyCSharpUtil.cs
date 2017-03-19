@@ -44,6 +44,7 @@ namespace Nuterra.Build
 			string assemblyCSharpPath = Path.Combine(terraTechManagedDir, "Assembly-CSharp.dll");
 			string assemblyBackupDir = Path.Combine(terraTechManagedDir, "NuterraBackups");
 			string assemblyHash = AssemblyCSharpUtil.GetFileHash(assemblyCSharpPath);
+			Console.WriteLine($"Raw assembly hash: `{assemblyHash}`");
 			if (assemblyHash == expectedHash)
 			{
 				//Current assembly is clean install, make backup

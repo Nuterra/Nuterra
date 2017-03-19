@@ -110,8 +110,8 @@ namespace Nuterra.Installer
 					Directory.CreateDirectory(moddedNuterra);
 				}
 
-				File.Copy($"{localNuterra}\\mod-nuterra.manifest", $"{moddedNuterra}\\mod-nuterra.manifest", overwrite: true);
-				File.Copy($"{localNuterra}\\mod-nuterra", $"{moddedNuterra}\\mod-nuterra", overwrite: true);
+				File.Copy(Path.Combine(localNuterra, "mod-nuterra.manifest"), Path.Combine(moddedNuterra, "mod-nuterra.manifest"), overwrite: true);
+				File.Copy(Path.Combine(localNuterra, "mod-nuterra"), Path.Combine(moddedNuterra, "mod-nuterra"), overwrite: true);
 
 				Console.WriteLine("Copying Mods");
 				string moddedMods = Path.Combine(moddedNuterra, "Mods");
@@ -124,8 +124,9 @@ namespace Nuterra.Installer
 				{
 					string modName = Path.GetFileName(file);
 					Console.WriteLine($"- {modName}");
-					File.Copy(file, $"{moddedMods}\\{modName}", overwrite: true);
+					File.Copy(file, Path.Combine(moddedMods, modName), overwrite: true);
 				}
+
 				Console.WriteLine();
 				Console.WriteLine("Install succesfull");
 				Console.WriteLine("Enjoy Nuterra :3");
