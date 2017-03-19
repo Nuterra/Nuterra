@@ -58,7 +58,8 @@
 			// findGameDialog
 			// 
 			this.findGameDialog.FileName = "TerraTechWin64.exe";
-			this.findGameDialog.Filter = "TerraTech (*.exe) | *.exe";
+			this.findGameDialog.Filter = "TerraTech Windows (*.exe)|*.exe|TerraTech Linux (*.x86_64)|*.x86_64|All Files " +
+    "(*.*)|*.*";
 			this.findGameDialog.SupportMultiDottedExtensions = true;
 			this.findGameDialog.Title = "Locate TerraTech executable";
 			// 
@@ -74,12 +75,12 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "TerraTech Install Directory";
 			// 
-			// InstallerSettingsPanel
+			// InstallSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
-			this.Name = "InstallerSettingsPanel";
+			this.Name = "InstallSettings";
 			this.Size = new System.Drawing.Size(378, 50);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
