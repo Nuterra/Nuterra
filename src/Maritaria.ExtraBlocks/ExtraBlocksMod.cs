@@ -16,6 +16,8 @@ namespace Maritaria.ExtraBlocks
 			BlockLoader.Register(new PinBlock());
 			BlockLoader.Register(new HoleBlock());
 			BlockLoader.Register(new CapBlock());
+			BlockLoader.Register(new HTest1Block());
+			BlockLoader.Register(new HTest2Block());
 			BlockLoader.Register(new CheatBlocks.GodModeBlock());
 			BlockLoader.Register(new CheatBlocks.InfiniteFuelBlock());
 		}
