@@ -34,3 +34,11 @@ sysinfo.txt
 
 # Blender
 *.blend1
+
+# DLLs
+*.dll
+*.pdb
+*.dll.mdb
+*.dll.meta
+*.pdb.meta
+*.dll.mdb.meta
