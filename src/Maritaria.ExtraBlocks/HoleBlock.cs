@@ -26,11 +26,8 @@ namespace Maritaria.ExtraBlocks
 		public HoleBlock()
 		{
 			Prefab = new BlockPrefabBuilder()
-				.SetBlockID(BlockID)
-				.SetName(Name)
 				.SetCategory(Category)
 				.SetModel(ModelFile)
-				.SetSize(new Vector3I(1, 1, 1))
 				.Build();
 		}
 	}

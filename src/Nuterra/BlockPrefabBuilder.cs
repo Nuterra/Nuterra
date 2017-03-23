@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Nuterra.Editor;
 using UnityEngine;
 
 namespace Nuterra
@@ -94,6 +96,14 @@ namespace Nuterra
 			foreach (GameObject child in _renderObject.EnumerateHierarchy(false, false))
 			{
 				child.layer = _renderObject.layer;
+			}
+
+			var prefabInfo = _renderObject.GetComponentsInChildren<CustomBlockPrefab>().FirstOrDefault();
+			if (prefabInfo != null)
+			{
+				SetBlockID(prefabInfo.BlockID);
+				SetName(prefabInfo.Name);
+				SetSize(new Vector3I(prefabInfo.Dimensions));
 			}
 
 			return this;

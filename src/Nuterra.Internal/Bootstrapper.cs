@@ -12,11 +12,23 @@ namespace Nuterra.Internal
 
 		public static void Start()
 		{
-			string assemblyFile = Path.Combine(FolderStructure.ModsFolder, "Nuterra.dll");
+			Assembly nuterraEditor = LoadAssemblyFromModsFolder("Nuterra.Editor.dll");
+			if (nuterraEditor == null) return;
+			Assembly nuterra = LoadAssemblyFromModsFolder("Nuterra.dll");
+			if (nuterra == null) return;
+			Console.WriteLine("Nuterra assembly loaded");
+			Type nuterraMain = nuterra.GetType("Nuterra.NuterraApi");
+			MethodInfo start = nuterraMain.GetMethod("Start", BindingFlags.Static | BindingFlags.NonPublic);
+			start.Invoke(null, new object[] { });
+		}
+
+		private static Assembly LoadAssemblyFromModsFolder(string filename)
+		{
+			string assemblyFile = Path.Combine(FolderStructure.ModsFolder, filename);
 			if (!File.Exists(assemblyFile))
 			{
 				Console.WriteLine($"Nuterra bootstrapper: Missing Nuterra assembly at {assemblyFile}");
-				return;
+				return null;
 			}
 			byte[] assemblyBytes = File.ReadAllBytes(assemblyFile);
 
@@ -27,10 +39,7 @@ namespace Nuterra.Internal
 				symbolBytes = File.ReadAllBytes(symbolFile);
 			}
 			Assembly nuterra = Assembly.Load(assemblyBytes, symbolBytes);
-			Console.WriteLine("Nuterra assembly loaded");
-			Type nuterraMain = nuterra.GetType("Nuterra.NuterraApi");
-			MethodInfo start = nuterraMain.GetMethod("Start", BindingFlags.Static | BindingFlags.NonPublic);
-			start.Invoke(null, new object[] { });
+			return nuterra;
 		}
 	}
 }
