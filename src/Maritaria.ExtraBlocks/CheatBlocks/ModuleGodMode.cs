@@ -22,22 +22,48 @@ namespace Maritaria.CheatBlocks
 		{
 			foreach (Damageable dmg in block.tank.blockman.IterateBlockComponents<Damageable>())
 			{
-				dmg.SetInvulnerable(true, true);
-				dmg.InitHealth(Damageable.kRefillHealth);
+				EnableBlockGodMode(dmg);
 			}
+			block.tank.AttachEvent.Subscribe(OnNewBlockAttached);
+			block.tank.DetachEvent.Subscribe(OnBlockRemoved);
 		}
 
 		private void OnDetach()
 		{
-			if (!HasAnotherGodModule())
+			if (!HasAnotherGodModule(block.tank))
 			{
 				block.tank.SetInvulnerable(false, true);
+				block.tank.AttachEvent.Unsubscribe(OnNewBlockAttached);
+				block.tank.DetachEvent.Unsubscribe(OnNewBlockAttached);
 			}
 		}
 
-		private bool HasAnotherGodModule()
+		private static void EnableBlockGodMode(Damageable dmg)
 		{
-			foreach (TankBlock otherBlock in block.tank.blockman.IterateBlocks())
+			dmg.SetInvulnerable(true, true);
+			dmg.InitHealth(Damageable.kRefillHealth);
+		}
+
+		private void OnNewBlockAttached(TankBlock otherblock, Tank tank)
+		{
+			if (tank != block.tank)
+			{
+				throw new InvalidOperationException("This shouldnt happen");
+			}
+			EnableBlockGodMode(otherblock.GetComponent<Damageable>());
+		}
+
+		private void OnBlockRemoved(TankBlock otherblock, Tank tank)
+		{
+			if (!HasAnotherGodModule(tank))
+			{
+				otherblock.GetComponent<Damageable>().SetInvulnerable(false, false);
+			}
+		}
+
+		private bool HasAnotherGodModule(Tank tank)
+		{
+			foreach (TankBlock otherBlock in tank.blockman.IterateBlocks())
 			{
 				var otherGodModule = otherBlock.GetComponent<ModuleGodMode>();
 				if ((otherGodModule != null) && (this != otherGodModule))

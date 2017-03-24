@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Nuterra.Editor;
 using UnityEngine;
 
@@ -9,37 +8,98 @@ namespace Nuterra
 	public sealed class BlockPrefabBuilder
 	{
 		private bool _finished = false;
-		private GameObject _prefab;
 		private TankBlock _block;
 		private Visible _visible;
 		private Damageable _damageable;
 		private ModuleDamage _moduleDamage;
 		private AutoSpriteRenderer _spriteRenderer;
 		private GameObject _renderObject;
+		private CustomBlock _customBlock;
 
 		public BlockPrefabBuilder()
 		{
-			_prefab = new GameObject();
-			GameObject.DontDestroyOnLoad(_prefab);
+			_customBlock = new CustomBlock();
+			_customBlock.Prefab = new GameObject();
+			GameObject.DontDestroyOnLoad(_customBlock.Prefab);
 
-			_prefab.tag = "TankBlock";
-			_prefab.layer = Globals.inst.layerTank;
+			_customBlock.Prefab.tag = "TankBlock";
+			_customBlock.Prefab.layer = Globals.inst.layerTank;
 
-			_visible = _prefab.EnsureComponent<Visible>();
-			_damageable = _prefab.EnsureComponent<Damageable>();
-			_moduleDamage = _prefab.EnsureComponent<ModuleDamage>();
-			_spriteRenderer = _prefab.EnsureComponent<AutoSpriteRenderer>();
+			_visible = _customBlock.Prefab.EnsureComponent<Visible>();
+			_damageable = _customBlock.Prefab.EnsureComponent<Damageable>();
+			_moduleDamage = _customBlock.Prefab.EnsureComponent<ModuleDamage>();
+			_spriteRenderer = _customBlock.Prefab.EnsureComponent<AutoSpriteRenderer>();
 
-			_block = _prefab.EnsureComponent<TankBlock>();
+			_block = _customBlock.Prefab.EnsureComponent<TankBlock>();
 			_block.attachPoints = new Vector3[] { };
 			_block.filledCells = new Vector3[] { new Vector3(0, 0, 0) };
 			_block.partialCells = new Vector3[] { };
 		}
 
+		public BlockPrefabBuilder FromAsset(GameObject prefab)
+		{
+			var prefabInfo = prefab.GetComponent<CustomBlockPrefab>();
+			SetBlockID(prefabInfo.BlockID);
+			SetName(prefabInfo.Name);
+			SetDescription(prefabInfo.Description);
+			SetPrice(prefabInfo.Price);
+			SetFaction(FactionSubTypes.GSO);
+			SetCategory(BlockCategories.Accessories);
+			SetSize(new Vector3I(prefabInfo.Dimensions));
+			SetModel(prefab);
+			SetIcon(prefabInfo.DisplaySprite);
+			return this;
+		}
+
+		public void Register()
+		{
+			ThrowIfFinished();
+			_finished = true;
+			BlockLoader.Register(_customBlock);
+		}
+
 		public BlockPrefabBuilder SetName(string blockName)
 		{
 			ThrowIfFinished();
-			_prefab.name = blockName;
+			_customBlock.Name = blockName;
+			_customBlock.Prefab.name = blockName;
+			return this;
+		}
+
+		public BlockPrefabBuilder SetBlockID(int id)
+		{
+			ThrowIfFinished();
+			_customBlock.BlockID = id;
+			_visible.m_ItemType = new ItemTypeInfo(ObjectTypes.Block, id);
+			return this;
+		}
+
+		public BlockPrefabBuilder SetDescription(string description)
+		{
+			ThrowIfFinished();
+			_customBlock.Description = description;
+			return this;
+		}
+
+		public BlockPrefabBuilder SetPrice(int price)
+		{
+			ThrowIfFinished();
+			_customBlock.Price = price;
+			return this;
+		}
+
+		public BlockPrefabBuilder SetFaction(FactionSubTypes faction)
+		{
+			ThrowIfFinished();
+			_customBlock.Faction = faction;
+			return this;
+		}
+
+		public BlockPrefabBuilder SetCategory(BlockCategories category)
+		{
+			ThrowIfFinished();
+			_customBlock.Category = category;
+			_block.m_BlockCategory = category;
 			return this;
 		}
 
@@ -67,29 +127,31 @@ namespace Nuterra
 			return this;
 		}
 
-		public BlockPrefabBuilder SetBlockID(int id)
+		public BlockPrefabBuilder SetMass(float mass)
 		{
 			ThrowIfFinished();
-			_visible.m_ItemType = new ItemTypeInfo(ObjectTypes.Block, id);
-			return this;
-		}
-
-		public BlockPrefabBuilder SetCategory(BlockCategories category)
-		{
-			ThrowIfFinished();
-			_block.m_BlockCategory = category;
+			if (mass <= 0f) throw new ArgumentOutOfRangeException(nameof(mass), "Cannot be lower or equal to zero");
+			_block.m_DefaultMass = mass;
 			return this;
 		}
 
 		public BlockPrefabBuilder SetModel(string path)
 		{
 			ThrowIfFinished();
+			SetModel(AssetBundleImport.Load<GameObject>(path));
+			return this;
+		}
+
+		private BlockPrefabBuilder SetModel(GameObject renderObject)
+		{
+			ThrowIfFinished();
 			if (_renderObject)
 			{
 				GameObject.DestroyImmediate(_renderObject);
 			}
-			_renderObject = GameObject.Instantiate(AssetBundleImport.Load<GameObject>(path));
-			_renderObject.transform.parent = _prefab.transform;
+
+			_renderObject = GameObject.Instantiate(renderObject);
+			_renderObject.transform.parent = _customBlock.Prefab.transform;
 			_renderObject.name = $"RenderObject";
 			_renderObject.layer = Globals.inst.layerTank;
 
@@ -98,22 +160,35 @@ namespace Nuterra
 				child.layer = _renderObject.layer;
 			}
 
-			var prefabInfo = _renderObject.GetComponentsInChildren<CustomBlockPrefab>().FirstOrDefault();
-			if (prefabInfo != null)
-			{
-				SetBlockID(prefabInfo.BlockID);
-				SetName(prefabInfo.Name);
-				SetSize(new Vector3I(prefabInfo.Dimensions));
-			}
-
 			return this;
 		}
 
-		public BlockPrefabBuilder SetMass(float mass)
+		public BlockPrefabBuilder SetIcon(string spriteFile)
 		{
-			if (mass <= 0f) throw new ArgumentOutOfRangeException(nameof(mass), "Cannot be lower or equal to zero");
-			_block.m_DefaultMass = mass;
+			ThrowIfFinished();
+			_customBlock.DisplaySprite = AssetBundleImport.Load<Sprite>(spriteFile);
 			return this;
+		}
+
+		private BlockPrefabBuilder SetIcon(Sprite displaySprite)
+		{
+			ThrowIfFinished();
+			_customBlock.DisplaySprite = displaySprite;
+			return this;
+		}
+
+		public BlockPrefabBuilder AddComponent<TBehaviour>(Action<TBehaviour> preparer) where TBehaviour : MonoBehaviour
+		{
+			ThrowIfFinished();
+			var component = _customBlock.Prefab.AddComponent<TBehaviour>();
+			preparer?.Invoke(component);
+			return this;
+		}
+
+		public BlockPrefabBuilder AddComponent<TBehaviour>() where TBehaviour : MonoBehaviour
+		{
+#warning TODO: Make extension method
+			return AddComponent<TBehaviour>(null);
 		}
 
 		private void ThrowIfFinished()
@@ -124,10 +199,10 @@ namespace Nuterra
 			}
 		}
 
-		public GameObject Build()
+		public CustomBlock Build()
 		{
 			_finished = true;
-			return _prefab;
+			return _customBlock;
 		}
 	}
 }

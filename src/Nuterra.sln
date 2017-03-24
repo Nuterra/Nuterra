@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Installer", "Nuterr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Editor", "Nuterra.Editor\Nuterra.Editor.csproj", "{276796F5-792C-486D-A616-02A5ECF1AFFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.BlockPacks", "Nuterra.BlockPacks\Nuterra.BlockPacks.csproj", "{873B35D4-4E84-4D63-813D-481ACA3B5CF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{276796F5-792C-486D-A616-02A5ECF1AFFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{276796F5-792C-486D-A616-02A5ECF1AFFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{276796F5-792C-486D-A616-02A5ECF1AFFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{873B35D4-4E84-4D63-813D-481ACA3B5CF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{873B35D4-4E84-4D63-813D-481ACA3B5CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{873B35D4-4E84-4D63-813D-481ACA3B5CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{873B35D4-4E84-4D63-813D-481ACA3B5CF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,5 +120,6 @@ Global
 		{CFB5CD3A-47A1-4E71-BA81-C93D4BB657B3} = {CC96E61F-75DD-4644-AC51-D9B783C00680}
 		{AB772A38-6138-4687-BF63-FFCBE25500AE} = {CC96E61F-75DD-4644-AC51-D9B783C00680}
 		{276796F5-792C-486D-A616-02A5ECF1AFFE} = {CC96E61F-75DD-4644-AC51-D9B783C00680}
+		{873B35D4-4E84-4D63-813D-481ACA3B5CF3} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 	EndGlobalSection
 EndGlobal

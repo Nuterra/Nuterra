@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CA3F8EE-6795-4EAA-B4F0-8F3719FD5AA4}</ProjectGuid>
+    <ProjectGuid>{873B35D4-4E84-4D63-813D-481ACA3B5CF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Maritaria.Cockpit</RootNamespace>
-    <AssemblyName>Maritaria.Cockpit</AssemblyName>
+    <RootNamespace>Nuterra.BlockPacks</RootNamespace>
+    <AssemblyName>Nuterra.BlockPacks</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -53,16 +53,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CockpitConfig.cs" />
-    <Compile Include="CockpitMod.cs" />
-    <Compile Include="FirstPersonCamera.cs" />
-    <Compile Include="FirstPersonController.cs" />
-    <Compile Include="ModuleFirstPerson.cs" />
+    <Compile Include="BlockPackMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nuterra.Editor\Nuterra.Editor.csproj">
+      <Project>{276796F5-792C-486D-A616-02A5ECF1AFFE}</Project>
+      <Name>Nuterra.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nuterra\Nuterra.csproj">
-      <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
+      <Project>{129AE68B-6968-44C4-A386-68C0E1E9A63E}</Project>
       <Name>Nuterra</Name>
     </ProjectReference>
   </ItemGroup>
