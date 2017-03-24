@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Maritaria.CheatBlocks
+namespace Maritaria.ExtraBlocks
 {
 	public sealed class ModuleGodMode : Module
 	{
