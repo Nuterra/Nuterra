@@ -498,7 +498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlockID: 9013
   Name: Great Blocko
-  Description: 
-  Price: 0
+  Description: neat
+  Price: 1100
   DisplaySprite: {fileID: 0}
-  Dimensions: {x: 1, y: 2, z: 1}
+  Dimensions: {x: 1, y: 1, z: 1}
