@@ -32,7 +32,7 @@ namespace Sylver
 		public GyroRotor()
 
 		{
-			Prefab = UnityEngine.GameObject.Instantiate(Singleton.Manager<ManSpawn>.inst.m_BlockPrefabs[414]);
+			Prefab = UnityEngine.GameObject.Instantiate(Singleton.Manager<ManSpawn>.inst.BlockPrefabs[414]);
 
 			Prefab.SetActive(false);
 

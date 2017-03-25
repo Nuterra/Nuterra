@@ -9,7 +9,7 @@ namespace Sylver
 	{
 		public static GameObject BehaviorHolder;
 
-		public override string Name => "Sylver's Mod";
+		public override string Name => "SylverMod";
 
 		public override string Description => "A mod made by Sylver/Exund";
 

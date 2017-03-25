@@ -14,7 +14,6 @@ namespace Maritaria.Cursor
 		public static readonly string HotspotFileName = "hotspots.json";
 
 		private CursorManager _manager;
-		private Dictionary<CursorType, Texture2D> _originalCursors;
 
 		public override string Name => nameof(CursorMod);
 		public override string Description => "Allows the cursor to be changed using a png image";

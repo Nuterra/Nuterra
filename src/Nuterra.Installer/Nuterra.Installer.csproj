@@ -101,22 +101,32 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Nuterra_Data\Mods\Maritaria.Cockpit.dll">
+    <None Include="..\Maritaria.Cockpit\bin\$(Configuration)\Maritaria.Cockpit.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.Cockpit.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\Mods\Maritaria.Cursor.dll">
+    <None Include="..\Maritaria.Cursor\bin\$(Configuration)\Maritaria.Cursor.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.Cursor.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\Mods\Maritaria.ExtraBlocks.dll">
+    <None Include="..\Maritaria.ExtraBlocks\bin\$(Configuration)\Maritaria.ExtraBlocks.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.ExtraBlocks.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\Mods\Maritaria.ExtraKeys.dll">
+    <None Include="..\Maritaria.ExtraKeys\bin\$(Configuration)\Maritaria.ExtraKeys.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.ExtraKeys.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\Mods\Nuterra.dll">
+    <None Include="..\Nuterra.HelloWorld\bin\$(Configuration)\Nuterra.HelloWorld.dll">
+      <Link>Nuterra_Data\Mods\Nuterra.HelloWorld.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nuterra_Data\Mods\Nuterra.HelloWorld.dll">
+    <None Include="..\Nuterra\bin\$(Configuration)\Nuterra.dll">
+      <Link>Nuterra_Data\Mods\Nuterra.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Sylver\bin\$(Configuration)\Sylver.dll">
+      <Link>Nuterra_Data\Mods\Sylver.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
