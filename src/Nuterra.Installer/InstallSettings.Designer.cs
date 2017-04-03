@@ -58,8 +58,8 @@
 			// findGameDialog
 			// 
 			this.findGameDialog.FileName = "TerraTechWin64.exe";
-			this.findGameDialog.Filter = "TerraTech Windows (*.exe)|*.exe|TerraTech Linux (*.x86_64)|*.x86_64|All Files " +
-    "(*.*)|*.*";
+			this.findGameDialog.Filter = "TerraTech Windows (*.exe)|*.exe|TerraTech Linux (*.x86_64)|*.x86_64|TerraTech Mac" +
+    "OS (*.app)|*.app|All Files (*.*)|*.*";
 			this.findGameDialog.SupportMultiDottedExtensions = true;
 			this.findGameDialog.Title = "Locate TerraTech executable";
 			// 
