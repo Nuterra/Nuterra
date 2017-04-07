@@ -71,9 +71,14 @@ namespace Nuterra.Build.Hooking
 			int insertionStart = insertedInstructionCounter;
 			if (settings.PassArguments)
 			{
+				if (sourceMethod.Parameters.Count != targetMethod.Parameters.Count)
+				{
+					throw new Exception($"Parameter count mismatch for {sourceMethod} -> {targetMethod}");
+				}
+
 				for (int i = 0; i < sourceMethod.Parameters.Count; i++)
 				{
-					body.Insert(insertedInstructionCounter++, GetLoadArgOpCode(i));
+					body.Insert(insertedInstructionCounter++, GetLoadArgOpCode(i, sourceMethod, targetMethod));
 				}
 			}
 			body.Insert(insertedInstructionCounter++, OpCodes.Call.ToInstruction(targetMethod));
@@ -209,15 +214,19 @@ namespace Nuterra.Build.Hooking
 			return clonedSource;
 		}
 
-		private static Instruction GetLoadArgOpCode(int i)
+		private static Instruction GetLoadArgOpCode(int i, MethodDef sourceMethod, MethodDef targetMethod)
 		{
+			if (targetMethod.Parameters[i].Type.IsByRef)
+			{
+				return OpCodes.Ldarga.ToInstruction(sourceMethod.Parameters[i]);
+			}
 			switch (i)
 			{
 				case 0: return OpCodes.Ldarg_0.ToInstruction();
 				case 1: return OpCodes.Ldarg_1.ToInstruction();
 				case 2: return OpCodes.Ldarg_2.ToInstruction();
 				case 3: return OpCodes.Ldarg_3.ToInstruction();
-				default: return OpCodes.Ldarg.ToInstruction(i);
+				default: return OpCodes.Ldarg.ToInstruction(sourceMethod.Parameters[i]);
 			}
 		}
 

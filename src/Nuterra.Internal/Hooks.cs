@@ -228,7 +228,7 @@ namespace Nuterra.Internal
 			public static class Licenses
 			{
 				//Hook to be called at the end of Licenses.Init
-				internal static void Init(ManLicenses inst)
+				internal static void Init(ManLicenses inst, int unused)
 				{
 					OnInitializing?.Invoke();
 				}
