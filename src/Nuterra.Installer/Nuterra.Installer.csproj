@@ -117,6 +117,10 @@
       <Link>Nuterra_Data\Mods\Maritaria.ExtraKeys.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Maritaria.Watermarks\bin\$(Configuration)\Maritaria.Watermarks.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.Watermarks.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Nuterra.HelloWorld\bin\$(Configuration)\Nuterra.HelloWorld.dll">
       <Link>Nuterra_Data\Mods\Nuterra.HelloWorld.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -127,7 +131,6 @@
     </None>
     <None Include="..\Sylver\bin\$(Configuration)\Sylver.dll">
       <Link>Nuterra_Data\Mods\Sylver.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
