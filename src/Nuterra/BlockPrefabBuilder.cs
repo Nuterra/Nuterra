@@ -18,8 +18,21 @@ namespace Nuterra
 
 		public BlockPrefabBuilder()
 		{
+			Initialize(new GameObject(), clearGridInfo: true);
+		}
+
+		public BlockPrefabBuilder(BlockTypes originalBlock)
+		{
+			var original = ManSpawn.inst.BlockPrefabs[(int)originalBlock];
+			var copy = GameObject.Instantiate(original);
+			Initialize(copy, clearGridInfo: false);
+		}
+
+		private void Initialize(GameObject prefab, bool clearGridInfo)
+		{
 			_customBlock = new CustomBlock();
-			_customBlock.Prefab = new GameObject();
+			_customBlock.Prefab = prefab;
+			_customBlock.Prefab.SetActive(false);
 			GameObject.DontDestroyOnLoad(_customBlock.Prefab);
 
 			_customBlock.Prefab.tag = "TankBlock";
@@ -31,9 +44,12 @@ namespace Nuterra
 			_spriteRenderer = _customBlock.Prefab.EnsureComponent<AutoSpriteRenderer>();
 
 			_block = _customBlock.Prefab.EnsureComponent<TankBlock>();
-			_block.attachPoints = new Vector3[] { };
-			_block.filledCells = new Vector3[] { new Vector3(0, 0, 0) };
-			_block.partialCells = new Vector3[] { };
+			if (clearGridInfo)
+			{
+				_block.attachPoints = new Vector3[] { };
+				_block.filledCells = new Vector3[] { new Vector3(0, 0, 0) };
+				_block.partialCells = new Vector3[] { };
+			}
 		}
 
 		public BlockPrefabBuilder FromAsset(GameObject prefab)

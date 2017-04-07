@@ -17,9 +17,11 @@ namespace Sylver
 			}
 		}
 
+		public static bool IsRandD => ManGameMode.inst.IsCurrent<ModeMisc>();
+
 		private void Update()
 		{
-			if (!ManGameMode.inst.IsCurrent<ModeMisc>())
+			if (!IsRandD)
 			{
 				//Only enable the behaviour in R&D mode
 				return;
