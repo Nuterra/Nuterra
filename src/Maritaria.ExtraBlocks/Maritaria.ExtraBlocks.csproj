@@ -53,19 +53,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaconBlock.cs" />
-    <Compile Include="HTest1Block.cs" />
-    <Compile Include="HTest2Block.cs" />
-    <Compile Include="CapBlock.cs" />
-    <Compile Include="CheatBlocks\GodModeBlock.cs" />
-    <Compile Include="CheatBlocks\InfiniteFuelBlock.cs" />
-    <Compile Include="CheatBlocks\ModuleGodMode.cs" />
-    <Compile Include="CheatBlocks\ModuleInfiniteFuel.cs" />
+    <Compile Include="ModuleGodMode.cs" />
+    <Compile Include="ModuleInfiniteFuel.cs" />
     <Compile Include="ExtraBlocksMod.cs" />
-    <Compile Include="HoleBlock.cs" />
-    <Compile Include="PinBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestHatBlock.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nuterra\Nuterra.csproj">

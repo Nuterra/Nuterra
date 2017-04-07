@@ -10,6 +10,7 @@ namespace Nuterra
 
 		public static void Register(CustomBlock block)
 		{
+			Console.WriteLine($"Registering block: {block.GetType()} #{block.BlockID} '{block.Name}'");
 			int blockID = block.BlockID;
 			CustomBlocks.Add(blockID, block);
 			int hashCode = ItemTypeInfo.GetHashCode(ObjectTypes.Block, blockID);

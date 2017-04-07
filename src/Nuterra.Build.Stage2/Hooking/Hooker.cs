@@ -12,7 +12,7 @@ namespace Nuterra.Build.Hooking
 		public static void Apply(ModuleDefMD module)
 		{
 			//Booting Nuterra
-			Redirect(module, "ManUI", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Start)) { PassArguments = false });
+			Redirect(module, "ManSpawn", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Start)) { PassArguments = false, AppendToEnd = true });
 
 			//Modded game flagging
 			Hook_BugReportFlagger(module);

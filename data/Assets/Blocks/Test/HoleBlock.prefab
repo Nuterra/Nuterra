@@ -72,6 +72,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000013673341476}
+  - 114: {fileID: 114000012962334712}
   m_Layer: 0
   m_Name: HoleBlock
   m_TagString: Untagged
@@ -484,3 +485,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114000012962334712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010508639920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 518161923, guid: a8c6d5d258f77174eb3e691162afc710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BlockID: 9013
+  Name: Great Blocko
+  Description: neat
+  Price: 1100
+  DisplaySprite: {fileID: 0}
+  Dimensions: {x: 1, y: 1, z: 1}
