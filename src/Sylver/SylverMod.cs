@@ -19,7 +19,7 @@ namespace Sylver
 
 		private void Update()
 		{
-			if (!IsRandD)
+			if (!ManGameMode.inst.IsCurrent<ModeMisc>())
 			{
 				//Only enable the behaviour in R&D mode
 				return;
@@ -79,16 +79,5 @@ namespace Sylver
 		private static string m_FriendlyAIName = "FTUE";
 
 		private int num;
-
-		public static bool IsRandD;
-
-		public static class Hooks_Mode
-		{
-			//Need to be Hooked at the start of Mode.EnterMode() by SylverMod.Mode_EnterMode(this);
-			public static void EnterMode(Mode newGamemode, bool firstTick, Mode.InitSettings initSettings)
-			{
-				IsRandD = (newGamemode is ModeMisc);
-			}
-		}
 	}
 }
