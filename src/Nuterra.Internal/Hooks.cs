@@ -299,6 +299,17 @@ namespace Nuterra.Internal
 					Initializing?.Invoke(manager);
 				}
 			}
+
+			public static class Screenshot
+			{
+				internal static void EncodeCompressedPreset(byte[] compressedSerialisedPreset, int serialisedPresetSize, Texture2D texture)
+				{
+					var info = new ScreenshotEvent(texture);
+					BeforeEncodeScreenshot?.Invoke(info);
+				}
+
+				public static event Action<ScreenshotEvent> BeforeEncodeScreenshot;
+			}
 		}
 
 		public static class BugReports
@@ -341,6 +352,20 @@ namespace Nuterra.Internal
 			}
 
 			public static event Action<SpriteLookupEvent> OnSpriteLookup;
+		}
+	}
+
+	public sealed class ScreenshotEvent
+	{
+		/// <summary>
+		/// The image the tech will be encoded onto.
+		/// </summary>
+		public Texture2D Texture { get; }
+
+		public ScreenshotEvent(Texture2D image)
+		{
+			if (image == null) throw new ArgumentNullException(nameof(image));
+			Texture = image;
 		}
 	}
 
