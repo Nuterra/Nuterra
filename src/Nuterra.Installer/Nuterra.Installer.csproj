@@ -131,6 +131,7 @@
     </None>
     <None Include="..\Sylver\bin\$(Configuration)\Sylver.dll">
       <Link>Nuterra_Data\Mods\Sylver.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
