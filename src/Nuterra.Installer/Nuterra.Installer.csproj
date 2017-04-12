@@ -125,6 +125,10 @@
       <Link>Nuterra_Data\Mods\Nuterra.HelloWorld.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Nuterra.Editor\bin\$(Configuration)\Nuterra.Editor.dll">
+      <Link>Nuterra_Data\Mods\Nuterra.Editor.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Nuterra\bin\$(Configuration)\Nuterra.dll">
       <Link>Nuterra_Data\Mods\Nuterra.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
