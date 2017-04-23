@@ -7,7 +7,7 @@ namespace Nuterra
 {
 	public static class NuterraApi
 	{
-		public static readonly Version CurrentVersion = new Version(0, 4, 0);
+		public static readonly Version CurrentVersion = new Version(0, 4, 1);
 
 		internal static ConfigManager Configuration { get; } = new ConfigManager(FolderStructure.ConfigFolder);
 

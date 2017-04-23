@@ -73,9 +73,16 @@
     <Compile Include="ModLoader.cs" />
     <Compile Include="NuterraApi.cs" />
     <Compile Include="TerraTechMod.cs" />
+    <Compile Include="UnityGraph.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nuterra.Editor\Nuterra.Editor.csproj">
+      <Project>{276796f5-792c-486d-a616-02a5ecf1affe}</Project>
+      <Name>Nuterra.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\build\Nuterra.Mods.targets" />

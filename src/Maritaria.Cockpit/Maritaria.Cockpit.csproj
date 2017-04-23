@@ -53,12 +53,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CockpitBlock.cs" />
     <Compile Include="CockpitConfig.cs" />
     <Compile Include="CockpitMod.cs" />
     <Compile Include="FirstPersonCamera.cs" />
     <Compile Include="FirstPersonController.cs" />
-    <Compile Include="LargeCockpitBlock.cs" />
     <Compile Include="ModuleFirstPerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

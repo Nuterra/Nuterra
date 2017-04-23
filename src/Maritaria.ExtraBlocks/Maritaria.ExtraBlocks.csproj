@@ -53,11 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaconBlock.cs" />
-    <Compile Include="CheatBlocks\GodModeBlock.cs" />
-    <Compile Include="CheatBlocks\InfiniteFuelBlock.cs" />
-    <Compile Include="CheatBlocks\ModuleGodMode.cs" />
-    <Compile Include="CheatBlocks\ModuleInfiniteFuel.cs" />
+    <Compile Include="ModuleGodMode.cs" />
+    <Compile Include="ModuleInfiniteFuel.cs" />
     <Compile Include="ExtraBlocksMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
