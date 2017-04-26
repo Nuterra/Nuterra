@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -12,14 +13,20 @@ namespace Nuterra.Internal
 
 		public static void Start()
 		{
-			Assembly nuterraEditor = LoadAssemblyFromModsFolder("Nuterra.Editor.dll");
-			if (nuterraEditor == null) return;
+			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 			Assembly nuterra = LoadAssemblyFromModsFolder("Nuterra.dll");
 			if (nuterra == null) return;
 			Console.WriteLine("Nuterra assembly loaded");
 			Type nuterraMain = nuterra.GetType("Nuterra.NuterraApi");
 			MethodInfo start = nuterraMain.GetMethod("Start", BindingFlags.Static | BindingFlags.NonPublic);
 			start.Invoke(null, new object[] { });
+		}
+
+		private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+		{
+			//Example args.Name: "Nuterra.Editor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+			string name = args.Name.Split(new char[] { ',' }, 2).First();
+			return LoadAssemblyFromModsFolder(name + ".dll");
 		}
 
 		private static Assembly LoadAssemblyFromModsFolder(string filename)
