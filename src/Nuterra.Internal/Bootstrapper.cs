@@ -14,12 +14,20 @@ namespace Nuterra.Internal
 		public static void Start()
 		{
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			Assembly nuterra = LoadAssemblyFromModsFolder("Nuterra.dll");
 			if (nuterra == null) return;
 			Console.WriteLine("Nuterra assembly loaded");
 			Type nuterraMain = nuterra.GetType("Nuterra.NuterraApi");
 			MethodInfo start = nuterraMain.GetMethod("Start", BindingFlags.Static | BindingFlags.NonPublic);
 			start.Invoke(null, new object[] { });
+
+			var test = new MousePointer();
+		}
+
+		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			Console.WriteLine("Got one boss: " + e.ExceptionObject);
 		}
 
 		private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)

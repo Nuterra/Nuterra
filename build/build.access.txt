@@ -33,10 +33,10 @@ method ModuleHeart DropAllItems
 field ModuleItemPickup m_Holder
 field ManSpawn tankPresets
 field ManSpawn m_BlockPrefabs
-field MousePointer m_DefaultPointer
-field MousePointer m_OverGrabbableCursor
-field MousePointer m_HoldingGrabbableCursor
-field MousePointer m_PaintingCursor
+wrap_field MousePointer m_DefaultPointer DefaultPointer read
+wrap_field MousePointer m_OverGrabbableCursor OverGrabbableCursor read
+wrap_field MousePointer m_HoldingGrabbableCursor HoldingGrabbableCursor read
+wrap_field MousePointer m_PaintingCursor PaintingCursor read
 field ModuleHeart m_HasAnchor
 field ModuleFuelTank m_MaterialsToUpdate
 method+virtual ModuleFuelTank get_RefillRate
