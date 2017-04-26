@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="Nuterra.Common.targets" />
   <!-- Force mods to compile against 3.5. This is the runtime unity supports -->
   <PropertyGroup>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>

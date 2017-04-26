@@ -23,6 +23,7 @@ field ModuleScoop actuator
 field ModuleScoop m_Lifted
 field ModuleScoop m_LiftAnim
 field ModuleScoop m_DropAnim
+field ModuleScoop m_UpAndDownMode
 field ModuleWeapon m_TargetPosition
 field TankBlock m_BlockCategory
 field ManStats/IntStatList m_StatPerTypeSerialized

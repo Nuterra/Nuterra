@@ -277,11 +277,17 @@ namespace Nuterra.Internal
 			{
 				internal static bool SaveSaveData(ManSaveGame.SaveData saveData, string filePath)
 				{
-					Console.WriteLine($"Flagging save file (current={saveData.State.m_OverlayData ?? "null"})");
-					saveData.State.m_OverlayData = "Save loaded by modded game";
+					FlagSave(saveData);
 					var saveEvent = new SaveGameEvent(saveData, filePath);
 					OnSave?.Invoke(saveEvent);
 					return saveEvent.CancelSave;
+				}
+
+				internal static void FlagSave(ManSaveGame.SaveData saveData)
+				{
+#warning Flag saves here
+					//Console.WriteLine($"Flagging save file (current={saveData.State.m_OverlayData ?? "null"})");
+					//saveData.State.m_OverlayData = "Save loaded by modded game";
 				}
 
 				public static event Action<SaveGameEvent> OnSave;
