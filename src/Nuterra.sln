@@ -11,6 +11,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CC96E61F-75DD-4644-AC51-D9B783C00680}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.Internal", "Nuterra.Internal\Nuterra.Internal.csproj", "{306B93ED-DC73-4899-BB32-D9571152C554}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F953D402-AAE3-4335-90A6-13BDBDF6D4FA} = {F953D402-AAE3-4335-90A6-13BDBDF6D4FA}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mods", "Mods", "{3BA7DE14-6278-440A-95B1-026F30C10140}"
 EndProject

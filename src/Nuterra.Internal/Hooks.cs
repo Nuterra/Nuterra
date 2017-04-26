@@ -113,16 +113,16 @@ namespace Nuterra.Internal
 						{
 							return;
 						}
-						if (!module.lifted && shouldFireEvent.Fire)
+						if (!module.m_Lifted && shouldFireEvent.Fire)
 						{
-							module.actuator.Play(module.lift.name);
-							module.lifted = true;
+							module.actuator.Play(module.m_LiftAnim.name);
+							module.m_Lifted = true;
 							return;
 						}
-						if (module.lifted && (!shouldFireEvent.Fire || (module.upAndDownMode && shouldFireEvent.Fire)))
+						if (module.m_Lifted && (!shouldFireEvent.Fire || (module.m_UpAndDownMode && shouldFireEvent.Fire)))
 						{
-							module.actuator.Play(module.drop.name);
-							module.lifted = false;
+							module.actuator.Play(module.m_DropAnim.name);
+							module.m_Lifted = false;
 						}
 					}
 				}

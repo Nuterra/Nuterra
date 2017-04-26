@@ -18,7 +18,7 @@
     <PropertyGroup>
       <CommandLineParams>--dir "$(TerraTech_Root)" --data "Nuterra_Data" --nuterra "Nuterra.Internal.dll" --out "$(Nuterra_OutputBuildStage2)"</CommandLineParams>
     </PropertyGroup>
-    <Exec Command="&quot;$(TargetPath)&quot; $(CommandLineParams)" WorkingDirectory="$(OutDir)"/>
+    <!-- <Exec Command="&quot;$(TargetPath)&quot; $(CommandLineParams)" WorkingDirectory="$(OutDir)"/> -->
   </Target>
   
   <Target Name="Nuterra_InstallMod" DependsOnTargets="Nuterra_ReadUserConfig;Nuterra_ModStage2"
