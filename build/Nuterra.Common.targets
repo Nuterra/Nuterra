@@ -11,7 +11,7 @@
     <Exec Command="&quot;$(Nuterra_Stage1Exe)&quot; $(CommandLineParams)" WorkingDirectory="$(Nuterra_Stage1Dir)"/>
   </Target>
   
-  <Target Name="Nuterra_ModStage2" DependsOnTargets="Nuterra_ReadUserConfig"
+  <Target Name="Nuterra_PrepareStage2Assembly" DependsOnTargets="Nuterra_ReadUserConfig"
           Inputs="$(Nuterra_Stage2Exe);$(Nuterra_AccessorConfig);$(Nuterra_HashConfig)"
           Outputs="$(Nuterra_OutputBuildStage2)">
     <!-- Run the build stage2 tool to fetch a clean copy of the assembly from the TT install dir and generate Assembly-CSharp.dll in /lib -->
@@ -22,7 +22,7 @@
     <Exec Command="&quot;$(Nuterra_Stage2Exe)&quot; $(CommandLineParams)" WorkingDirectory="$(Nuterra_Stage2Dir)"/>
   </Target>
   
-  <Target Name="Nuterra_PrepareAssembly" DependsOnTargets="Nuterra_ReadUserConfig;Nuterra_ModStage2"
+  <Target Name="Nuterra_ModStage2" DependsOnTargets="Nuterra_ReadUserConfig;Nuterra_PrepareStage2Assembly"
           Inputs="$(Nuterra_OutputBuildStage2)"
           Outputs="$(TerraTech_AssemblyCSharp)">
     <Copy SourceFiles="$(Nuterra_OutputBuildStage2)" DestinationFiles="$(TerraTech_AssemblyCSharp)" />
