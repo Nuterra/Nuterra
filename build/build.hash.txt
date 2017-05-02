@@ -3,6 +3,8 @@
 # First matched hash is accepted, put hashes of new versions of the game at the top of the file
 
 # 0.7.4
+f5TB9FoIaNfyG5w5zl/j9Q== Windows-64bit-R&D
+4QxGc0MeOc2+PS4sHEsgYQ== Windows-64bit-default
 iisXS82+iqQiOc8cuLrvIA== Windows-64bit (clean)
 #f5TB9FoIaNfyG5w5zl/j9Q== Windows-64bit (unknown)
 
