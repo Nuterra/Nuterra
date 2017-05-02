@@ -22,7 +22,7 @@ Check the [Releases] page for the latest version of the mod.
 For more detailed information on installing Nuterra and troubleshooting, see this [wiki page](https://github.com/Nuterra/nuterra/wiki/How-to-install-Nuterra).
 
 # Development
-The main tool used to develop the mod is [dnSpy], a tool to decompile and edit managed assemblies. All modifications to the game are collected in the Maritaria namespace, merged into the original assembly and finally the original code is redirected to pass through the mod code. The documentation includes instructions about usage of [dnSpy].
+The main language for the project is C#. Mods are developed in Visual Studio with buildscripts available to automate deployment on your local machine. The Nuterra API is also developed in Visual Studio and has its own set of buildscripts for automating the modding process.
 
 # Roadmap
 ## 0.4.0 - Mod API, initial release
