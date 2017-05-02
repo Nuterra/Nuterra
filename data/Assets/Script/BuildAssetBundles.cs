@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR
+
+using System.IO;
 using UnityEditor;
 
 public class BuildAssetBundles
@@ -12,3 +14,5 @@ public class BuildAssetBundles
 		BuildPipeline.BuildAssetBundles(AssetBundlesOutputFolder, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
 	}
 }
+
+#endif

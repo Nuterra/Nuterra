@@ -1,12 +1,15 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
 using Nuterra;
+using Nuterra.Internal;
 using UnityEngine;
 
 namespace Maritaria.Cockpit
 {
 	public sealed class CockpitMod : TerraTechMod
 	{
+		private GameObject _holder;
+
 		public override string Name => nameof(CockpitMod);
 		public override string Description => "Adds various cockpit blocks to the game to experience the game in first-person";
 
@@ -14,6 +17,8 @@ namespace Maritaria.Cockpit
 		{
 			FirstPersonKey = KeyCode.F,
 		};
+
+
 
 		public override void Load()
 		{
@@ -44,6 +49,39 @@ namespace Maritaria.Cockpit
 				.SetIcon(@"Assets/Blocks/Cockpit/Cockpit.Large.Icon.png")
 				.AddComponent<ModuleFirstPerson>()
 				.Register();
+
+			_holder = new GameObject();
+			_holder.AddComponent<FirstPersonController>().Mod = this;
+			GameObject.DontDestroyOnLoad(_holder);
+
+			Hooks.Modules.TankControl.CanControlTank += TankControl_CanControlTank;
+			Hooks.Managers.Pointer.OnCameraSpinStart += Pointer_OnCameraSpinStart;
+			Hooks.Managers.Pointer.OnCameraSpinEnd += Pointer_OnCameraSpinEnd;
+		}
+
+		private void Pointer_OnCameraSpinStart()
+		{
+			if (CameraManager.inst.IsCurrent<FirstPersonCamera>())
+			{
+#warning TODO: Move to camera class
+				FirstPersonCamera.inst.BeginSpinControl();
+			}
+		}
+
+		private void Pointer_OnCameraSpinEnd()
+		{
+			if (CameraManager.inst.IsCurrent<FirstPersonCamera>())
+			{
+				FirstPersonCamera.inst.EndSpinControl();
+			}
+		}
+
+		private void TankControl_CanControlTank(Nuterra.Internal.CanControlTankEvent info)
+		{
+			if (CameraManager.inst.IsCurrent<FirstPersonCamera>())
+			{
+				info.CanControl = true;
+			}
 		}
 
 		public override JObject CreateDefaultConfiguration()
