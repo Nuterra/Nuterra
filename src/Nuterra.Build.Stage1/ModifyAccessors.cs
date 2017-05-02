@@ -52,6 +52,7 @@ namespace Nuterra.Build
 				return;
 			}
 
+			Console.WriteLine($"Applying: {line}");
 			string[] parts = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
 			string subject = parts[0];

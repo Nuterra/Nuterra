@@ -56,7 +56,6 @@
     <Compile Include="CursorManager.cs" />
     <Compile Include="CursorType.cs" />
     <Compile Include="CursorMod.cs" />
-    <Compile Include="GameCursor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -68,7 +68,19 @@ namespace Nuterra
 				LogComponent_BoxCollider((BoxCollider)inst);
 				return;
 			}
+			if (inst is TerrainObject)
+			{
+				LogComponent_TerrainObject((TerrainObject)inst, prefix);
+				return;
+			}
 			Console.WriteLine();
+		}
+
+		private static void LogComponent_TerrainObject(TerrainObject obj, string prefix)
+		{
+			Console.WriteLine($"{{{obj.PrefabGUID}}} \"{obj.name}\"");
+			Console.WriteLine($"{prefix} pos:{obj.transform.position} rot:{obj.transform.rotation}");
+			//Console.WriteLine($"{prefix} sceneryType: {(SceneryTypes)obj.visible?.ItemType}");
 		}
 
 		public static void LogComponent_TankBlock(TankBlock tankBlock, string prefix)

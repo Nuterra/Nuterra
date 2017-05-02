@@ -314,7 +314,7 @@ namespace Nuterra.Build.Hooking
 			MethodDef markUserMessage = bugReportFlagger.Methods.Single(m => m.Name == nameof(Hooks.BugReports.MarkUserMessage));
 
 			TypeDef bugReporter = module.Find("UIScreenBugReport", isReflectionName: true);
-			TypeDef postIterator = bugReporter.NestedTypes.Single(t => t.FullName == "UIScreenBugReport/<PostIt>c__Iterator78");
+			TypeDef postIterator = bugReporter.NestedTypes.Single(t => t.FullName.Contains("UIScreenBugReport/<PostIt>"));
 			MethodDef moveNext = postIterator.Methods.Single(m => m.Name == "MoveNext");
 
 			FieldDef bodyField = bugReporter.Fields.Single(f => f.Name == "m_Body");

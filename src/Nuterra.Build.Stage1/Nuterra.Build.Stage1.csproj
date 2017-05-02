@@ -64,18 +64,17 @@
     <Compile Include="LoadAssemblyCSharp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Nuterra_Data\build.access.txt">
+    <None Include="..\..\build\build.access.txt">
+      <Link>Nuterra_Data\build.access.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Nuterra_Data\build.hash.txt">
+    <None Include="..\..\build\build.hash.txt">
+      <Link>Nuterra_Data\build.hash.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\build\Nuterra.BuildTools.targets" />
-  
   <Target Name="AfterBuild" DependsOnTargets="Nuterra_ModStage1"/>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

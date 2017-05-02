@@ -93,7 +93,7 @@ namespace Maritaria.Cursor
 			byte[] bytes = File.ReadAllBytes(filepath);
 			Texture2D texture = new Texture2D(1, 1);
 			texture.LoadImage(bytes, false);
-			target.Cursors[cursorType] = new GameCursor(texture, hotspot.Value);
+			target.Cursors[cursorType] = new MousePointer.CursorData { m_Texture = texture, m_Hotspot = hotspot.Value };
 		}
 
 		public override void Unload()

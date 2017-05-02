@@ -11,6 +11,13 @@
     <Nuterra_OutputBuildStage2>$(Nuterra_Libs)\Assembly-CSharp.dll</Nuterra_OutputBuildStage2>
     
     <Nuterra_UserBuildConfig>$(Nuterra_BuildScripts)\Nuterra.User.xml</Nuterra_UserBuildConfig>
+    <Nuterra_AccessorConfig>$(Nuterra_BuildScripts)\build.access.txt</Nuterra_AccessorConfig>
+    <Nuterra_HashConfig>$(Nuterra_BuildScripts)\build.hash.txt</Nuterra_HashConfig>
+    
+    <Nuterra_Stage1Dir>$(Nuterra_ProjectRoot)\src\Nuterra.Build.Stage1\bin\$(Configuration)</Nuterra_Stage1Dir>
+    <Nuterra_Stage1Exe>$(Nuterra_Stage1Dir)\Nuterra.Build.Stage1.exe</Nuterra_Stage1Exe>
+    <Nuterra_Stage2Dir>$(Nuterra_ProjectRoot)\src\Nuterra.Build.Stage2\bin\$(Configuration)</Nuterra_Stage2Dir>
+    <Nuterra_Stage2Exe>$(Nuterra_Stage2Dir)\Nuterra.Build.Stage2.exe</Nuterra_Stage2Exe>
     
   </PropertyGroup>
   

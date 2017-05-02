@@ -113,16 +113,16 @@ namespace Nuterra.Internal
 						{
 							return;
 						}
-						if (!module.lifted && shouldFireEvent.Fire)
+						if (!module.m_Lifted && shouldFireEvent.Fire)
 						{
-							module.actuator.Play(module.lift.name);
-							module.lifted = true;
+							module.actuator.Play(module.m_LiftAnim.name);
+							module.m_Lifted = true;
 							return;
 						}
-						if (module.lifted && (!shouldFireEvent.Fire || (module.upAndDownMode && shouldFireEvent.Fire)))
+						if (module.m_Lifted && (!shouldFireEvent.Fire || (module.m_UpAndDownMode && shouldFireEvent.Fire)))
 						{
-							module.actuator.Play(module.drop.name);
-							module.lifted = false;
+							module.actuator.Play(module.m_DropAnim.name);
+							module.m_Lifted = false;
 						}
 					}
 				}
@@ -277,11 +277,17 @@ namespace Nuterra.Internal
 			{
 				internal static bool SaveSaveData(ManSaveGame.SaveData saveData, string filePath)
 				{
-					Console.WriteLine($"Flagging save file (current={saveData.State.m_OverlayData ?? "null"})");
-					saveData.State.m_OverlayData = "Save loaded by modded game";
+					FlagSave(saveData);
 					var saveEvent = new SaveGameEvent(saveData, filePath);
 					OnSave?.Invoke(saveEvent);
 					return saveEvent.CancelSave;
+				}
+
+				internal static void FlagSave(ManSaveGame.SaveData saveData)
+				{
+#warning Flag saves here
+					//Console.WriteLine($"Flagging save file (current={saveData.State.m_OverlayData ?? "null"})");
+					//saveData.State.m_OverlayData = "Save loaded by modded game";
 				}
 
 				public static event Action<SaveGameEvent> OnSave;
