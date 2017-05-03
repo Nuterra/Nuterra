@@ -53,6 +53,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra.BlockPacks", "Nuter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maritaria.Watermarks", "Maritaria.Watermarks\Maritaria.Watermarks.csproj", "{3BFDFF28-F8A6-43EA-9F3A-E73FA4EDA70B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maritaria.WorldBuilder", "Maritaria.WorldBuilder\Maritaria.WorldBuilder.csproj", "{17D1662B-2C8C-40AB-86AE-E2F19D78E204}"
+	ProjectSection(ProjectDependencies) = postProject
+		{129AE68B-6968-44C4-A386-68C0E1E9A63E} = {129AE68B-6968-44C4-A386-68C0E1E9A63E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +120,10 @@ Global
 		{3BFDFF28-F8A6-43EA-9F3A-E73FA4EDA70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BFDFF28-F8A6-43EA-9F3A-E73FA4EDA70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BFDFF28-F8A6-43EA-9F3A-E73FA4EDA70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D1662B-2C8C-40AB-86AE-E2F19D78E204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D1662B-2C8C-40AB-86AE-E2F19D78E204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D1662B-2C8C-40AB-86AE-E2F19D78E204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D1662B-2C8C-40AB-86AE-E2F19D78E204}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,5 +143,6 @@ Global
 		{276796F5-792C-486D-A616-02A5ECF1AFFE} = {CC96E61F-75DD-4644-AC51-D9B783C00680}
 		{873B35D4-4E84-4D63-813D-481ACA3B5CF3} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 		{3BFDFF28-F8A6-43EA-9F3A-E73FA4EDA70B} = {3BA7DE14-6278-440A-95B1-026F30C10140}
+		{17D1662B-2C8C-40AB-86AE-E2F19D78E204} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 	EndGlobalSection
 EndGlobal

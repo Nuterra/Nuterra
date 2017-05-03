@@ -46,3 +46,7 @@ field ModuleHeart m_ReadyAfterTime
 wrap_field ManSplashScreen m_SplashScreens SplashScreens read+write
 wrap_field ManSpawn tankPresets TankPresets read
 wrap_field ManSpawn m_BlockPrefabs BlockPrefabs read
+
+field ManSpawn m_TerrainObjectTable
+field TerrainObjectTable m_GUIDToPrefabLookup
+wrap_field ResourceDispenser m_AnimatedTransform AnimatedTransform read
