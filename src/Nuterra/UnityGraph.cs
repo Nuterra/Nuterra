@@ -73,6 +73,11 @@ namespace Nuterra
 				LogComponent_TerrainObject((TerrainObject)inst, prefix);
 				return;
 			}
+			if (inst is ResourceDispenser)
+			{
+				LogComponent_ResourceDispenser((ResourceDispenser)inst);
+				return;
+			}
 			Console.WriteLine();
 		}
 
@@ -125,6 +130,11 @@ namespace Nuterra
 		public static void LogComponent_BoxCollider(BoxCollider box)
 		{
 			Console.WriteLine($"{box.center} {box.size}");
+		}
+
+		public static void LogComponent_ResourceDispenser(ResourceDispenser dispenser)
+		{
+			Console.WriteLine($"{dispenser.AnimatedTransform?.gameObject.name ?? "(null)"}");
 		}
 
 		public static void LogPrivates(object obj, string prefix)
