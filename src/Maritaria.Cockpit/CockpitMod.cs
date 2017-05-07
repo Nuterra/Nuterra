@@ -18,8 +18,6 @@ namespace Maritaria.Cockpit
 			FirstPersonKey = KeyCode.F,
 		};
 
-
-
 		public override void Load()
 		{
 			base.Load();
@@ -76,7 +74,7 @@ namespace Maritaria.Cockpit
 			}
 		}
 
-		private void TankControl_CanControlTank(Nuterra.Internal.CanControlTankEvent info)
+		private void TankControl_CanControlTank(CanControlTankEvent info)
 		{
 			if (CameraManager.inst.IsCurrent<FirstPersonCamera>())
 			{
