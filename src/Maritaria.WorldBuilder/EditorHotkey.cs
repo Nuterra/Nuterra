@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuterra;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Maritaria.WorldBuilder
 {
@@ -46,6 +47,7 @@ namespace Maritaria.WorldBuilder
 			"MountainTree3",
 			"MountainTree4",
 		};
+
 		private List<TerrainObject> _prefabs;
 		private int _selectedIndex;
 		private GameObject _ghost;
@@ -61,11 +63,23 @@ namespace Maritaria.WorldBuilder
 
 		private void Update()
 		{
+			bool stateChanged = false;
 			if (Input.GetKeyDown(KeyCode.L))
 			{
+				stateChanged = !stateChanged;
 				EditorEnabled = !EditorEnabled;
+			}
+			bool shouldUpdate = EditorEnabled;
+			if (ManPauseGame.inst.IsPaused || EventSystem.current.IsPointerOverGameObject() || !ManGameMode.inst.IsCurrent<ModeMisc>())
+			{
+				stateChanged |= !EditorEnabled;
+				shouldUpdate = false;
+			}
+			if (stateChanged)
+			{
 				if (EditorEnabled)
 				{
+					CameraManager.inst.Switch(WorldEditorCamera.inst);
 					if (!_ghost)
 					{
 						_ghost = CreateGhost(SelectedPrefab, Vector3.zero);
@@ -73,10 +87,11 @@ namespace Maritaria.WorldBuilder
 				}
 				else
 				{
+					CameraManager.inst.Switch<TankCamera>();
 					Destroy(_ghost);
 				}
 			}
-			if (EditorEnabled)
+			if (shouldUpdate)
 			{
 				Update_Editor();
 			}
@@ -84,7 +99,10 @@ namespace Maritaria.WorldBuilder
 
 		private void OnGUI()
 		{
-			GUI.Label(new Rect(0, 0, 200, 100), $"Selection: {SelectedPrefab.name}");
+			if (EditorEnabled)
+			{
+				GUI.Label(new Rect(0, 0, 200, 100), $"Selection: {SelectedPrefab.name}");
+			}
 		}
 
 		private void Update_Editor()
@@ -92,25 +110,41 @@ namespace Maritaria.WorldBuilder
 			var mousePos = Input.mousePosition;
 			RaycastHit ray;
 			bool hit = Physics.Raycast(Singleton.camera.ScreenPointToRay(mousePos), out ray, float.MaxValue, Globals.inst.layerTerrain.mask | Globals.inst.layerScenery.mask, QueryTriggerInteraction.Ignore);
-			//LMB
-			if (Input.GetMouseButtonDown(0))
+
+			if (Input.GetMouseButtonDown(0 /*LMB*/))
 			{
 				PlaceRock(hit, ray);
 			}
-			//RMB
-			if (Input.GetMouseButtonDown(1))
+			if (Input.GetKeyDown(KeyCode.Z))
 			{
-				_mouseDownPos = mousePos;
-			}
-			else if (Input.GetMouseButtonUp(1) && (_mouseDownPos == mousePos))
-			{
-				SelectNextPrefab(hit, ray);
+				DeleteRock(hit, ray);
 			}
 
+			UpdatePrefabSelection(ray, hit);
 			UpdateGhost(ray);
 		}
 
-		private Vector3 _mouseDownPos;
+		private void UpdatePrefabSelection(RaycastHit ray, bool hit)
+		{
+			if (Input.GetKeyDown(KeyCode.Q))
+			{
+				SelectPreviousPrefab(hit, ray);
+			}
+			if (Input.GetKeyDown(KeyCode.E))
+			{
+				SelectNextPrefab(hit, ray);
+			}
+		}
+
+		private void SelectPreviousPrefab(bool hit, RaycastHit ray)
+		{
+			_selectedIndex--;
+			if (_selectedIndex < 0)
+			{
+				_selectedIndex = _prefabs.Count - 1;
+			}
+			UpdateGhostModel(ray);
+		}
 
 		private void SelectNextPrefab(bool hit, RaycastHit ray)
 		{
@@ -119,6 +153,11 @@ namespace Maritaria.WorldBuilder
 			{
 				_selectedIndex = 0;
 			}
+			UpdateGhostModel(ray);
+		}
+
+		private void UpdateGhostModel(RaycastHit ray)
+		{
 			Destroy(_ghost);
 			_ghost = CreateGhost(SelectedPrefab, ray.point);
 		}
@@ -156,6 +195,25 @@ namespace Maritaria.WorldBuilder
 		private void PlaceRock(Vector3 point, Quaternion direction)
 		{
 			SelectedPrefab.SpawnFromPrefabAndAddToSaveData(point, direction);
+		}
+
+		private void DeleteRock(bool hit, RaycastHit ray)
+		{
+			if (hit && ray.transform.gameObject.IsScenery())
+			{
+				var vis = ray.transform.gameObject.GetComponentInParents<Visible>(true);
+				UnityGraph.LogGameObject(vis.transform.gameObject);
+
+				var terrain = vis.gameObject.GetComponent<TerrainObject>();
+				var dispenser = vis.gameObject.GetComponent<ResourceDispenser>();
+
+				var info = dispenser.Store();
+				dispenser.SetAwake(false);
+				info.health = 0f;
+				info.regrowDelay = -1f;
+				dispenser.Restore(info);
+				dispenser.SetAwake(true);
+			}
 		}
 	}
 }

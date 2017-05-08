@@ -15,6 +15,7 @@ namespace Maritaria.WorldBuilder
 			base.Load();
 			holder = new GameObject();
 			holder.AddComponent<EditorHotkey>().Mod = this;
+			WorldEditorCamera.InitSingleton(holder);
 			UnityEngine.Object.DontDestroyOnLoad(holder);
 		}
 	}

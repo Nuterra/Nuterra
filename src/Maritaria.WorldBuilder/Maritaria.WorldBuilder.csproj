@@ -56,6 +56,7 @@
     <Compile Include="WorldBuilderMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EditorHotkey.cs" />
+    <Compile Include="WorldEditorCamera.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nuterra\Nuterra.csproj">
