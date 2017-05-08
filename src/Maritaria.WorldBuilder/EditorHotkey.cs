@@ -72,7 +72,7 @@ namespace Maritaria.WorldBuilder
 			bool shouldUpdate = EditorEnabled;
 			if (ManPauseGame.inst.IsPaused || EventSystem.current.IsPointerOverGameObject() || !ManGameMode.inst.IsCurrent<ModeMisc>())
 			{
-				stateChanged |= !EditorEnabled;
+				stateChanged |= EditorEnabled;
 				shouldUpdate = false;
 			}
 			if (stateChanged)
