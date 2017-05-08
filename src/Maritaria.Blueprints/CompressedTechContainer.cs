@@ -66,17 +66,20 @@ namespace Maritaria.Blueprints
 
 		private void SpawnTech()
 		{
-			ManSpawn.inst.SpawnTank(new ManSpawn.TankSpawnParams
+			if (_savedTech != null)
 			{
-				blockIDs = null,
-				forceSpawn = true,
-				grounded = true,
-				placement = ManSpawn.TankSpawnParams.Placement.BoundsCentredAtPosition,
-				position = Singleton.Manager<ManWorld>.inst.ProjectToGround(transform.position, true),
-				rotation = Quaternion.Euler(0f, Singleton.cameraTrans.rotation.eulerAngles.y, 0f),
-				teamID = ManSpawn.PlayerTeam,
-				techData = _savedTech,
-			}, addToObjectManager: true);
+				ManSpawn.inst.SpawnTank(new ManSpawn.TankSpawnParams
+				{
+					blockIDs = null,
+					forceSpawn = true,
+					grounded = true,
+					placement = ManSpawn.TankSpawnParams.Placement.BoundsCentredAtPosition,
+					position = Singleton.Manager<ManWorld>.inst.ProjectToGround(transform.position, true),
+					rotation = Quaternion.Euler(0f, Singleton.cameraTrans.rotation.eulerAngles.y, 0f),
+					teamID = ManSpawn.PlayerTeam,
+					techData = _savedTech,
+				}, addToObjectManager: true);
+			}
 		}
 
 		private void SelfDestruct()
