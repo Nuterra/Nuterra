@@ -76,11 +76,11 @@
       <DependentUpon>InstallSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra">
-      <Link>Nuterra_Data\mod-nuterra</Link>
+      <Link>Nuterra_Data\Assets\mod-nuterra</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra.manifest">
-      <Link>Nuterra_Data\mod-nuterra.manifest</Link>
+    <None Include="..\..\data\GeneratedAssetBundles\mod-blueprints">
+      <Link>Nuterra_Data\Assets\mod-blueprints</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
@@ -88,9 +88,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Nuterra_Data\CustomCursor\HighVis_White\hotspots.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\nuterra.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
@@ -144,6 +141,10 @@
     </None>
     <None Include="..\Nuterra.Editor\bin\$(Configuration)\Nuterra.Editor.dll">
       <Link>Nuterra_Data\Mods\Nuterra.Editor.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Maritaria.Blueprints\bin\$(Configuration)\Maritaria.Blueprints.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.Blueprints.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Maritaria.WorldBuilder\bin\$(Configuration)\Maritaria.WorldBuilder.dll">

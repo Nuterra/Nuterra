@@ -88,11 +88,6 @@ namespace Nuterra.Installer
 				Console.WriteLine();
 
 				string localNuterra = Path.Combine(Directory.GetCurrentDirectory(), "Nuterra_Data");
-				string localMods = Path.Combine(localNuterra, "Mods");
-				if (!Directory.Exists(localMods))
-				{
-					throw new Exception("Missing mods from install directory Nuterra_Data/Mods!");
-				}
 
 				var info = new ModificationInfo();
 				info.TerraTechRoot = Path.GetDirectoryName(installSettings.TerraTechRoot);
@@ -101,10 +96,11 @@ namespace Nuterra.Installer
 
 				Console.WriteLine("Modding Assembly-CSharp.dll");
 				InstallProgram.PerformInstall(info);
+				Console.WriteLine();
 
 				if (!ArePathsEqual(Directory.GetCurrentDirectory(), info.TerraTechRoot))
 				{
-					CopyNuterraFiles(info, localNuterra, localMods);
+					CopyNuterraFiles(info, localNuterra);
 				}
 				else
 				{
@@ -130,31 +126,35 @@ namespace Nuterra.Installer
 			}
 		}
 
-		private static void CopyNuterraFiles(ModificationInfo info, string localNuterra, string localMods)
+		private static void CopyNuterraFiles(ModificationInfo info, string localNuterra)
 		{
-			Console.WriteLine("Copying Assetbundles");
 			string moddedNuterra = Path.Combine(info.TerraTechRoot, "Nuterra_Data");
-			if (!Directory.Exists(moddedNuterra))
+			CopyDirectory(localNuterra, moddedNuterra, "Assets", "*");
+			CopyDirectory(localNuterra, moddedNuterra, "Mods", "*.dll");
+		}
+
+		private static void CopyDirectory(string localNuterra, string moddedNuterra, string dirname, string filePattern)
+		{
+			Console.WriteLine($"Copying {dirname}");
+			string source = Path.Combine(localNuterra, dirname);
+			if (!Directory.Exists(source))
 			{
-				Directory.CreateDirectory(moddedNuterra);
+				Console.WriteLine("Warning: missing directory from install dir!");
+				return;
+			}
+			string target = Path.Combine(moddedNuterra, dirname);
+			if (!Directory.Exists(target))
+			{
+				Directory.CreateDirectory(target);
 			}
 
-			File.Copy(Path.Combine(localNuterra, "mod-nuterra.manifest"), Path.Combine(moddedNuterra, "mod-nuterra.manifest"), overwrite: true);
-			File.Copy(Path.Combine(localNuterra, "mod-nuterra"), Path.Combine(moddedNuterra, "mod-nuterra"), overwrite: true);
-
-			Console.WriteLine("Copying Mods");
-			string moddedMods = Path.Combine(moddedNuterra, "Mods");
-			if (!Directory.Exists(moddedMods))
+			foreach (string file in Directory.EnumerateFiles(source, filePattern))
 			{
-				Directory.CreateDirectory(moddedMods);
+				string fileName = Path.GetFileName(file);
+				Console.WriteLine($"- {fileName}");
+				File.Copy(file, Path.Combine(target, fileName), overwrite: true);
 			}
-
-			foreach (string file in Directory.EnumerateFiles(localMods, "*.dll"))
-			{
-				string modName = Path.GetFileName(file);
-				Console.WriteLine($"- {modName}");
-				File.Copy(file, Path.Combine(moddedMods, modName), overwrite: true);
-			}
+			Console.WriteLine();
 		}
 
 		private bool ArePathsEqual(string path1, string path2)

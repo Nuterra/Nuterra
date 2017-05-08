@@ -61,7 +61,7 @@ namespace Nuterra
 			SetPrice(prefabInfo.Price);
 			SetFaction(FactionSubTypes.GSO);
 			SetCategory(BlockCategories.Accessories);
-			SetSize(new Vector3I(prefabInfo.Dimensions));
+			SetSize(new Vector3I(prefabInfo.Dimensions), AttachmentPoints.Bottom);
 			SetModel(prefab);
 			SetIcon(prefabInfo.DisplaySprite);
 			return this;
@@ -119,7 +119,7 @@ namespace Nuterra
 			return this;
 		}
 
-		public BlockPrefabBuilder SetSize(Vector3I size)
+		public BlockPrefabBuilder SetSize(Vector3I size, AttachmentPoints points = AttachmentPoints.Bottom)
 		{
 			ThrowIfFinished();
 			List<Vector3> cells = new List<Vector3>();
@@ -135,12 +135,41 @@ namespace Nuterra
 						{
 							aps.Add(new Vector3(x, -0.5f, z));
 						}
+						if (points == AttachmentPoints.All)
+						{
+							if (x == 0)
+							{
+								aps.Add(new Vector3(-0.5f, y, z));
+							}
+							if (x == size.x - 1)
+							{
+								aps.Add(new Vector3(x + 0.5f, y, z));
+							}
+							if (y == size.y - 1)
+							{
+								aps.Add(new Vector3(x, y + 0.5f, z));
+							}
+							if (z == 0)
+							{
+								aps.Add(new Vector3(x, y, -0.5f));
+							}
+							if (z == size.z - 1)
+							{
+								aps.Add(new Vector3(x, y, z + 0.5f));
+							}
+						}
 					}
 				}
 			}
 			_block.filledCells = cells.ToArray();
 			_block.attachPoints = aps.ToArray();
 			return this;
+		}
+
+		public enum AttachmentPoints
+		{
+			Bottom,
+			All,
 		}
 
 		public BlockPrefabBuilder SetMass(float mass)
@@ -158,7 +187,7 @@ namespace Nuterra
 			return this;
 		}
 
-		private BlockPrefabBuilder SetModel(GameObject renderObject)
+		public BlockPrefabBuilder SetModel(GameObject renderObject)
 		{
 			ThrowIfFinished();
 			if (_renderObject)

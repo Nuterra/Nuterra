@@ -76,7 +76,7 @@
 			this.Controls.Add(this.installConsole);
 			this.MinimumSize = new System.Drawing.Size(400, 250);
 			this.Name = "MainForm";
-			this.Text = "Nuterra v0.4.0 Installer";
+			this.Text = "Nuterra v0.4.2.1 Installer";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.ResumeLayout(false);

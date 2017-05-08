@@ -13,5 +13,6 @@ namespace Nuterra.Internal
 		public static readonly string DataFolder = Path.Combine(RootFolder, "Nuterra_Data");
 		public static readonly string ModsFolder = Path.Combine(DataFolder, "Mods");
 		public static readonly string ConfigFolder = Path.Combine(DataFolder, "Config");
+		public static readonly string AssetsFolder = Path.Combine(DataFolder, "Assets");
 	}
 }
