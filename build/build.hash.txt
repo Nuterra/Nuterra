@@ -1,0 +1,16 @@
+# Lines like these are comments and ignored by the build tools
+# Write hashes like this: {hash} {version}
+# First matched hash is accepted, put hashes of new versions of the game at the top of the file
+
+# 0.7.4
+f5TB9FoIaNfyG5w5zl/j9Q== Windows-64bit-R&D
+4QxGc0MeOc2+PS4sHEsgYQ== Windows-64bit-default
+iisXS82+iqQiOc8cuLrvIA== Windows-64bit (clean)
+#f5TB9FoIaNfyG5w5zl/j9Q== Windows-64bit (unknown)
+
+# 0.7.3
+#0jD/kiQpfQVfu4alobstFQ== Windows-64bit
+#UZWmGr/cmm+p8hNyWnexzg== Linux-64bit
+
+# 0.7.2
+#aVrNE3srEPlGYhn2vLwJqw== Windows-64bit

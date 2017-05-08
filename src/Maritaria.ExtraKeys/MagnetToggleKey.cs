@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using Nuterra;
 using Nuterra.Internal;
 using UnityEngine;
 
@@ -35,6 +38,7 @@ namespace Maritaria.ExtraKeys
 
 		private void Update()
 		{
+
 			if (Input.GetKeyDown(Mod.KeyConfig.MagnetToggleKey))
 			{
 				MagnetsEnabled = !MagnetsEnabled;

@@ -10,7 +10,7 @@ namespace Maritaria.Cursor
 	{
 		private MousePointer _original;
 
-		public Dictionary<CursorType, GameCursor> Cursors { get; set; }
+		public Dictionary<CursorType, MousePointer.CursorData> Cursors { get; set; }
 
 		public static CursorManager Install(MousePointer original)
 		{
@@ -29,18 +29,17 @@ namespace Maritaria.Cursor
 
 		public void RestoreFromOriginalMousePointer()
 		{
-			Cursors = new Dictionary<CursorType, GameCursor>();
+			Cursors = new Dictionary<CursorType, MousePointer.CursorData>();
 
-
-			Cursors.Add(CursorType.Default, new GameCursor(GetOriginalCursor(_original, "m_DefaultPointer"), new Vector2(16f, 16f)));
-			Cursors.Add(CursorType.Hover, new GameCursor(GetOriginalCursor(_original, "m_OverGrabbableCursor"), new Vector2(16f, 16f)));
-			Cursors.Add(CursorType.Pressed, new GameCursor(GetOriginalCursor(_original, "m_HoldingGrabbableCursor"), new Vector2(16f, 16f)));
-			Cursors.Add(CursorType.Painting, new GameCursor(GetOriginalCursor(_original, "m_PaintingCursor"), new Vector2(16f, 16f)));
+			Cursors.Add(CursorType.Default, _original.DefaultPointer);
+			Cursors.Add(CursorType.Hover, _original.OverGrabbableCursor);
+			Cursors.Add(CursorType.Pressed, _original.HoldingGrabbableCursor);
+			Cursors.Add(CursorType.Painting, _original.PaintingCursor);
 		}
 
-		private static Texture2D GetOriginalCursor(MousePointer pointer, string name)
+		private static MousePointer.CursorData GetOriginalCursor(MousePointer pointer, string name)
 		{
-			return (Texture2D)typeof(MousePointer).GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(pointer);
+			return (MousePointer.CursorData)typeof(MousePointer).GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(pointer);
 		}
 
 		private void Update()
@@ -58,7 +57,7 @@ namespace Maritaria.Cursor
 					cursor = this.Cursors[CursorType.Hover];
 				}
 			}
-			UnityEngine.Cursor.SetCursor(cursor.Texture, cursor.Hotspot, CursorMode.Auto);
+			UnityEngine.Cursor.SetCursor(cursor.m_Texture, cursor.m_Hotspot, CursorMode.Auto);
 		}
 	}
 }

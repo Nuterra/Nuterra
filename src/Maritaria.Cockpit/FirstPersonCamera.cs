@@ -64,7 +64,6 @@ namespace Maritaria.Cockpit
 
 				float before = changeAroundX;
 				changeAroundX = Mathf.Clamp(changeAroundX, -80, 80);
-				Console.WriteLine($"Float: {before} => {changeAroundX}");
 				Quaternion newRotation = Quaternion.Euler(changeAroundX, changeAroundY, 0);
 				_rotation = newRotation;
 			}

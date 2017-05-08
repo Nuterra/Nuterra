@@ -51,14 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra">
-      <Link>Nuterra_Data\mod-nuterra</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra.manifest">
-      <Link>Nuterra_Data\mod-nuterra.manifest</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Hooking\AfterMerge.cs" />
     <Compile Include="AbsorbNuterra.cs" />
     <Compile Include="HookNuterra.cs" />
@@ -89,15 +81,6 @@
     <Compile Include="ModuleImport\TypeDefOptions.cs" />
     <Compile Include="ModuleImport\TypeNodeCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\hotspots.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\hotspots.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\nuterra.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -117,38 +100,10 @@
       <Link>Nuterra_Data\GalaxyCSharp.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\default.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\hover.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\painting.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\pressed.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\default.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\hover.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\painting.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\HighVis_White\pressed.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Nuterra_Data\CustomCursor\license.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\build\Nuterra.BuildTools.targets" />
-  
-  <Target Name="AfterBuild" DependsOnTargets="Nuterra_ModStage2;Nuterra_InstallMod" />
+  <Target Name="AfterBuild" DependsOnTargets="Nuterra_ModStage2" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

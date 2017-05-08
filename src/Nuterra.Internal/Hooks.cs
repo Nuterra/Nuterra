@@ -113,16 +113,16 @@ namespace Nuterra.Internal
 						{
 							return;
 						}
-						if (!module.lifted && shouldFireEvent.Fire)
+						if (!module.m_Lifted && shouldFireEvent.Fire)
 						{
-							module.actuator.Play(module.lift.name);
-							module.lifted = true;
+							module.actuator.Play(module.m_LiftAnim.name);
+							module.m_Lifted = true;
 							return;
 						}
-						if (module.lifted && (!shouldFireEvent.Fire || (module.upAndDownMode && shouldFireEvent.Fire)))
+						if (module.m_Lifted && (!shouldFireEvent.Fire || (module.m_UpAndDownMode && shouldFireEvent.Fire)))
 						{
-							module.actuator.Play(module.drop.name);
-							module.lifted = false;
+							module.actuator.Play(module.m_DropAnim.name);
+							module.m_Lifted = false;
 						}
 					}
 				}
@@ -228,7 +228,7 @@ namespace Nuterra.Internal
 			public static class Licenses
 			{
 				//Hook to be called at the end of Licenses.Init
-				internal static void Init(ManLicenses inst)
+				internal static void Init(ManLicenses inst, int unused)
 				{
 					OnInitializing?.Invoke();
 				}
@@ -277,18 +277,26 @@ namespace Nuterra.Internal
 			{
 				internal static bool SaveSaveData(ManSaveGame.SaveData saveData, string filePath)
 				{
-					Console.WriteLine($"Flagging save file (current={saveData.State.m_OverlayData ?? "null"})");
-					saveData.State.m_OverlayData = "Save loaded by modded game";
+					FlagSave(saveData);
 					var saveEvent = new SaveGameEvent(saveData, filePath);
 					OnSave?.Invoke(saveEvent);
 					return saveEvent.CancelSave;
 				}
 
+				internal static void FlagSave(ManSaveGame.SaveData saveData)
+				{
+#warning Flag saves here
+					//Console.WriteLine($"Flagging save file (current={saveData.State.m_OverlayData ?? "null"})");
+					//saveData.State.m_OverlayData = "Save loaded by modded game";
+				}
+
 				public static event Action<SaveGameEvent> OnSave;
 			}
+
 			public static class SplashScreen
 			{
 				public static bool Initialized { get; set; }
+
 				public static event Action<ManSplashScreen> Initializing;
 
 				internal static void Awake(ManSplashScreen manager)
@@ -296,6 +304,17 @@ namespace Nuterra.Internal
 					Initialized = true;
 					Initializing?.Invoke(manager);
 				}
+			}
+
+			public static class Screenshot
+			{
+				internal static void EncodeCompressedPreset(byte[] compressedSerialisedPreset, int serialisedPresetSize, Texture2D texture)
+				{
+					var info = new ScreenshotEvent(texture);
+					BeforeEncodeScreenshot?.Invoke(info);
+				}
+
+				public static event Action<ScreenshotEvent> BeforeEncodeScreenshot;
 			}
 		}
 
@@ -339,6 +358,20 @@ namespace Nuterra.Internal
 			}
 
 			public static event Action<SpriteLookupEvent> OnSpriteLookup;
+		}
+	}
+
+	public sealed class ScreenshotEvent
+	{
+		/// <summary>
+		/// The image the tech will be encoded onto.
+		/// </summary>
+		public Texture2D Texture { get; }
+
+		public ScreenshotEvent(Texture2D image)
+		{
+			if (image == null) throw new ArgumentNullException(nameof(image));
+			Texture = image;
 		}
 	}
 

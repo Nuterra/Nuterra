@@ -6,12 +6,16 @@ namespace Nuterra.Build
 	{
 		protected override void Perform(ModificationInfo info)
 		{
-			string cleanAssemblyPath = AssemblyCSharpUtil.FindCleanAssembly(info.TerraTechManaged, info.ExpectedHash);
-			if (cleanAssemblyPath == null)
+			foreach(string hash in info.AcceptedHashes)
 			{
-				Error.NoCleanBackup();
+				string cleanAssemblyPath = AssemblyCSharpUtil.FindCleanAssembly(info.TerraTechManaged, hash);
+				if (cleanAssemblyPath != null)
+				{
+					info.CleanAssemblyPath = cleanAssemblyPath;
+					return;
+				}
 			}
-			info.CleanAssemblyPath = cleanAssemblyPath;
+			Error.NoCleanBackup();
 		}
 	}
 }

@@ -17,6 +17,8 @@ namespace Sylver
 			}
 		}
 
+		public static bool IsRandD => ManGameMode.inst.IsCurrent<ModeMisc>();
+
 		private void Update()
 		{
 			if (!IsRandD)
@@ -79,16 +81,5 @@ namespace Sylver
 		private static string m_FriendlyAIName = "FTUE";
 
 		private int num;
-
-		public static bool IsRandD;
-
-		public static class Hooks_Mode
-		{
-			//Need to be Hooked at the start of Mode.EnterMode() by SylverMod.Mode_EnterMode(this);
-			public static void EnterMode(Mode newGamemode, bool firstTick, Mode.InitSettings initSettings)
-			{
-				IsRandD = (newGamemode is ModeMisc);
-			}
-		}
 	}
 }

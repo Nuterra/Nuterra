@@ -1,29 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  
-  <Target Name="Nuterra_ModStage1" DependsOnTargets="Nuterra_ReadUserConfig"
-          Inputs="$(TargetPath);Nuterra_Data\build.access.txt"
-          Outputs="$(Nuterra_OutputBuildStage1)">
-    <!-- Run the build stage1 tool to fetch a clean copy of the assembly from the TT install dir and generate Assembly-CSharp-stage1.dll in /lib -->
-    <PropertyGroup>
-      <CommandLineParams>--dir "$(TerraTech_Root)" --data "Nuterra_Data" --out "$(Nuterra_OutputBuildStage1)"</CommandLineParams>
-    </PropertyGroup>
-    <Exec Command="&quot;$(TargetPath)&quot; $(CommandLineParams)" WorkingDirectory="$(OutDir)"/>
-  </Target>
-  
-  <Target Name="Nuterra_ModStage2" DependsOnTargets="Nuterra_ReadUserConfig"
-          Inputs="$(TargetPath)"
-          Outputs="$(Nuterra_OutputBuildStage2)">
-    <!-- Run the build stage2 tool to fetch a clean copy of the assembly from the TT install dir and generate Assembly-CSharp.dll in /lib -->
-    <PropertyGroup>
-      <CommandLineParams>--dir "$(TerraTech_Root)" --data "Nuterra_Data" --nuterra "Nuterra.Internal.dll" --out "$(Nuterra_OutputBuildStage2)"</CommandLineParams>
-    </PropertyGroup>
-    <Exec Command="&quot;$(TargetPath)&quot; $(CommandLineParams)" WorkingDirectory="$(OutDir)"/>
-  </Target>
-  
-  <Target Name="Nuterra_InstallMod" DependsOnTargets="Nuterra_ReadUserConfig;Nuterra_ModStage2"
-          Inputs="$(Nuterra_OutputBuildStage2)"
-          Outputs="$(TerraTech_AssemblyCSharp)">
-    <Copy SourceFiles="$(Nuterra_OutputBuildStage2)" DestinationFiles="$(TerraTech_AssemblyCSharp)" />
-  </Target>
+  <Import Project="Nuterra.Common.targets" />
 </Project>

@@ -75,7 +75,24 @@
     <EmbeddedResource Include="InstallSettings.resx">
       <DependentUpon>InstallSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra">
+      <Link>Nuterra_Data\mod-nuterra</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\data\GeneratedAssetBundles\mod-nuterra.manifest">
+      <Link>Nuterra_Data\mod-nuterra.manifest</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="App.config" />
+    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\hotspots.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_White\hotspots.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Nuterra_Data\nuterra.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -117,8 +134,20 @@
       <Link>Nuterra_Data\Mods\Maritaria.ExtraKeys.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Maritaria.Watermarks\bin\$(Configuration)\Maritaria.Watermarks.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.Watermarks.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Nuterra.HelloWorld\bin\$(Configuration)\Nuterra.HelloWorld.dll">
       <Link>Nuterra_Data\Mods\Nuterra.HelloWorld.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Nuterra.Editor\bin\$(Configuration)\Nuterra.Editor.dll">
+      <Link>Nuterra_Data\Mods\Nuterra.Editor.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Maritaria.WorldBuilder\bin\$(Configuration)\Maritaria.WorldBuilder.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.WorldBuilder.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Nuterra\bin\$(Configuration)\Nuterra.dll">
@@ -127,6 +156,51 @@
     </None>
     <None Include="..\Sylver\bin\$(Configuration)\Sylver.dll">
       <Link>Nuterra_Data\Mods\Sylver.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\default.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\hover.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\painting.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_Black\pressed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_White\default.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_White\hover.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_White\painting.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\HighVis_White\pressed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuterra_Data\CustomCursor\license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

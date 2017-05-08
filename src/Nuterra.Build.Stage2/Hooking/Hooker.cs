@@ -12,7 +12,7 @@ namespace Nuterra.Build.Hooking
 		public static void Apply(ModuleDefMD module)
 		{
 			//Booting Nuterra
-			Redirect(module, "ManUI", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Start)) { PassArguments = false });
+			Redirect(module, "ManSpawn", typeof(Bootstrapper), new RedirectSettings(nameof(Bootstrapper.Start)) { PassArguments = false, AppendToEnd = true });
 
 			//Modded game flagging
 			Hook_BugReportFlagger(module);
@@ -23,6 +23,7 @@ namespace Nuterra.Build.Hooking
 			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StartCameraSpin)) { AppendToEnd = true });
 			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StopCameraSpin)) { AppendToEnd = true });
 			Redirect(module, "ManSplashScreen", typeof(Hooks.Managers.SplashScreen), new RedirectSettings(nameof(Hooks.Managers.SplashScreen.Awake)) { AppendToEnd = true });
+			Redirect(module, "ManScreenshot", typeof(Hooks.Managers.Screenshot), new RedirectSettings(nameof(Hooks.Managers.Screenshot.EncodeCompressedPreset)) { });
 
 			//Module events
 			Redirect(module, "ModuleDrill", typeof(Hooks.Modules.Drill), new RedirectSettings(nameof(Hooks.Modules.Drill.ControlInput)) { ReplaceBody = true });
@@ -71,9 +72,14 @@ namespace Nuterra.Build.Hooking
 			int insertionStart = insertedInstructionCounter;
 			if (settings.PassArguments)
 			{
+				if (sourceMethod.Parameters.Count != targetMethod.Parameters.Count)
+				{
+					throw new Exception($"Parameter count mismatch for {sourceMethod} -> {targetMethod}");
+				}
+
 				for (int i = 0; i < sourceMethod.Parameters.Count; i++)
 				{
-					body.Insert(insertedInstructionCounter++, GetLoadArgOpCode(i));
+					body.Insert(insertedInstructionCounter++, GetLoadArgOpCode(i, sourceMethod, targetMethod));
 				}
 			}
 			body.Insert(insertedInstructionCounter++, OpCodes.Call.ToInstruction(targetMethod));
@@ -209,15 +215,19 @@ namespace Nuterra.Build.Hooking
 			return clonedSource;
 		}
 
-		private static Instruction GetLoadArgOpCode(int i)
+		private static Instruction GetLoadArgOpCode(int i, MethodDef sourceMethod, MethodDef targetMethod)
 		{
+			if (targetMethod.Parameters[i].Type.IsByRef)
+			{
+				return OpCodes.Ldarga.ToInstruction(sourceMethod.Parameters[i]);
+			}
 			switch (i)
 			{
 				case 0: return OpCodes.Ldarg_0.ToInstruction();
 				case 1: return OpCodes.Ldarg_1.ToInstruction();
 				case 2: return OpCodes.Ldarg_2.ToInstruction();
 				case 3: return OpCodes.Ldarg_3.ToInstruction();
-				default: return OpCodes.Ldarg.ToInstruction(i);
+				default: return OpCodes.Ldarg.ToInstruction(sourceMethod.Parameters[i]);
 			}
 		}
 
@@ -304,7 +314,7 @@ namespace Nuterra.Build.Hooking
 			MethodDef markUserMessage = bugReportFlagger.Methods.Single(m => m.Name == nameof(Hooks.BugReports.MarkUserMessage));
 
 			TypeDef bugReporter = module.Find("UIScreenBugReport", isReflectionName: true);
-			TypeDef postIterator = bugReporter.NestedTypes.Single(t => t.FullName == "UIScreenBugReport/<PostIt>c__Iterator78");
+			TypeDef postIterator = bugReporter.NestedTypes.Single(t => t.FullName.Contains("UIScreenBugReport/<PostIt>"));
 			MethodDef moveNext = postIterator.Methods.Single(m => m.Name == "MoveNext");
 
 			FieldDef bodyField = bugReporter.Fields.Single(f => f.Name == "m_Body");
