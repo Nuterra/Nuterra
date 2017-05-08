@@ -146,6 +146,10 @@
       <Link>Nuterra_Data\Mods\Nuterra.Editor.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Maritaria.WorldBuilder\bin\$(Configuration)\Maritaria.WorldBuilder.dll">
+      <Link>Nuterra_Data\Mods\Maritaria.WorldBuilder.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Nuterra\bin\$(Configuration)\Nuterra.dll">
       <Link>Nuterra_Data\Mods\Nuterra.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
