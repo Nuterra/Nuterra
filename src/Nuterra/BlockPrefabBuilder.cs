@@ -52,21 +52,6 @@ namespace Nuterra
 			}
 		}
 
-		public BlockPrefabBuilder FromAsset(GameObject prefab)
-		{
-			var prefabInfo = prefab.GetComponent<CustomBlockPrefab>();
-			SetBlockID(prefabInfo.BlockID);
-			SetName(prefabInfo.Name);
-			SetDescription(prefabInfo.Description);
-			SetPrice(prefabInfo.Price);
-			SetFaction(FactionSubTypes.GSO);
-			SetCategory(BlockCategories.Accessories);
-			SetSize(new Vector3I(prefabInfo.Dimensions), AttachmentPoints.Bottom);
-			SetModel(prefab);
-			SetIcon(prefabInfo.DisplaySprite);
-			return this;
-		}
-
 		public void Register()
 		{
 			ThrowIfFinished();
@@ -215,10 +200,10 @@ namespace Nuterra
 			return this;
 		}
 
-		private BlockPrefabBuilder SetIcon(Sprite displaySprite)
+		public BlockPrefabBuilder SetIcon(Sprite sprite)
 		{
 			ThrowIfFinished();
-			_customBlock.DisplaySprite = displaySprite;
+			_customBlock.DisplaySprite = sprite;
 			return this;
 		}
 

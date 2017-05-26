@@ -72,16 +72,17 @@ namespace Nuterra.BlockPacks
 			if (prefab.GetComponent<CustomBlockPrefab>() != null)
 			{
 				_loadedblocks.Add(assetPath, prefab);
-				Console.WriteLine();
-				Console.WriteLine("================");
-				Console.WriteLine();
-				Console.WriteLine("EY its me UR FUNCTION");
-				Console.WriteLine(assetPath);
-				Console.WriteLine();
-				Console.WriteLine("================");
-				Console.WriteLine();
+				var prefabInfo = prefab.GetComponent<CustomBlockPrefab>();
 				new BlockPrefabBuilder()
-					.FromAsset(prefab)
+					.SetBlockID(prefabInfo.BlockID)
+					.SetName(prefabInfo.Name)
+					.SetDescription(prefabInfo.Description)
+					.SetPrice(prefabInfo.Price)
+					.SetFaction(FactionSubTypes.GSO)
+					.SetCategory(BlockCategories.Accessories)
+					.SetSize(new Vector3I(prefabInfo.Dimensions), BlockPrefabBuilder.AttachmentPoints.Bottom)
+					.SetModel(prefab)
+					.SetIcon(prefabInfo.DisplaySprite)
 					.Register();
 			}
 		}
