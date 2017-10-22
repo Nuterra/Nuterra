@@ -7,29 +7,20 @@ using UnityEngine;
 using System.Xml;
 using System.Xml.Linq;
 using System.IO;
+using Nuterra;
 
 namespace Sylver.PreciseSnapshots
 {
-    class XMLLoad : MonoBehaviour
+    public static class XMLLoad
     {
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.O) && Input.GetKey(KeyCode.LeftAlt) && Singleton.playerTank)
-            {
-                Vector3 position = Singleton.playerTank.trans.position;
-                Quaternion rotation = Singleton.playerTank.trans.rotation;
-                Tank temp = LoadXMLAsTech(Path.Combine(PreciseSnapshotsMod.PreciseSnapshotsFolder, "My First Tech.xml"), position+new Vector3(30,0,30), rotation);
-                Tank playerTank = Singleton.playerTank;
-                Singleton.Manager<ManTechs>.inst.SetPlayerTank(null, true);
-                playerTank.RemoveFromGame();
-                temp.trans.position = position;
-                temp.trans.rotation = rotation;
-
-                Singleton.Manager<ManTechs>.inst.SetPlayerTank(temp, true);
-            }
-        }
-
-        public Tank LoadXMLAsTech(string path,Vector3 position, Quaternion rotation)
+        /// <summary>
+        /// Load XML Files as Techs
+        /// </summary>
+        /// <param name="path">Path of the Tech file</param>
+        /// <param name="position">Tech position</param>
+        /// <param name="rotation">Tech rotation</param>
+        /// <returns></returns>
+        public static Tank LoadXMLAsTech(string path, Vector3 position, Quaternion rotation)
         {
             XmlDocument TechXML = new XmlDocument();
             try
@@ -60,6 +51,19 @@ namespace Sylver.PreciseSnapshots
                         IntVector3 localPositionIntVector = new IntVector3(int.Parse(cahedLocalPositionXML["x"].Value), int.Parse(cahedLocalPositionXML["y"].Value), int.Parse(cahedLocalPositionXML["z"].Value));
 
                         tech.blockman.AddBlock(block, localPositionIntVector, new OrthoRotation(OrthoRot));
+
+                        var localPositionXML = TechXML.SelectNodes("//Transform/Position")[i].Attributes;
+                        Vector3 localPosition = new Vector3(float.Parse(localPositionXML["x"].Value), float.Parse(localPositionXML["y"].Value), float.Parse(localPositionXML["z"].Value));
+
+                        var localRotationXML = TechXML.SelectNodes("//Transform/Rotation")[i].Attributes;
+                        Vector3 localRotation = new Vector3(float.Parse(localRotationXML["x"].Value), float.Parse(localRotationXML["y"].Value), float.Parse(localRotationXML["z"].Value));
+
+                        var localScaleXML = TechXML.SelectNodes("//Transform/Scale")[i].Attributes;
+                        Vector3 localScale = new Vector3(float.Parse(localScaleXML["x"].Value), float.Parse(localScaleXML["y"].Value), float.Parse(localScaleXML["z"].Value));
+
+                        block.trans.localPosition = localPosition;
+                        block.trans.localRotation = Quaternion.Euler(localRotation);
+                        block.trans.localScale = localScale;
                     }
                 }
                 catch { break; }

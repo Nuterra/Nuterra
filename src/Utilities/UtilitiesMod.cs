@@ -13,7 +13,6 @@ namespace Utilities
     public class UtilitiesMod : TerraTechMod
     {
         private GameObject _holder;
-        private static int currentWindowID = int.MaxValue-1;
 
         public override string Name => "Utilities";
 
@@ -48,11 +47,6 @@ namespace Utilities
                 AllVisibles[(int)obj.visible.type].Remove(obj.visible);
             }
             catch { }
-        }
-
-        public static int GetWindowID()
-        {
-            return currentWindowID--;
         }
 
         public static Dictionary<int, List<Visible>> AllVisibles = new Dictionary<int, List<Visible>>

@@ -24,8 +24,8 @@ namespace Sylver.PreciseSnapshots
         {
             base.Load();
             _holder = new GameObject();
-            _holder.AddComponent<XMLSave>();
-            _holder.AddComponent<XMLLoad>();
+            _holder.AddComponent<SaveWindow>();
+            _holder.AddComponent<LoadWindow>();
             UnityEngine.Object.DontDestroyOnLoad(_holder);
 
             if(!Directory.Exists(PreciseSnapshotsFolder))

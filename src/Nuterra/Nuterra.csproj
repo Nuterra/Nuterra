@@ -74,6 +74,7 @@
     <Compile Include="NuterraApi.cs" />
     <Compile Include="TerraTechMod.cs" />
     <Compile Include="UnityGraph.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

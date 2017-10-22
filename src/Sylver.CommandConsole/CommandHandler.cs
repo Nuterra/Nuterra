@@ -6,20 +6,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Rewired.UI.ControlMapper;
 using Nuterra.Internal;
+using Nuterra;
 
 
 namespace Sylver.CommandConsole
 {
     class CommandHandler : MonoBehaviour
     {
-
+        private int ID = Utils.GetWindowID();
         private void OnGUI()
         {
             if (!visible) return;
             
             
             //GUI.skin.window = new GUIStyle { normal = { background = back, textColor = Color.white }, stretchHeight = true, stretchWidth = true };
-            GUI.Window(int.MaxValue, new Rect(Screen.width - 500f, Screen.height - 500f, 500f, 500f), new GUI.WindowFunction(DoWindow), "Console"/*, new GUIStyle { normal = { background = back, textColor = Color.white }/*, stretchHeight = true, stretchWidth = true }*/);
+            GUI.Window(ID, new Rect(Screen.width - 500f, Screen.height - 500f, 500f, 500f), new GUI.WindowFunction(DoWindow), "Console"/*, new GUIStyle { normal = { background = back, textColor = Color.white }/*, stretchHeight = true, stretchWidth = true }*/);
         }
 
         private void Update()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Nuterra;
 
 namespace Utilities
 {
@@ -11,7 +12,7 @@ namespace Utilities
     {
         private bool visible = false;
 
-        private int ID = UtilitiesMod.GetWindowID();
+        private int ID = Utils.GetWindowID();
 
         private void Update()
         {

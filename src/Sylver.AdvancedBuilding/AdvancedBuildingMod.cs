@@ -26,6 +26,5 @@ namespace Sylver.AdvancedBuilding
             _holder.AddComponent<ScaleBlocks>();
             UnityEngine.Object.DontDestroyOnLoad(_holder);  
         }
-
     }
 }

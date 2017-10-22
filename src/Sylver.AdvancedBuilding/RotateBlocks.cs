@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Nuterra;
 
 namespace Sylver.AdvancedBuilding
 {
     class RotateBlocks : MonoBehaviour
     {
+        private int ID = Utils.GetWindowID();
+
         private bool visible = false;
 
         private TankBlock block;
@@ -63,7 +66,7 @@ namespace Sylver.AdvancedBuilding
             GUI.skin.label.margin.bottom = 5;
             try
             {
-                win = GUI.Window(int.MinValue, win, new GUI.WindowFunction(DoWindow), "Block Rotation");
+                win = GUI.Window(ID, win, new GUI.WindowFunction(DoWindow), "Block Rotation");
                 block.trans.rotation = Quaternion.Euler(x, y, z);
             }
             catch (Exception ex)

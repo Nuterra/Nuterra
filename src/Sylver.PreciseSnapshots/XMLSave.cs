@@ -7,23 +7,25 @@ using UnityEngine;
 using System.Xml;
 using System.Xml.Linq;
 using System.IO;
+using Nuterra;
 
 namespace Sylver.PreciseSnapshots
 {
-    class XMLSave : MonoBehaviour
+    public static class XMLSave
     {
-        private void Update()
+        /// <summary>
+        /// Save Techs as XML Files
+        /// </summary>
+        /// <param name="tech">Tech to save</param>
+        /// <param name="path">Path of saving folder</param>
+        public static void SaveTechAsXML(Tank tech,string path)
         {
-            if(Input.GetKeyDown(KeyCode.S) && Input.GetKey(KeyCode.LeftAlt) && Singleton.playerTank)
+            if (!Directory.Exists(path))
             {
-                Console.WriteLine("Saving...");
-                SaveTechAsXML(Singleton.playerTank);
+                Console.WriteLine("XMLSave : Specified path \"" + path + "\" doesn't exists !");
+                return;
             }
-        }
-
-        public void SaveTechAsXML(Tank tech)
-        {
-            XmlWriter saver = XmlWriter.Create(Path.Combine(PreciseSnapshotsMod.PreciseSnapshotsFolder, tech.name+".xml"),new XmlWriterSettings { Indent = true });
+            XmlWriter saver = XmlWriter.Create(Path.Combine(path, tech.name+".xml"),new XmlWriterSettings { Indent = true });
 
             saver.WriteStartDocument();
             saver.WriteStartElement("Tech");

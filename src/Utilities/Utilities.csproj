@@ -33,9 +33,6 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\TerraTechTTMM\TerraTechWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Nuterra">
-      <HintPath>..\..\..\..\..\TerraTechTTMM\Nuterra_Data\Mods\Nuterra.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,6 +52,12 @@
     <Compile Include="TimeInfo.cs" />
     <Compile Include="UtilitiesMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nuterra\Nuterra.csproj">
+      <Project>{129ae68b-6968-44c4-a386-68c0e1e9a63e}</Project>
+      <Name>Nuterra</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
