@@ -19,11 +19,12 @@ namespace Nuterra.Build.Hooking
 			Hook_ManSaveGame_SaveSaveData(module);
 
 			//Manager events
-			Redirect(module, "ManLicenses", typeof(Hooks.Managers.Licenses), new RedirectSettings(nameof(Hooks.Managers.Licenses.Init)) { AppendToEnd = true });
+			//Redirect(module, "ManLicenses", typeof(Hooks.Managers.Licenses), new RedirectSettings(nameof(Hooks.Managers.Licenses.Init)) { AppendToEnd = true });
 			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StartCameraSpin)) { AppendToEnd = true });
 			Redirect(module, "ManPointer", typeof(Hooks.Managers.Pointer), new RedirectSettings(nameof(Hooks.Managers.Pointer.StopCameraSpin)) { AppendToEnd = true });
 			Redirect(module, "ManSplashScreen", typeof(Hooks.Managers.SplashScreen), new RedirectSettings(nameof(Hooks.Managers.SplashScreen.Awake)) { AppendToEnd = true });
 			Redirect(module, "ManScreenshot", typeof(Hooks.Managers.Screenshot), new RedirectSettings(nameof(Hooks.Managers.Screenshot.EncodeCompressedPreset)) { });
+
 
 			//Module events
 			Redirect(module, "ModuleDrill", typeof(Hooks.Modules.Drill), new RedirectSettings(nameof(Hooks.Modules.Drill.ControlInput)) { ReplaceBody = true });
@@ -32,8 +33,12 @@ namespace Nuterra.Build.Hooking
 			Redirect(module, "ModuleScoop", typeof(Hooks.Modules.Scoop), new RedirectSettings(nameof(Hooks.Modules.Scoop.ControlInput)) { ReplaceBody = true });
 			Redirect(module, "ModuleWeapon", typeof(Hooks.Modules.Weapon), new RedirectSettings(nameof(Hooks.Modules.Weapon.ControlInputManual)) { ReplaceBody = true });
 			Redirect(module, "ModuleHeart", typeof(Hooks.Modules.Heart), new RedirectSettings(nameof(Hooks.Modules.Heart.Update)));
+            //Redirect(module, "TechWeapon", typeof(Hooks.Modules.TechWeapon), new RedirectSettings(nameof(Hooks.Modules.TechWeapon.AddWeapon)) { AppendToEnd = true });
+            //Redirect(module, "TechWeapon", typeof(Hooks.Modules.TechWeapon), new RedirectSettings(nameof(Hooks.Modules.TechWeapon.RemoveWeapon)) { AppendToEnd = true });
+            Redirect(module, "Visibe", typeof(Hooks.Visibles), new RedirectSettings(nameof(Hooks.Visibles.OnSpawn)) { AppendToEnd = true });
+            Redirect(module, "Visibe", typeof(Hooks.Visibles), new RedirectSettings(nameof(Hooks.Visibles.OnRecycle)) { AppendToEnd = true });
 
-			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanAcceptItem));
+            CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanAcceptItem));
 			CreateHook(module, "ModuleItemPickup", typeof(Hooks.Modules.ItemPickup), nameof(Hooks.Modules.ItemPickup.CanReleaseItem));
 
 			//Custom block support

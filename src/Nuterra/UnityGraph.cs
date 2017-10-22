@@ -107,14 +107,14 @@ namespace Nuterra
 				Console.WriteLine($"{prefix}\t\t- {vec}");
 			}
 			Console.WriteLine($"{prefix}\tapGroups:");
-			foreach (TankBlock.APGroup group in tankBlock.apGroups)
+			/*foreach (TankBlock.APGroup group in tankBlock.apGroups)
 			{
 				Console.WriteLine($"{prefix}\t\t- Count: {group.Count}");
 				foreach (int i in group.Enumerate())
 				{
 					Console.WriteLine($"{prefix}\t\t\t{i}");
 				}
-			}
+			}*/
 		}
 
 		public static void LogComponent_Visible(Visible visible)

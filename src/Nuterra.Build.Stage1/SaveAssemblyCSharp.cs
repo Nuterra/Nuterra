@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using dnlib.DotNet;
 using dnlib.DotNet.Writer;
 
 namespace Nuterra.Build
@@ -8,10 +9,10 @@ namespace Nuterra.Build
 	{
 		protected override void Perform(ModificationInfo info)
 		{
-			string output = info.AssemblyCSharpOutputPath ?? Path.Combine(info.TerraTechManaged, "Assembly-CSharp.dll");
+			string output = /*info.AssemblyCSharpOutputPath ?? */Path.Combine(info.TerraTechManaged, "Assembly-CSharp-Modded.dll");
 			ModuleWriterOptions writerOptions = new ModuleWriterOptions();
-			//writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveFieldRids | MetaDataFlags.PreservePropertyRids;
-			info.AssemblyCSharp.Write(output, writerOptions);
+			writerOptions.MetaDataOptions.Flags = MetaDataFlags.PreserveAll | MetaDataFlags.KeepOldMaxStack;
+			info.AssemblyCSharp.Write(output,writerOptions);
 		}
 	}
 }

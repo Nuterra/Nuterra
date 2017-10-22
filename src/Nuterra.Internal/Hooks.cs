@@ -81,7 +81,7 @@ namespace Nuterra.Internal
 					}
 					if (performBehaviour)
 					{
-						module.state.enabled = shouldFireEvent.Fire;
+						//module.state.enabled = shouldFireEvent.Fire;
 					}
 				}
 
@@ -109,7 +109,7 @@ namespace Nuterra.Internal
 					}
 					if (performBehaviour)
 					{
-						if (module.actuator.isPlaying)
+						/*if (module.actuator.isPlaying)
 						{
 							return;
 						}
@@ -123,7 +123,7 @@ namespace Nuterra.Internal
 						{
 							module.actuator.Play(module.m_DropAnim.name);
 							module.m_Lifted = false;
-						}
+						}*/
 					}
 				}
 
@@ -182,7 +182,26 @@ namespace Nuterra.Internal
 				public static event Action<CanControlTankEvent> CanControlTank;
 			}
 
-			public static class Heart
+            public static class TechWeapon
+            {
+                public static void AddWeapon(ModuleWeapon Module)
+                {
+                    WeaponAddedEvent weaponAddedEvent = new WeaponAddedEvent(Module);
+                    WeaponAdded?.Invoke(weaponAddedEvent);
+                }
+
+                public static void RemoveWeapon(ModuleWeapon Module)
+                {
+                    WeaponRemovedEvent weaponRemovedEvent = new WeaponRemovedEvent(Module);
+                    WeaponRemoved?.Invoke(weaponRemovedEvent);
+                }
+                
+                public static event Action<WeaponAddedEvent> WeaponAdded;
+                
+                public static event Action<WeaponRemovedEvent> WeaponRemoved;
+            }
+
+            public static class Heart
 			{
 				internal static void Update(ModuleHeart module)
 				{
@@ -193,8 +212,8 @@ namespace Nuterra.Internal
 
 					if (!updateEvent.IsOnline && onlineOriginal)
 					{
-						module.DropAllItems(false);
-						module.m_ReadyAfterTime = Time.time + 0.0001f;
+						/*module.DropAllItems(false);
+						module.m_ReadyAfterTime = Time.time + 0.0001f;*/
 					}
 				}
 
@@ -228,7 +247,7 @@ namespace Nuterra.Internal
 			public static class Licenses
 			{
 				//Hook to be called at the end of Licenses.Init
-				internal static void Init(ManLicenses inst, int unused)
+				internal static void Init()
 				{
 					OnInitializing?.Invoke();
 				}
@@ -359,7 +378,26 @@ namespace Nuterra.Internal
 
 			public static event Action<SpriteLookupEvent> OnSpriteLookup;
 		}
-	}
+
+        public static class Visibles
+        {
+            public static void OnSpawn(Visible visible)
+            {
+                VisibleSpawnedEvent visibleSpawnedEvent = new VisibleSpawnedEvent(visible);
+                VisibleSpawned?.Invoke(visibleSpawnedEvent);
+            }
+
+            public static void OnRecycle(Visible visible)
+            {
+                VisibleRecycledEvent visibleRecycledEvent = new VisibleRecycledEvent(visible);
+                VisibleRecycled?.Invoke(visibleRecycledEvent);
+            }
+
+            public static event Action<VisibleSpawnedEvent> VisibleSpawned;
+
+            public static event Action<VisibleRecycledEvent> VisibleRecycled;
+        }
+    }
 
 	public sealed class ScreenshotEvent
 	{
@@ -511,4 +549,76 @@ namespace Nuterra.Internal
 			Module = module;
 		}
 	}
+
+    public sealed class WeaponAddedEvent
+    {
+        public ModuleWeapon WeaponComponent
+        {
+            get;
+            private set;
+        }
+
+        public WeaponAddedEvent(ModuleWeapon Weapon)
+        {
+            if (Weapon == null)
+            {
+                throw new ArgumentNullException("Weapon");
+            }
+            this.WeaponComponent = Weapon;
+        }
+    }
+
+    public sealed class WeaponRemovedEvent
+    {
+        public ModuleWeapon WeaponComponent
+        {
+            get;
+            private set;
+        }
+
+        public WeaponRemovedEvent(ModuleWeapon Weapon)
+        {
+            if (Weapon == null)
+            {
+                throw new ArgumentNullException("Weapon");
+            }
+            this.WeaponComponent = Weapon;
+        }
+    }
+
+    public sealed class VisibleSpawnedEvent
+    {
+        public Visible visible
+        {
+            get;
+            private set;
+        }
+
+        public VisibleSpawnedEvent(Visible visible)
+        {
+            if (visible == null)
+            {
+                throw new ArgumentNullException("Weapon");
+            }
+            this.visible = visible;
+        }
+    }
+
+    public sealed class VisibleRecycledEvent
+    {
+        public Visible visible
+        {
+            get;
+            private set;
+        }
+
+        public VisibleRecycledEvent(Visible visible)
+        {
+            if (visible == null)
+            {
+                throw new ArgumentNullException("Weapon");
+            }
+            this.visible = visible;
+        }
+    }
 }

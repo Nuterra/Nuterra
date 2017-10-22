@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuterra", "Nuterra\Nuterra.csproj", "{129AE68B-6968-44C4-A386-68C0E1E9A63E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -60,6 +60,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maritaria.WorldBuilder", "M
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maritaria.Blueprints", "Maritaria.Blueprints\Maritaria.Blueprints.csproj", "{340D4B91-2451-4A37-AD01-2C5014F12E5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sylver.AdvancedBuilding", "Sylver.AdvancedBuilding\Sylver.AdvancedBuilding.csproj", "{D53AD23D-5F7F-45A1-8276-1B0BE125655D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sylver.CommandConsole", "Sylver.CommandConsole\Sylver.CommandConsole.csproj", "{06AB4647-6157-4167-80A8-C7891FDA31E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sylver.PreciseSnapshots", "Sylver.PreciseSnapshots\Sylver.PreciseSnapshots.csproj", "{2E3BD124-03BA-485E-A106-ADF6D4A912B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sylver.WeaponGroups", "Sylver.WeaponGroups\Sylver.WeaponGroups.csproj", "{18B7AF3E-F35C-4D2C-BA94-22990F782582}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{9CEE2341-24DE-4F57-BE50-31CC4B47A0C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +141,26 @@ Global
 		{340D4B91-2451-4A37-AD01-2C5014F12E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{340D4B91-2451-4A37-AD01-2C5014F12E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{340D4B91-2451-4A37-AD01-2C5014F12E5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D53AD23D-5F7F-45A1-8276-1B0BE125655D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D53AD23D-5F7F-45A1-8276-1B0BE125655D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D53AD23D-5F7F-45A1-8276-1B0BE125655D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D53AD23D-5F7F-45A1-8276-1B0BE125655D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06AB4647-6157-4167-80A8-C7891FDA31E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06AB4647-6157-4167-80A8-C7891FDA31E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06AB4647-6157-4167-80A8-C7891FDA31E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06AB4647-6157-4167-80A8-C7891FDA31E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E3BD124-03BA-485E-A106-ADF6D4A912B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E3BD124-03BA-485E-A106-ADF6D4A912B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E3BD124-03BA-485E-A106-ADF6D4A912B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E3BD124-03BA-485E-A106-ADF6D4A912B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B7AF3E-F35C-4D2C-BA94-22990F782582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B7AF3E-F35C-4D2C-BA94-22990F782582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B7AF3E-F35C-4D2C-BA94-22990F782582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B7AF3E-F35C-4D2C-BA94-22990F782582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CEE2341-24DE-4F57-BE50-31CC4B47A0C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CEE2341-24DE-4F57-BE50-31CC4B47A0C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CEE2341-24DE-4F57-BE50-31CC4B47A0C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CEE2341-24DE-4F57-BE50-31CC4B47A0C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,5 +182,10 @@ Global
 		{3BFDFF28-F8A6-43EA-9F3A-E73FA4EDA70B} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 		{17D1662B-2C8C-40AB-86AE-E2F19D78E204} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 		{340D4B91-2451-4A37-AD01-2C5014F12E5B} = {3BA7DE14-6278-440A-95B1-026F30C10140}
+		{D53AD23D-5F7F-45A1-8276-1B0BE125655D} = {3BA7DE14-6278-440A-95B1-026F30C10140}
+		{06AB4647-6157-4167-80A8-C7891FDA31E2} = {3BA7DE14-6278-440A-95B1-026F30C10140}
+		{2E3BD124-03BA-485E-A106-ADF6D4A912B0} = {3BA7DE14-6278-440A-95B1-026F30C10140}
+		{18B7AF3E-F35C-4D2C-BA94-22990F782582} = {3BA7DE14-6278-440A-95B1-026F30C10140}
+		{9CEE2341-24DE-4F57-BE50-31CC4B47A0C8} = {3BA7DE14-6278-440A-95B1-026F30C10140}
 	EndGlobalSection
 EndGlobal

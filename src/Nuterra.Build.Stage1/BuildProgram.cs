@@ -22,10 +22,10 @@ namespace Nuterra.Build
 		{
 			var info = ModificationInfo.Parse(args);
 			var modificationChain = new VerifyRootDirectory();
-			modificationChain
-				.SetNext(new FindCleanAssembly())
-				.SetNext(new LoadAssemblyCSharp())
-				.SetNext(new ModifyAccessors())
+            modificationChain
+                .SetNext(new FindCleanAssembly())
+                .SetNext(new LoadAssemblyCSharp())
+                .SetNext(new ModifyAccessors())
 				.SetNext(new SaveAssemblyCSharp());
 
 			modificationChain.ExecuteSteps(info);

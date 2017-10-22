@@ -1,2 +1,6 @@
 # Ban all versions of Assembly-CSharp.dll
 Assembly-CSharp*.dll
+/.vs/NuterraFull/v15/.suo
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/.vs/slnx.sqlite-journal

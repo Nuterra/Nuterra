@@ -47,9 +47,24 @@ namespace Nuterra
 			if (clearGridInfo)
 			{
 				_block.attachPoints = new Vector3[] { };
-				_block.filledCells = new Vector3[] { new Vector3(0, 0, 0) };
-				_block.partialCells = new Vector3[] { };
+				_block.filledCells = new IntVector3[] { new Vector3(0, 0, 0) };
+				_block.partialCells = new IntVector3[] { };
 			}
+		}
+
+		public BlockPrefabBuilder FromAsset(GameObject prefab)
+		{
+			var prefabInfo = prefab.GetComponent<CustomBlockPrefab>();
+			SetBlockID(prefabInfo.BlockID);
+			SetName(prefabInfo.Name);
+			SetDescription(prefabInfo.Description);
+			SetPrice(prefabInfo.Price);
+			SetFaction(FactionSubTypes.GSO);
+			SetCategory(BlockCategories.Accessories);
+			SetSize(new Vector3I(prefabInfo.Dimensions), AttachmentPoints.Bottom);
+			SetModel(prefab);
+			SetIcon(prefabInfo.DisplaySprite);
+			return this;
 		}
 
 		public void Register()
@@ -107,7 +122,7 @@ namespace Nuterra
 		public BlockPrefabBuilder SetSize(Vector3I size, AttachmentPoints points = AttachmentPoints.Bottom)
 		{
 			ThrowIfFinished();
-			List<Vector3> cells = new List<Vector3>();
+			List<IntVector3> cells = new List<IntVector3>();
 			List<Vector3> aps = new List<Vector3>();
 			for (int x = 0; x < size.x; x++)
 			{
@@ -200,10 +215,10 @@ namespace Nuterra
 			return this;
 		}
 
-		public BlockPrefabBuilder SetIcon(Sprite sprite)
+		public BlockPrefabBuilder SetIcon(Sprite displaySprite)
 		{
 			ThrowIfFinished();
-			_customBlock.DisplaySprite = sprite;
+			_customBlock.DisplaySprite = displaySprite;
 			return this;
 		}
 
