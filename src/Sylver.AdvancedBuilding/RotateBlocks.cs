@@ -37,9 +37,9 @@ namespace Sylver.AdvancedBuilding
                 try
                 {
                     block = Singleton.Manager<ManPointer>.inst.targetVisible.block;
-                    x = block.trans.rotation.eulerAngles.x;
-                    y = block.trans.rotation.eulerAngles.y;
-                    z = block.trans.rotation.eulerAngles.z;
+                    x = block.trans.localRotation.eulerAngles.x;
+                    y = block.trans.localRotation.eulerAngles.y;
+                    z = block.trans.localRotation.eulerAngles.z;
                     //Console.WriteLine(block.trans.rotation.eulerAngles);
                 }
                 catch (Exception ex)
@@ -67,7 +67,7 @@ namespace Sylver.AdvancedBuilding
             try
             {
                 win = GUI.Window(ID, win, new GUI.WindowFunction(DoWindow), "Block Rotation");
-                block.trans.rotation = Quaternion.Euler(x, y, z);
+                block.trans.localRotation = Quaternion.Euler(x, y, z);
             }
             catch (Exception ex)
             {

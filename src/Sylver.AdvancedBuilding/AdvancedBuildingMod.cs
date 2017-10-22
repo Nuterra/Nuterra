@@ -24,6 +24,7 @@ namespace Sylver.AdvancedBuilding
             _holder.AddComponent<RotateBlocks>();
             _holder.AddComponent<TranslateBlocks>();
             _holder.AddComponent<ScaleBlocks>();
+            _holder.AddComponent<BlocksInfo>();
             UnityEngine.Object.DontDestroyOnLoad(_holder);  
         }
     }

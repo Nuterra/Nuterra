@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +10,15 @@ using Nuterra;
 
 namespace Sylver.AdvancedBuilding
 {
-    class TranslateBlocks : MonoBehaviour
+    class BlocksInfo : MonoBehaviour
     {
         private int ID = Utils.GetWindowID();
+
         private bool visible = false;
 
         private TankBlock block;
 
-        private float x = 0, y = 0, z = 0, posX, posY;
+        private float posX, posY;
 
         private Rect win;
 
@@ -30,18 +33,13 @@ namespace Sylver.AdvancedBuilding
             {
                 posX = Input.mousePosition.x;
                 posY = Input.mousePosition.y;
-                win = new Rect(posX, posY, 200f, 200f);
+                win = new Rect(posX - 400f, posY, 200f, 200f);
                 try
                 {
                     block = Singleton.Manager<ManPointer>.inst.targetVisible.block;
-                    x = block.trans.localPosition.x;
-                    y = block.trans.localPosition.y;
-                    z = block.trans.localPosition.z;
-                    //Console.WriteLine(block.trans.rotation.eulerAngles);
                 }
                 catch (Exception ex)
                 {
-                    //Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
                     block = null;
                 }
                 visible = block;
@@ -60,11 +58,10 @@ namespace Sylver.AdvancedBuilding
         {
             if (!visible || !block) return;
             GUI.skin.label.margin.top = 5;
-            GUI.skin.label.margin.bottom = 5;
+            GUI.skin.label.margin.bottom = 0;
             try
             {
-                win = GUI.Window(ID, win, new GUI.WindowFunction(DoWindow), "Block position");
-                block.trans.localPosition = new Vector3(x, y, z);
+                win = GUI.Window(ID, win, new GUI.WindowFunction(DoWindow), "Block Infos");
             }
             catch (Exception ex)
             {
@@ -74,16 +71,36 @@ namespace Sylver.AdvancedBuilding
 
         private void DoWindow(int id)
         {
-            GUILayout.Label("X position");
-            float.TryParse(GUILayout.TextField(x.ToString()), out x);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Type");
+            GUILayout.Label(block.BlockType.ToString());
+            GUILayout.EndHorizontal();
 
-            GUILayout.Label("Y position");
-            float.TryParse(GUILayout.TextField(y.ToString()), out y);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Category");
+            GUILayout.Label(block.BlockCategory.ToString());
+            GUILayout.EndHorizontal();
 
-            GUILayout.Label("Z position");
-            float.TryParse(GUILayout.TextField(z.ToString()), out z);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Rarity");
+            GUILayout.Label(block.BlockRarity.ToString());
+            GUILayout.EndHorizontal();
 
-            //GUILayout.Label(((IntVector3)block.trans.localPosition).ToString());
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Centre of Mass");
+            GUILayout.Label(block.CentreOfMass.ToString());
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Mass");
+            GUILayout.Label(block.CurrentMass.ToString());
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Health");
+            GUILayout.Label(block.visible.damageable.Health.ToString());
+            GUILayout.EndHorizontal();
+
 
             if (GUILayout.Button("Close"))
             {

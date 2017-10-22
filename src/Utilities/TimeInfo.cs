@@ -13,6 +13,7 @@ namespace Utilities
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Keypad3)) visible = !visible;
+            if (Singleton.playerPos.y > 3000) RenderSettings.ambientSkyColor = new Color32(25, 40, 65, byte.MaxValue);
         }
 
         private void OnGUI()

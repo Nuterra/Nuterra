@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvancedBuildingMod.cs" />
+    <Compile Include="BlocksInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateBlocks.cs" />
     <Compile Include="ScaleBlocks.cs" />
