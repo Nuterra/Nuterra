@@ -22,8 +22,7 @@ namespace Utilities
         private void OnGUI()
         {
             if (!visible || Singleton.Manager<ManSaveGame>.inst.m_SaveData==null) return;
-            GUI.skin.label.margin.top = 5;
-            GUI.skin.label.margin.bottom = 5;
+
             try
             { 
             GUI.Window(ID, new Rect(300f, 0, 300f, 300f), new GUI.WindowFunction(DoWindow), "Current Save Infos");

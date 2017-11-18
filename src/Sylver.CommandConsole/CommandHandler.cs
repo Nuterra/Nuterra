@@ -7,6 +7,7 @@ using UnityEngine;
 using Rewired.UI.ControlMapper;
 using Nuterra.Internal;
 using Nuterra;
+using Nuterra.UI;
 
 
 namespace Sylver.CommandConsole
@@ -17,15 +18,42 @@ namespace Sylver.CommandConsole
         private void OnGUI()
         {
             if (!visible) return;
-            
-            
+            GUI.skin = NuterraGUI.Skin;/*.window = new GUIStyle(GUI.skin.window)
+            {
+                normal =
+            {
+                background = NuterraGUI.LoadImage("Border_BG.png"),
+                textColor = Color.white
+            },
+                border = new RectOffset(16, 16, 16, 16),
+            }; 
+
+            GUI.skin.button = new GUIStyle(GUI.skin.button)
+            {
+                normal =
+            {
+                background = NuterraGUI.LoadImage("HUD_Button_BG.png"),
+                textColor = Color.white
+            },
+                hover =
+            {
+                background = NuterraGUI.LoadImage("HUD_Button_Highlight.png")
+            },
+                active =
+            {
+                background = NuterraGUI.LoadImage("HUD_Button_Selected.png")
+            },
+                border = new RectOffset(16, 16, 16, 16),
+                alignment = TextAnchor.MiddleCenter,
+            };*/
+
             //GUI.skin.window = new GUIStyle { normal = { background = back, textColor = Color.white }, stretchHeight = true, stretchWidth = true };
             GUI.Window(ID, new Rect(Screen.width - 500f, Screen.height - 500f, 500f, 500f), new GUI.WindowFunction(DoWindow), "Console"/*, new GUIStyle { normal = { background = back, textColor = Color.white }/*, stretchHeight = true, stretchWidth = true }*/);
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.BackQuote))
+            if (Input.GetKeyDown(KeyCode.BackQuote) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 visible = !visible;
             }
@@ -83,6 +111,7 @@ namespace Sylver.CommandConsole
                         if (page < 0) page = 0;
                         if (page > 0) page -= 1;
                         output.text += "\n" + string.Format(info, "Help - Page " + (page + 1) + "/" + Math.Ceiling((double)Commands.Count / 5));
+                        output.text += "\n" + string.Format(info, "Command usage : CommandName Arg1:Value1 Arg2:Value2 ArgN:ValueN\nFor more informations about a command do \"Help CommandName\"");
                         foreach (string commName in Commands.Keys)
                         {
                             if (page * 5 <= i && i < page * 5 + 5)
@@ -97,7 +126,8 @@ namespace Sylver.CommandConsole
                 else
                 {
                     output.text += "\n" + string.Format(info,"Help - Page " + (page + 1) + "/" + Math.Ceiling((double)Commands.Count / 5));
-                    foreach(string commName in Commands.Keys)
+                    output.text += "\n" + string.Format(info, "Command usage : CommandName Arg1:Value1 Arg2:Value2 ArgN:ValueN\nFor more informations about a command do \"Help CommandName\"");
+                    foreach (string commName in Commands.Keys)
                     {
                         if(page*5<=i && i<page*5+5)
                         {
@@ -115,7 +145,7 @@ namespace Sylver.CommandConsole
             }
             else if (commandName == "s")
             {
-                Tank temp = Singleton.Manager<ManSpawn>.inst.SpawnEmptyTech(Singleton.playerTank.Team, Singleton.playerPos + new Vector3(30, 0, 30), Quaternion.identity, true, false);
+                Tank temp = Singleton.Manager<ManSpawn>.inst.SpawnEmptyTech(Singleton.playerTank.Team, Singleton.playerPos + new Vector3(30, 0, 30), Quaternion.identity, true, false,"");
                 try
                 {
                     output.text += "\n"+ temp.blockman.blockTableSize + " " + temp.blockman.blockCentreBounds.ToString();

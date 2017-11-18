@@ -13,13 +13,17 @@ namespace Utilities
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Keypad1)) visible = !visible;
+            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                WikiInfos.GetBlocksInfos();
+                WikiInfos.GetResourcesInfos();
+            }
         }
 
         private void OnGUI()
         {
             if (!visible || !Singleton.playerTank) return;
-            GUI.skin.label.margin.top = 5;
-            GUI.skin.label.margin.bottom = 5;
+
             try
             {
                 GUI.Window(ID, new Rect(0, 0, 300f, 300f), new GUI.WindowFunction(DoWindow), "Player Tech Infos");

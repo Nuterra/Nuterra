@@ -33,6 +33,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\TerraTechTTMM\TerraTechWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Nuterra.UI">
+      <HintPath>..\Nuterra.UI\bin\Debug\Nuterra.UI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

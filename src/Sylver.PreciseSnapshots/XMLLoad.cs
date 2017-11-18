@@ -32,8 +32,8 @@ namespace Sylver.PreciseSnapshots
                 return null;
             }
 
-            Tank tech = Singleton.Manager<ManSpawn>.inst.SpawnEmptyTech(0, position, rotation, true, false);
-            tech.name = TechXML.GetElementsByTagName("Tech")[0].Attributes["Name"].Value;
+            Tank tech = Singleton.Manager<ManSpawn>.inst.SpawnEmptyTech(0, position, rotation, true, false, TechXML.GetElementsByTagName("Tech")[0].Attributes["Name"].Value);
+           
             for(int i = 0; i < TechXML.GetElementsByTagName("Block").Count; i++)
             {
                 var BlockXML = TechXML.GetElementsByTagName("Block")[i];

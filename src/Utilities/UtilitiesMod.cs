@@ -26,6 +26,7 @@ namespace Utilities
             _holder.AddComponent<CurrentSaveInfo>();
             _holder.AddComponent<TimeInfo>();
             //_holder.AddComponent<ManAssets>();
+            _holder.AddComponent<UITest>();
             UnityEngine.Object.DontDestroyOnLoad(_holder);
             Hooks.Visibles.VisibleSpawned += Visibles_VisibleSpawned;
             Hooks.Visibles.VisibleRecycled += Visibles_VisibleRecycled;

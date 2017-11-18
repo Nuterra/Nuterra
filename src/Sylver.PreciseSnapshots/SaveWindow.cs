@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Nuterra;
 using UnityEngine;
 using System.IO;
+using Nuterra.UI;
 
 namespace Sylver.PreciseSnapshots
 {
@@ -21,7 +22,7 @@ namespace Sylver.PreciseSnapshots
         {
             if (Input.GetKeyDown(KeyCode.S) && Input.GetKey(KeyCode.LeftAlt) && Singleton.playerTank)
             {
-                path = Path.Combine(PreciseSnapshotsMod.PreciseSnapshotsFolder, Singleton.playerTank.name + ".xml");
+                path = Path.GetFullPath(Path.Combine(PreciseSnapshotsMod.PreciseSnapshotsFolder, Singleton.playerTank.name + ".xml"));
                 if(File.Exists(path))
                 {
                     visible = true;
@@ -34,6 +35,15 @@ namespace Sylver.PreciseSnapshots
         private void OnGUI()
         {
             if (!visible) return;
+            GUI.skin = NuterraGUI.Skin;/*.window = new GUIStyle(GUI.skin.window)
+            {
+                normal =
+            {
+                background = NuterraGUI.LoadImage("Border_BG.png"),
+                textColor = Color.white
+            },
+                border = new RectOffset(16, 16, 16, 16),
+            };*/
             GUI.Window(ID, new Rect((Screen.width - 700f) / 2, (Screen.height - 200f) / 2, 700f, 200f), new GUI.WindowFunction(DoWindow), "");
         }
 

@@ -17,8 +17,19 @@ namespace Nuterra.Internal
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			Assembly nuterra = LoadAssemblyFromModsFolder("Nuterra.dll");
 			if (nuterra == null) return;
-			Console.WriteLine("Nuterra assembly loaded");
-			Type nuterraMain = nuterra.GetType("Nuterra.NuterraApi");
+            Console.WriteLine("Nuterra assembly loaded");
+
+            Assembly nuterraUI = LoadAssemblyFromModsFolder("Nuterra.UI.dll");
+            if (nuterraUI != null)
+            {
+                Console.WriteLine("Nuterra.UI assembly loaded");
+                Type nuterraUIMain = nuterraUI.GetType("Nuterra.UI.NuterraGUI");
+                MethodInfo UIstart = nuterraUIMain.GetMethod("Start", BindingFlags.Static | BindingFlags.NonPublic);
+                UIstart.Invoke(null, new object[] { });
+            }
+            
+
+            Type nuterraMain = nuterra.GetType("Nuterra.NuterraApi");
 			MethodInfo start = nuterraMain.GetMethod("Start", BindingFlags.Static | BindingFlags.NonPublic);
 			start.Invoke(null, new object[] { });
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Nuterra;
+using Nuterra.UI;
 
 namespace Sylver.AdvancedBuilding
 {
@@ -59,8 +60,17 @@ namespace Sylver.AdvancedBuilding
         private void OnGUI()
         {
             if (!visible || !block) return;
+            GUI.skin = NuterraGUI.Skin;/*.window = new GUIStyle(GUI.skin.window)
+            {
+                normal =
+            {
+                background = NuterraGUI.LoadImage("Border_BG.png"),
+                textColor = Color.white
+            },
+                border = new RectOffset(16, 16, 16, 16),
+            };
             GUI.skin.label.margin.top = 5;
-            GUI.skin.label.margin.bottom = 5;
+            GUI.skin.label.margin.bottom = 5;*/
             try
             {
                 win = GUI.Window(ID, win, new GUI.WindowFunction(DoWindow), "Block position");

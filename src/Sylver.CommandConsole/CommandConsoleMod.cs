@@ -30,8 +30,10 @@ namespace Sylver.CommandConsole
             (new SetRotationCommand()).Init();
             (new SetVelocityCommand()).Init();
             (new DisarmCommand()).Init();
+            (new TimeSetCommand()).Init();
+            (new TimeStopCommand()).Init();
+            (new SetDayLengthCommand()).Init();
 
-            
 
             /*foreach(byte cur in File.ReadAllBytes(Path.Combine(FolderStructure.AssetsFolder, "HUD_Border_BG.png")))
             {

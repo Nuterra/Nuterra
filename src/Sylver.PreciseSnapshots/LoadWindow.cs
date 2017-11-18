@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Nuterra;
 using UnityEngine;
 using System.IO;
+using Nuterra.UI;
 
 namespace Sylver.PreciseSnapshots
 {
@@ -32,6 +33,15 @@ namespace Sylver.PreciseSnapshots
         private void OnGUI()
         {
             if (!visible) return;
+            GUI.skin = NuterraGUI.Skin;/*.window = new GUIStyle(GUI.skin.window)
+            {
+                normal =
+            {
+                background = NuterraGUI.LoadImage("Border_BG.png"),
+                textColor = Color.white
+            },
+                border = new RectOffset(16, 16, 16, 16),
+            };*/
             GUI.Window(ID, new Rect((Screen.width - 700f) / 2, (Screen.height - 500f) / 2, 700f, 500f), new GUI.WindowFunction(DoWindow), "Techs");
         }
 
@@ -39,7 +49,7 @@ namespace Sylver.PreciseSnapshots
         {
 
             scrollPos = GUILayout.BeginScrollView(scrollPos);
-            foreach (var tech in Directory.GetFiles(PreciseSnapshotsMod.PreciseSnapshotsFolder))
+            foreach (var tech in Directory.GetFiles(Path.GetFullPath(PreciseSnapshotsMod.PreciseSnapshotsFolder)))
             {
                 if (GUILayout.Button(tech,new GUIStyle(GUI.skin.button) { richText = true, alignment = TextAnchor.MiddleLeft }))
                 {

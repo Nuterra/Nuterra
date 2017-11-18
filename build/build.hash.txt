@@ -2,10 +2,13 @@
 # Write hashes like this: {hash} {version}
 # First matched hash is accepted, put hashes of new versions of the game at the top of the file
 
-#0.7.7.2
+# 0.7.8
+Ny7xxCefXhT/nw6c9v/MYA== Windows-64bit-R&D
+
+# 0.7.7.2
 rqJgBr5eIwXZnOxBRexkEw== Windows-64bit-R&D
 
-#0.7.7.1
+# 0.7.7.1
 RoxjQNKve1hzJ8CG16sQ4Q== Windows-64bit-R&D
 
 # 0.7.4
