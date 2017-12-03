@@ -88,13 +88,16 @@ namespace Sylver.AdvancedBuilding
         private void DoWindow(int id)
         {
             GUILayout.Label("X rotation");
-            float.TryParse(GUILayout.TextField(x.ToString()),out x);
+            x = NuterraGUI.NumberField(x, 15f);
+            //float.TryParse(GUILayout.TextField(x.ToString()),out x);
 
             GUILayout.Label("Y rotation");
-            float.TryParse(GUILayout.TextField(y.ToString()), out y);
+            y = NuterraGUI.NumberField(y, 15f);
+            //float.TryParse(GUILayout.TextField(y.ToString()), out y);
 
             GUILayout.Label("Z rotation");
-            float.TryParse(GUILayout.TextField(z.ToString()), out z);
+            z = NuterraGUI.NumberField(z, 15f);
+            //float.TryParse(GUILayout.TextField(z.ToString()), out z);
 
             //GUILayout.Label(block.cachedLocalRotation.ToString());
 

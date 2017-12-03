@@ -17,18 +17,18 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("TextField_BG.png"),
+                    background = Elements.LoadImageFromAsset("TextField_BG.png"),
                     textColor = Color.white
                 },
                 active =
                 {
-                    background = Elements.LoadImage("TextField_BG_Highlight.png"),
+                    background = Elements.LoadImageFromAsset("TextField_BG_Highlight.png"),
                     textColor = Color.white
                 },
 
                 clipping = TextClipping.Clip,
                 border = new RectOffset(10, 10, 5, 5),
-                padding = new RectOffset(4, 4, 4, 4)
+                padding = new RectOffset(10, 10, 4, 4)
             };
         }
     }

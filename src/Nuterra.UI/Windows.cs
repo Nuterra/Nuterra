@@ -18,13 +18,13 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Border_BG.png"),
+                    background = Elements.LoadImageFromAsset("Border_BG.png"),
                     textColor = Color.white
                 },
                 alignment = TextAnchor.UpperCenter,
                 border = new RectOffset(16, 16, 16, 16),
-                padding = new RectOffset(16, 16, 20, 16),
-                contentOffset = new Vector2(0f,-8f),
+                padding = new RectOffset(16, 16, 26, 16),
+                contentOffset = new Vector2(0f,-18f),
             };
         }
     }

@@ -17,6 +17,7 @@ namespace Utilities
             {
                 WikiInfos.GetBlocksInfos();
                 WikiInfos.GetResourcesInfos();
+                WikiInfos.GetRecipiesInfos();
             }
         }
 

@@ -25,6 +25,8 @@ namespace Nuterra.Build
 			}
 			MakeInternalsVisibleToAssembly(module, "Nuterra.Internal");
 			MakeInternalsVisibleToAssembly(module, "Nuterra");
+
+            HijackFont(module);
 		}
 
 		private static void MakeInternalsVisibleToAssembly(ModuleDefMD module, string assemblyName)
@@ -169,5 +171,33 @@ namespace Nuterra.Build
 				method.IsVirtual = true;
 			}
 		}
-	}
+
+        private static void HijackFont(ModuleDefMD module)
+        {
+            TypeDef UICoords = module.Find("UICoords", false);
+            FieldDef m_Text = UICoords.Fields.First(f => f.Name == "m_Text");
+            PropertyDef font = m_Text.DeclaringType.FindProperty("font");
+            TypeSig fontType = font.DeclaringType.ToTypeSig();
+
+            FieldDef Exo = new FieldDefUser("Exo",
+                new FieldSig(fontType),
+                FieldAttributes.Public | FieldAttributes.Static);
+
+            UICoords.Fields.Add(Exo);
+
+            var body = UICoords.Methods.First(m => m.Name == "OnPool").Body.Instructions;
+
+            body.Insert(body.Count - 1, OpCodes.Ldarg_0.ToInstruction());
+            body.Insert(body.Count - 1, OpCodes.Ldfld.ToInstruction(m_Text));
+            body.Insert(body.Count - 1, OpCodes.Callvirt.ToInstruction(font.GetMethod));
+            body.Insert(body.Count - 1, OpCodes.Stsfld.ToInstruction(Exo));
+
+            /*
+            11	002B	ldarg.0
+            12	002C	ldfld	class [UnityEngine.UI]UnityEngine.UI.Text UICoords::m_Text
+            13	0031	callvirt	instance class [UnityEngine]UnityEngine.Font [UnityEngine.UI]UnityEngine.UI.Text::get_font()
+            14	0036	stsfld	class [UnityEngine]UnityEngine.Font UICoords::Exo
+            */
+        }
+    }
 }

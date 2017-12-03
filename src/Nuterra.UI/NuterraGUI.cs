@@ -14,11 +14,6 @@ namespace Nuterra.UI
     public class NuterraGUI : Singleton.Manager<NuterraGUI>
     {
 
-        public NuterraGUI()
-        {
-
-        }
-
         public static GUISkin Skin
         {
             get
@@ -90,7 +85,19 @@ namespace Nuterra.UI
             {
                 Console.WriteLine(ex.ToString());
             }*/
+
+            Skin.font = Elements.NuterraUIAssetBundle.LoadAsset<Font>(@"Assets/UI/Fonts/Exo-Bold.ttf");
                
+        }
+
+        public static float NumberField(float value,float interval)
+        {
+            GUILayout.BeginHorizontal(GUILayout.Height(30));
+            float.TryParse(GUILayout.TextField(value.ToString()), out float val);
+            if (GUILayout.Button("+")) val += interval;
+            if (GUILayout.Button("-")) val -= interval;
+            GUILayout.EndHorizontal();
+            return val;
         }
 
         private static GUISkin _skin;

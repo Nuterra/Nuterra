@@ -54,6 +54,7 @@
     <Compile Include="CommandHandler.cs" />
     <Compile Include="DisarmCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetGravityCommand.cs" />
     <Compile Include="SetRotationCommand.cs" />
     <Compile Include="SetVelocityCommand.cs" />
     <Compile Include="TeleportationCommand.cs" />

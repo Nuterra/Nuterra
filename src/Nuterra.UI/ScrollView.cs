@@ -23,37 +23,37 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Scroll_Horizontal_BG.png")
+                    background = Elements.LoadImageFromAsset("Scroll_Horizontal_BG.png")
                 },
                 fixedHeight = 16f,
-                border = new RectOffset(6, 6, 8, 8)
+                border = new RectOffset(8, 8, 8, 8)
             };
             this.Vertical = new GUIStyle
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Scroll_Vertical_BG.png")
+                    background = Elements.LoadImageFromAsset("Scroll_Vertical_BG.png")
                 },
                 fixedWidth = 16f,
-                border = new RectOffset(8, 8, 6, 6)
+                border = new RectOffset(8, 8, 8, 8)
             };
             this.ThumbHorizontal = new GUIStyle
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Scroll_Horizontal_Thumb.png")
+                    background = Elements.LoadImageFromAsset("Scroll_Horizontal_Thumb.png")
                 },
                 fixedHeight = 16f,
-                border = new RectOffset(6, 6, 8, 8)
+                border = new RectOffset(8, 8, 8, 8)
             };
             this.ThumbVertical = new GUIStyle
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Scroll_Vertical_Thumb.png")
+                    background = Elements.LoadImageFromAsset("Scroll_Vertical_Thumb.png")
                 },
                 fixedWidth = 16f,
-                border = new RectOffset(8, 8, 6, 6)
+                border = new RectOffset(8, 8, 8, 8)
             };
         }
     }

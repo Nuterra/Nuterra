@@ -13,5 +13,15 @@ namespace Nuterra
         {
             return currentWindowID--;
         }
+
+        public static ItemTypeInfo ITIFromBlock(BlockTypes type)
+        {
+            return new ItemTypeInfo(ObjectTypes.Block, (int)type);
+        }
+
+        public static ItemTypeInfo ITIFromChunk(ChunkTypes type)
+        {
+            return new ItemTypeInfo(ObjectTypes.Chunk, (int)type);
+        }
     }
 }

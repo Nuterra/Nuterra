@@ -19,22 +19,22 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Toggle_OFF.png")
+                    background = Elements.LoadImageFromAsset("Toggle_OFF.png")
                 },
                 active =
                 {
-                    background = Elements.LoadImage("Toggle_ON.png")
+                    background = Elements.LoadImageFromAsset("Toggle_ON.png")
                 },
             };
             Check = new GUIStyle(GUI.skin.toggle)
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Check_Unticked.png")
+                    background = Elements.LoadImageFromAsset("Check_Unticked.png")
                 },
                 active =
                 {
-                    background = Elements.LoadImage("Check_Ticked.png")
+                    background = Elements.LoadImageFromAsset("Check_Ticked.png")
                 },
                 border = new RectOffset(2, 2, 2, 2)
             };

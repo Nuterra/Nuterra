@@ -85,13 +85,16 @@ namespace Sylver.AdvancedBuilding
         private void DoWindow(int id)
         {
             GUILayout.Label("X position");
-            float.TryParse(GUILayout.TextField(x.ToString()), out x);
+            x = NuterraGUI.NumberField(x, 0.125f);
+            //float.TryParse(GUILayout.TextField(x.ToString()), out x);
 
             GUILayout.Label("Y position");
-            float.TryParse(GUILayout.TextField(y.ToString()), out y);
+            y = NuterraGUI.NumberField(y, 0.125f);
+            //float.TryParse(GUILayout.TextField(y.ToString()), out y);
 
             GUILayout.Label("Z position");
-            float.TryParse(GUILayout.TextField(z.ToString()), out z);
+            z = NuterraGUI.NumberField(z, 0.125f);
+            //float.TryParse(GUILayout.TextField(z.ToString()), out z);
 
             //GUILayout.Label(((IntVector3)block.trans.localPosition).ToString());
 

@@ -25,21 +25,21 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("HUD_Button_BG.png"),
+                    background = Elements.LoadImageFromAsset("HUD_Button_BG.png"),
                     textColor = Color.white
                 },
                 hover =
                 {
-                    background = Elements.LoadImage("HUD_Button_Highlight.png"),
+                    background = Elements.LoadImageFromAsset("HUD_Button_Highlight.png"),
                     textColor = Color.white
                 },
                 active =
                 {
-                    background = Elements.LoadImage("HUD_Button_Selected.png"),
+                    background = Elements.LoadImageFromAsset("HUD_Button_Selected.png"),
                     textColor = Color.white
                 },
                 border = new RectOffset(16, 16, 16, 16),
-                padding = new RectOffset(8, 8, 8, 8),
+                padding = new RectOffset(5, 5, 5, 5),
                 alignment = TextAnchor.MiddleCenter,
                 
             };
@@ -48,17 +48,17 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("HUD_Button_GREY_BG.png"),
+                    background = Elements.LoadImageFromAsset("HUD_Button_GREY_BG.png"),
                     textColor = Color.white
                 },
                 hover =
                 {
-                    background = Elements.LoadImage("HUD_Button_RED_BG.png"),
+                    background = Elements.LoadImageFromAsset("HUD_Button_RED_BG.png"),
                     textColor = Color.white
                 },
                 active =
                 {
-                    background = Elements.LoadImage("HUD_Button_RED_BG.png"),
+                    background = Elements.LoadImageFromAsset("HUD_Button_RED_BG.png"),
                     textColor = Color.white
                 },
             };
@@ -67,11 +67,11 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Button_Close.png")
+                    background = Elements.LoadImageFromAsset("Button_Close.png")
                 },
                 active =
                 {
-                    background = Elements.LoadImage("Button_Close.png")
+                    background = Elements.LoadImageFromAsset("Button_Close.png")
                 },
                 alignment = TextAnchor.UpperRight,
                 margin = new RectOffset { right = 0, top=0 }
@@ -81,15 +81,15 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Button_BG.png")
+                    background = Elements.LoadImageFromAsset("Button_BG.png")
                 },
                 hover =
                 {
-                    background = Elements.LoadImage("Button_BG.png")
+                    background = Elements.LoadImageFromAsset("Button_BG.png")
                 },
                 active =
                 {
-                    background = Elements.LoadImage("Button_Highlight_BG.png")
+                    background = Elements.LoadImageFromAsset("Button_Highlight_BG.png")
                 }
             };
 
@@ -97,11 +97,11 @@ namespace Nuterra.UI
             {
                 normal =
                 {
-                    background = Elements.LoadImage("Button_GREY_BG.png")
+                    background = Elements.LoadImageFromAsset("Button_GREY_BG.png")
                 },
                 hover =
                 {
-                    background = Elements.LoadImage("Button_GREY_BG.png")
+                    background = Elements.LoadImageFromAsset("Button_GREY_BG.png")
                 },
             };
         }

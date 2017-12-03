@@ -87,13 +87,16 @@ namespace Sylver.AdvancedBuilding
         private void DoWindow(int id)
         {
             GUILayout.Label("X scale");
-            float.TryParse(GUILayout.TextField(x.ToString()), out x);
+            x = NuterraGUI.NumberField(x, 0.1f);
+            //float.TryParse(GUILayout.TextField(x.ToString()), out x);
 
             GUILayout.Label("Y scale");
-            float.TryParse(GUILayout.TextField(y.ToString()), out y);
+            y = NuterraGUI.NumberField(y, 0.1f);
+            //float.TryParse(GUILayout.TextField(y.ToString()), out y);
 
             GUILayout.Label("Z scale");
-            float.TryParse(GUILayout.TextField(z.ToString()), out z);
+            z = NuterraGUI.NumberField(z, 0.1f);
+            //float.TryParse(GUILayout.TextField(z.ToString()), out z);
             if (GUILayout.Button("Close"))
             {
                 visible = false;

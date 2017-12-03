@@ -134,7 +134,7 @@ namespace Nuterra
 
 		public static void LogComponent_ResourceDispenser(ResourceDispenser dispenser)
 		{
-			Console.WriteLine($"{dispenser.AnimatedTransform?.gameObject.name ?? "(null)"}");
+			Console.WriteLine($"{dispenser.m_AnimatedTransform?.gameObject.name ?? "(null)"}");
 		}
 
 		public static void LogPrivates(object obj, string prefix)

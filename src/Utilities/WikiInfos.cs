@@ -97,5 +97,37 @@ namespace Utilities
             File.WriteAllText(Path.Combine(FolderStructure.DataFolder, "ResourcesInfos.csv"), infos);
 
         }
+
+        public static void GetRecipiesInfos()
+        {
+            string infos = "";
+            foreach (var list in RecipeManager.inst.recipeTable.m_RecipeLists)
+            {
+                infos+="\n"+"\n\nName : " + list.m_Name;
+                foreach (var recipe in list)
+                {
+                    infos+="\n"+"\n\tInput items :";
+                    foreach (var input in recipe.m_InputItems)
+                    {
+                        infos+="\n"+"\t\t" + input.ToString();
+                    }
+
+                    infos+="\n"+"\n\tOutput type : " + recipe.m_OutputType.ToString();
+
+                    infos+="\n"+"\n\tOutput items :";
+                    foreach (var output in recipe.m_OutputItems)
+                    {
+                        infos+="\n"+"\t\t" + output.ToString();
+                    }
+
+                    infos+="\n"+"\n\tMoney Output : " + recipe.m_MoneyOutput;
+                    infos+="\n"+"\tEnergy Output : " + recipe.m_EnergyType.ToString() + " " + recipe.m_EnergyOutput;
+                    infos+="\n"+"\tBuild time : " + recipe.m_BuildTimeSeconds;
+                }
+            }
+
+            File.WriteAllText(Path.Combine(FolderStructure.DataFolder, "Recipies.txt"), infos);
+
+        }
     }
 }

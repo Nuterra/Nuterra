@@ -23,9 +23,20 @@ namespace Nuterra.UI
 
         public static InputFields InputFields { get; private set; }
 
+        public static readonly AssetBundle NuterraUIAssetBundle;
+
+        static Elements()
+        {
+            NuterraUIAssetBundle = AssetBundle.LoadFromFile(Path.Combine(FolderStructure.AssetsFolder, "mod-nuterra-ui"));
+
+            if (NuterraUIAssetBundle == null)
+            {
+                Debug.Log("Failed to load mod-nuterra-ui AssetBundle, errors are coming");
+            }
+        }
 
         public static void BuildElements()
-        {
+        {          
             IsInitialized = true;
             Windows = new Windows();
             Buttons = new Buttons();
@@ -35,7 +46,12 @@ namespace Nuterra.UI
             NuterraGUI.BuildSkin();
         }
 
-        public static Texture2D LoadImage(string name)
+        public static Texture2D LoadImageFromAsset(string name)
+        {
+            return NuterraUIAssetBundle.LoadAsset<Texture2D>(@"Assets/UI/Elements/"+name);
+        }
+
+        public static Texture2D LoadImageFromFile(string name)
         {
             if (loadedTextures.ContainsKey(name))
             {
